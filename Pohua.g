@@ -13,8 +13,6 @@ options { language = Ruby; }
 
 ID: ( LETRA_MIN ) ( LETRA_MIN | LETRA_MAY | '_' | DIGITO )*;
 
-VARIABLE: '@' ID ;
-
 CTE_ENTERA: DIGITO+;
 
 CTE_FLOTANTE: CTE_ENTERA '.' CTE_ENTERA (EXPONENTE)?;

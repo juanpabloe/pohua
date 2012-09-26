@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.2.1-SNAPSHOT Jul 31, 2010 19:34:52
 # Ruby runtime library version: 1.8.11
 # Input grammar file: Pohua.g
-# Generated at: 2012-09-22 17:22:05
+# Generated at: 2012-09-25 20:22:07
 # 
 
 # ~~~> start load path setup
@@ -66,13 +66,12 @@ module Pohua
   module TokenData
 
     # define the token constants
-    define_tokens( :OPERADORES_TERMINO => 19, :OPERADORES_ASIGNACION => 21, 
-                   :DIGITO => 6, :CTE_ENTERA => 9, :LETRA_MIN => 4, :EXPONENTE => 10, 
-                   :COMENTARIOS => 15, :WHITESPACE => 16, :CTE_FLOTANTE => 11, 
-                   :ID => 7, :EOF => -1, :OPERADORES_COMPARACION => 20, 
-                   :CLASES_OB => 14, :SEPARADORES => 17, :CTE_STRING => 13, 
-                   :VARIABLE => 8, :LETRA_MAY => 5, :OPERADORES_FACTOR => 18, 
-                   :CUALQUIERA_DENTRO_STRING_O_COMETARIO => 12 )
+    define_tokens( :OPERADORES_TERMINO => 18, :OPERADORES_ASIGNACION => 20, 
+                   :DIGITO => 6, :CTE_ENTERA => 8, :LETRA_MIN => 4, :EXPONENTE => 9, 
+                   :COMENTARIOS => 14, :WHITESPACE => 15, :CTE_FLOTANTE => 10, 
+                   :ID => 7, :EOF => -1, :OPERADORES_COMPARACION => 19, 
+                   :CLASES_OB => 13, :SEPARADORES => 16, :CTE_STRING => 12, 
+                   :LETRA_MAY => 5, :OPERADORES_FACTOR => 17, :CUALQUIERA_DENTRO_STRING_O_COMETARIO => 11 )
     
   end
 
@@ -88,16 +87,14 @@ module Pohua
       # ignore
     end
     
-    RULE_NAMES   = [ "ID", "VARIABLE", "CTE_ENTERA", "CTE_FLOTANTE", "CTE_STRING", 
-                     "CLASES_OB", "COMENTARIOS", "WHITESPACE", "SEPARADORES", 
-                     "OPERADORES_FACTOR", "OPERADORES_TERMINO", "OPERADORES_COMPARACION", 
-                     "OPERADORES_ASIGNACION", "LETRA_MAY", "LETRA_MIN", 
-                     "DIGITO", "EXPONENTE", "CUALQUIERA_DENTRO_STRING_O_COMETARIO" ].freeze
-    RULE_METHODS = [ :id!, :variable!, :cte_entera!, :cte_flotante!, :cte_string!, 
-                     :clases_ob!, :comentarios!, :whitespace!, :separadores!, 
-                     :operadores_factor!, :operadores_termino!, :operadores_comparacion!, 
-                     :operadores_asignacion!, :letra_may!, :letra_min!, 
-                     :digito!, :exponente!, :cualquiera_dentro_string_o_cometario! ].freeze
+    RULE_NAMES   = [ "ID", "CTE_ENTERA", "CTE_FLOTANTE", "CTE_STRING", "CLASES_OB", 
+                     "COMENTARIOS", "WHITESPACE", "SEPARADORES", "OPERADORES_FACTOR", 
+                     "OPERADORES_TERMINO", "OPERADORES_COMPARACION", "OPERADORES_ASIGNACION", 
+                     "LETRA_MAY", "LETRA_MIN", "DIGITO", "EXPONENTE", "CUALQUIERA_DENTRO_STRING_O_COMETARIO" ].freeze
+    RULE_METHODS = [ :id!, :cte_entera!, :cte_flotante!, :cte_string!, :clases_ob!, 
+                     :comentarios!, :whitespace!, :separadores!, :operadores_factor!, 
+                     :operadores_termino!, :operadores_comparacion!, :operadores_asignacion!, 
+                     :letra_may!, :letra_min!, :digito!, :exponente!, :cualquiera_dentro_string_o_cometario! ].freeze
 
     
     def initialize( input=nil, options = {} )
@@ -164,44 +161,19 @@ module Pohua
 
     end
 
-    # lexer rule variable! (VARIABLE)
-    # (in Pohua.g)
-    def variable!
-      # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 2 )
-
-      type = VARIABLE
-      channel = ANTLR3::DEFAULT_CHANNEL
-
-      
-      # - - - - main rule block - - - -
-      # at line 16:11: '@' ID
-      match( 0x40 )
-      id!
-
-      
-      @state.type = type
-      @state.channel = channel
-
-    ensure
-      # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 2 )
-
-    end
-
     # lexer rule cte_entera! (CTE_ENTERA)
     # (in Pohua.g)
     def cte_entera!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 3 )
+      # trace_in( __method__, 2 )
 
       type = CTE_ENTERA
       channel = ANTLR3::DEFAULT_CHANNEL
 
       
       # - - - - main rule block - - - -
-      # at line 18:13: ( DIGITO )+
-      # at file 18:13: ( DIGITO )+
+      # at line 16:13: ( DIGITO )+
+      # at file 16:13: ( DIGITO )+
       match_count_2 = 0
       while true
         alt_2 = 2
@@ -213,7 +185,7 @@ module Pohua
         end
         case alt_2
         when 1
-          # at line 18:13: DIGITO
+          # at line 16:13: DIGITO
           digito!
 
         else
@@ -233,7 +205,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 3 )
+      # trace_out( __method__, 2 )
 
     end
 
@@ -241,18 +213,18 @@ module Pohua
     # (in Pohua.g)
     def cte_flotante!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 4 )
+      # trace_in( __method__, 3 )
 
       type = CTE_FLOTANTE
       channel = ANTLR3::DEFAULT_CHANNEL
 
       
       # - - - - main rule block - - - -
-      # at line 20:15: CTE_ENTERA '.' CTE_ENTERA ( EXPONENTE )?
+      # at line 18:15: CTE_ENTERA '.' CTE_ENTERA ( EXPONENTE )?
       cte_entera!
       match( 0x2e )
       cte_entera!
-      # at line 20:41: ( EXPONENTE )?
+      # at line 18:41: ( EXPONENTE )?
       alt_3 = 2
       look_3_0 = @input.peek( 1 )
 
@@ -261,7 +233,7 @@ module Pohua
       end
       case alt_3
       when 1
-        # at line 20:42: EXPONENTE
+        # at line 18:42: EXPONENTE
         exponente!
 
       end
@@ -272,7 +244,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 4 )
+      # trace_out( __method__, 3 )
 
     end
 
@@ -280,16 +252,16 @@ module Pohua
     # (in Pohua.g)
     def cte_string!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 5 )
+      # trace_in( __method__, 4 )
 
       type = CTE_STRING
       channel = ANTLR3::DEFAULT_CHANNEL
 
       
       # - - - - main rule block - - - -
-      # at line 22:13: '\"' ( CUALQUIERA_DENTRO_STRING_O_COMETARIO | '\\\"' )* '\"'
+      # at line 20:13: '\"' ( CUALQUIERA_DENTRO_STRING_O_COMETARIO | '\\\"' )* '\"'
       match( 0x22 )
-      # at line 22:17: ( CUALQUIERA_DENTRO_STRING_O_COMETARIO | '\\\"' )*
+      # at line 20:17: ( CUALQUIERA_DENTRO_STRING_O_COMETARIO | '\\\"' )*
       while true # decision 4
         alt_4 = 3
         look_4_0 = @input.peek( 1 )
@@ -307,11 +279,11 @@ module Pohua
         end
         case alt_4
         when 1
-          # at line 22:19: CUALQUIERA_DENTRO_STRING_O_COMETARIO
+          # at line 20:19: CUALQUIERA_DENTRO_STRING_O_COMETARIO
           cualquiera_dentro_string_o_cometario!
 
         when 2
-          # at line 22:58: '\\\"'
+          # at line 20:58: '\\\"'
           match( 0x22 )
 
         else
@@ -326,7 +298,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 5 )
+      # trace_out( __method__, 4 )
 
     end
 
@@ -334,16 +306,16 @@ module Pohua
     # (in Pohua.g)
     def clases_ob!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 6 )
+      # trace_in( __method__, 5 )
 
       type = CLASES_OB
       channel = ANTLR3::DEFAULT_CHANNEL
 
       
       # - - - - main rule block - - - -
-      # at line 28:12: LETRA_MAY ( LETRA_MAY | LETRA_MIN | DIGITO )*
+      # at line 26:12: LETRA_MAY ( LETRA_MAY | LETRA_MIN | DIGITO )*
       letra_may!
-      # at line 28:22: ( LETRA_MAY | LETRA_MIN | DIGITO )*
+      # at line 26:22: ( LETRA_MAY | LETRA_MIN | DIGITO )*
       while true # decision 5
         alt_5 = 4
         case look_5 = @input.peek( 1 )
@@ -353,15 +325,15 @@ module Pohua
         end
         case alt_5
         when 1
-          # at line 28:24: LETRA_MAY
+          # at line 26:24: LETRA_MAY
           letra_may!
 
         when 2
-          # at line 28:36: LETRA_MIN
+          # at line 26:36: LETRA_MIN
           letra_min!
 
         when 3
-          # at line 28:48: DIGITO
+          # at line 26:48: DIGITO
           digito!
 
         else
@@ -375,7 +347,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 6 )
+      # trace_out( __method__, 5 )
 
     end
 
@@ -383,17 +355,17 @@ module Pohua
     # (in Pohua.g)
     def comentarios!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 7 )
+      # trace_in( __method__, 6 )
 
       type = COMENTARIOS
       channel = ANTLR3::DEFAULT_CHANNEL
 
       
       # - - - - main rule block - - - -
-      # at line 30:14: '#' ( CUALQUIERA_DENTRO_STRING_O_COMETARIO ) '#'
+      # at line 28:14: '#' ( CUALQUIERA_DENTRO_STRING_O_COMETARIO ) '#'
       match( 0x23 )
-      # at line 30:18: ( CUALQUIERA_DENTRO_STRING_O_COMETARIO )
-      # at line 30:20: CUALQUIERA_DENTRO_STRING_O_COMETARIO
+      # at line 28:18: ( CUALQUIERA_DENTRO_STRING_O_COMETARIO )
+      # at line 28:20: CUALQUIERA_DENTRO_STRING_O_COMETARIO
       cualquiera_dentro_string_o_cometario!
 
       match( 0x23 )
@@ -404,7 +376,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 7 )
+      # trace_out( __method__, 6 )
 
     end
 
@@ -412,14 +384,14 @@ module Pohua
     # (in Pohua.g)
     def whitespace!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 8 )
+      # trace_in( __method__, 7 )
 
       type = WHITESPACE
       channel = ANTLR3::DEFAULT_CHANNEL
 
       
       # - - - - main rule block - - - -
-      # at line 32:15: ( ' ' | '\\t' | '\\r' | '\\n' )
+      # at line 30:15: ( ' ' | '\\t' | '\\r' | '\\n' )
       if @input.peek( 1 ).between?( 0x9, 0xa ) || @input.peek(1) == 0xd || @input.peek(1) == 0x20
         @input.consume
       else
@@ -439,7 +411,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 8 )
+      # trace_out( __method__, 7 )
 
     end
 
@@ -447,15 +419,15 @@ module Pohua
     # (in Pohua.g)
     def separadores!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 9 )
+      # trace_in( __method__, 8 )
 
       type = SEPARADORES
       channel = ANTLR3::DEFAULT_CHANNEL
 
       
       # - - - - main rule block - - - -
-      # at line 34:14: ( ':' | '(' | ')' | ';' | WHITESPACE | ',' )
-      # at line 34:14: ( ':' | '(' | ')' | ';' | WHITESPACE | ',' )
+      # at line 32:14: ( ':' | '(' | ')' | ';' | WHITESPACE | ',' )
+      # at line 32:14: ( ':' | '(' | ')' | ';' | WHITESPACE | ',' )
       alt_6 = 6
       case look_6 = @input.peek( 1 )
       when 0x3a then alt_6 = 1
@@ -469,27 +441,27 @@ module Pohua
       end
       case alt_6
       when 1
-        # at line 34:16: ':'
+        # at line 32:16: ':'
         match( 0x3a )
 
       when 2
-        # at line 34:22: '('
+        # at line 32:22: '('
         match( 0x28 )
 
       when 3
-        # at line 34:28: ')'
+        # at line 32:28: ')'
         match( 0x29 )
 
       when 4
-        # at line 34:34: ';'
+        # at line 32:34: ';'
         match( 0x3b )
 
       when 5
-        # at line 34:40: WHITESPACE
+        # at line 32:40: WHITESPACE
         whitespace!
 
       when 6
-        # at line 34:53: ','
+        # at line 32:53: ','
         match( 0x2c )
 
       end
@@ -500,7 +472,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 9 )
+      # trace_out( __method__, 8 )
 
     end
 
@@ -508,7 +480,7 @@ module Pohua
     # (in Pohua.g)
     def operadores_factor!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 10 )
+      # trace_in( __method__, 9 )
 
       type = OPERADORES_FACTOR
       channel = ANTLR3::DEFAULT_CHANNEL
@@ -532,7 +504,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 10 )
+      # trace_out( __method__, 9 )
 
     end
 
@@ -540,7 +512,7 @@ module Pohua
     # (in Pohua.g)
     def operadores_termino!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 11 )
+      # trace_in( __method__, 10 )
 
       type = OPERADORES_TERMINO
       channel = ANTLR3::DEFAULT_CHANNEL
@@ -564,7 +536,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 11 )
+      # trace_out( __method__, 10 )
 
     end
 
@@ -572,14 +544,14 @@ module Pohua
     # (in Pohua.g)
     def operadores_comparacion!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 12 )
+      # trace_in( __method__, 11 )
 
       type = OPERADORES_COMPARACION
       channel = ANTLR3::DEFAULT_CHANNEL
 
       
       # - - - - main rule block - - - -
-      # at line 40:23: ( '==' | '<' | '>' | '&&' | '||' | '!=' )
+      # at line 38:23: ( '==' | '<' | '>' | '&&' | '||' | '!=' )
       alt_7 = 6
       case look_7 = @input.peek( 1 )
       when 0x3d then alt_7 = 1
@@ -593,30 +565,57 @@ module Pohua
       end
       case alt_7
       when 1
-        # at line 40:25: '=='
+        # at line 38:25: '=='
         match( "==" )
 
       when 2
-        # at line 40:32: '<'
+        # at line 38:32: '<'
         match( 0x3c )
 
       when 3
-        # at line 40:38: '>'
+        # at line 38:38: '>'
         match( 0x3e )
 
       when 4
-        # at line 40:44: '&&'
+        # at line 38:44: '&&'
         match( "&&" )
 
       when 5
-        # at line 40:51: '||'
+        # at line 38:51: '||'
         match( "||" )
 
       when 6
-        # at line 40:58: '!='
+        # at line 38:58: '!='
         match( "!=" )
 
       end
+      
+      @state.type = type
+      @state.channel = channel
+
+    ensure
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_out( __method__, 11 )
+
+    end
+
+    # lexer rule operadores_asignacion! (OPERADORES_ASIGNACION)
+    # (in Pohua.g)
+    def operadores_asignacion!
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_in( __method__, 12 )
+
+      type = OPERADORES_ASIGNACION
+      channel = ANTLR3::DEFAULT_CHANNEL
+
+      
+      # - - - - main rule block - - - -
+      # at line 40:24: ( '=' )
+      # at line 40:24: ( '=' )
+      # at line 40:26: '='
+      match( 0x3d )
+
+
       
       @state.type = type
       @state.channel = channel
@@ -627,26 +626,19 @@ module Pohua
 
     end
 
-    # lexer rule operadores_asignacion! (OPERADORES_ASIGNACION)
+    # lexer rule letra_may! (LETRA_MAY)
     # (in Pohua.g)
-    def operadores_asignacion!
+    def letra_may!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 13 )
 
-      type = OPERADORES_ASIGNACION
-      channel = ANTLR3::DEFAULT_CHANNEL
-
       
       # - - - - main rule block - - - -
-      # at line 42:24: ( '=' )
-      # at line 42:24: ( '=' )
-      # at line 42:26: '='
-      match( 0x3d )
+      # at line 43:13: ( 'A' .. 'Z' )
+      # at line 43:13: ( 'A' .. 'Z' )
+      # at line 43:15: 'A' .. 'Z'
+      match_range( 0x41, 0x5a )
 
-
-      
-      @state.type = type
-      @state.channel = channel
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
@@ -654,18 +646,18 @@ module Pohua
 
     end
 
-    # lexer rule letra_may! (LETRA_MAY)
+    # lexer rule letra_min! (LETRA_MIN)
     # (in Pohua.g)
-    def letra_may!
+    def letra_min!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 14 )
 
       
       # - - - - main rule block - - - -
-      # at line 45:13: ( 'A' .. 'Z' )
-      # at line 45:13: ( 'A' .. 'Z' )
-      # at line 45:15: 'A' .. 'Z'
-      match_range( 0x41, 0x5a )
+      # at line 46:13: ( 'a' .. 'z' )
+      # at line 46:13: ( 'a' .. 'z' )
+      # at line 46:15: 'a' .. 'z'
+      match_range( 0x61, 0x7a )
 
 
     ensure
@@ -674,18 +666,18 @@ module Pohua
 
     end
 
-    # lexer rule letra_min! (LETRA_MIN)
+    # lexer rule digito! (DIGITO)
     # (in Pohua.g)
-    def letra_min!
+    def digito!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 15 )
 
       
       # - - - - main rule block - - - -
-      # at line 48:13: ( 'a' .. 'z' )
-      # at line 48:13: ( 'a' .. 'z' )
-      # at line 48:15: 'a' .. 'z'
-      match_range( 0x61, 0x7a )
+      # at line 49:11: ( '0' .. '9' )
+      # at line 49:11: ( '0' .. '9' )
+      # at line 49:13: '0' .. '9'
+      match_range( 0x30, 0x39 )
 
 
     ensure
@@ -694,35 +686,15 @@ module Pohua
 
     end
 
-    # lexer rule digito! (DIGITO)
+    # lexer rule exponente! (EXPONENTE)
     # (in Pohua.g)
-    def digito!
+    def exponente!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 16 )
 
       
       # - - - - main rule block - - - -
-      # at line 51:11: ( '0' .. '9' )
-      # at line 51:11: ( '0' .. '9' )
-      # at line 51:13: '0' .. '9'
-      match_range( 0x30, 0x39 )
-
-
-    ensure
-      # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 16 )
-
-    end
-
-    # lexer rule exponente! (EXPONENTE)
-    # (in Pohua.g)
-    def exponente!
-      # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 17 )
-
-      
-      # - - - - main rule block - - - -
-      # at line 54:13: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+      # at line 52:13: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
       if @input.peek(1) == 0x45 || @input.peek(1) == 0x65
         @input.consume
       else
@@ -732,7 +704,7 @@ module Pohua
       end
 
 
-      # at line 54:23: ( '+' | '-' )?
+      # at line 52:23: ( '+' | '-' )?
       alt_8 = 2
       look_8_0 = @input.peek( 1 )
 
@@ -753,7 +725,7 @@ module Pohua
 
 
       end
-      # at file 54:34: ( '0' .. '9' )+
+      # at file 52:34: ( '0' .. '9' )+
       match_count_9 = 0
       while true
         alt_9 = 2
@@ -765,7 +737,7 @@ module Pohua
         end
         case alt_9
         when 1
-          # at line 54:35: '0' .. '9'
+          # at line 52:35: '0' .. '9'
           match_range( 0x30, 0x39 )
 
         else
@@ -781,7 +753,7 @@ module Pohua
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 17 )
+      # trace_out( __method__, 16 )
 
     end
 
@@ -789,52 +761,52 @@ module Pohua
     # (in Pohua.g)
     def cualquiera_dentro_string_o_cometario!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 18 )
+      # trace_in( __method__, 17 )
 
       
       # - - - - main rule block - - - -
-      # at line 57:39: ( DIGITO | LETRA_MIN | LETRA_MAY | OPERADORES_ASIGNACION | OPERADORES_COMPARACION | OPERADORES_FACTOR | OPERADORES_TERMINO | SEPARADORES )
-      # at line 57:39: ( DIGITO | LETRA_MIN | LETRA_MAY | OPERADORES_ASIGNACION | OPERADORES_COMPARACION | OPERADORES_FACTOR | OPERADORES_TERMINO | SEPARADORES )
+      # at line 55:39: ( DIGITO | LETRA_MIN | LETRA_MAY | OPERADORES_ASIGNACION | OPERADORES_COMPARACION | OPERADORES_FACTOR | OPERADORES_TERMINO | SEPARADORES )
+      # at line 55:39: ( DIGITO | LETRA_MIN | LETRA_MAY | OPERADORES_ASIGNACION | OPERADORES_COMPARACION | OPERADORES_FACTOR | OPERADORES_TERMINO | SEPARADORES )
       alt_10 = 8
       alt_10 = @dfa10.predict( @input )
       case alt_10
       when 1
-        # at line 57:41: DIGITO
+        # at line 55:41: DIGITO
         digito!
 
       when 2
-        # at line 57:50: LETRA_MIN
+        # at line 55:50: LETRA_MIN
         letra_min!
 
       when 3
-        # at line 57:62: LETRA_MAY
+        # at line 55:62: LETRA_MAY
         letra_may!
 
       when 4
-        # at line 57:74: OPERADORES_ASIGNACION
+        # at line 55:74: OPERADORES_ASIGNACION
         operadores_asignacion!
 
       when 5
-        # at line 57:97: OPERADORES_COMPARACION
+        # at line 55:97: OPERADORES_COMPARACION
         operadores_comparacion!
 
       when 6
-        # at line 57:122: OPERADORES_FACTOR
+        # at line 55:122: OPERADORES_FACTOR
         operadores_factor!
 
       when 7
-        # at line 57:142: OPERADORES_TERMINO
+        # at line 55:142: OPERADORES_TERMINO
         operadores_termino!
 
       when 8
-        # at line 57:163: SEPARADORES
+        # at line 55:163: SEPARADORES
         separadores!
 
       end
 
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 18 )
+      # trace_out( __method__, 17 )
 
     end
 
@@ -846,8 +818,8 @@ module Pohua
     # but instead use the next_token method, which will
     # build and emit the actual next token
     def token!
-      # at line 1:8: ( ID | VARIABLE | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CLASES_OB | COMENTARIOS | WHITESPACE | SEPARADORES | OPERADORES_FACTOR | OPERADORES_TERMINO | OPERADORES_COMPARACION | OPERADORES_ASIGNACION )
-      alt_11 = 13
+      # at line 1:8: ( ID | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CLASES_OB | COMENTARIOS | WHITESPACE | SEPARADORES | OPERADORES_FACTOR | OPERADORES_TERMINO | OPERADORES_COMPARACION | OPERADORES_ASIGNACION )
+      alt_11 = 12
       alt_11 = @dfa11.predict( @input )
       case alt_11
       when 1
@@ -855,51 +827,47 @@ module Pohua
         id!
 
       when 2
-        # at line 1:13: VARIABLE
-        variable!
-
-      when 3
-        # at line 1:22: CTE_ENTERA
+        # at line 1:13: CTE_ENTERA
         cte_entera!
 
-      when 4
-        # at line 1:33: CTE_FLOTANTE
+      when 3
+        # at line 1:24: CTE_FLOTANTE
         cte_flotante!
 
-      when 5
-        # at line 1:46: CTE_STRING
+      when 4
+        # at line 1:37: CTE_STRING
         cte_string!
 
-      when 6
-        # at line 1:57: CLASES_OB
+      when 5
+        # at line 1:48: CLASES_OB
         clases_ob!
 
-      when 7
-        # at line 1:67: COMENTARIOS
+      when 6
+        # at line 1:58: COMENTARIOS
         comentarios!
 
-      when 8
-        # at line 1:79: WHITESPACE
+      when 7
+        # at line 1:70: WHITESPACE
         whitespace!
 
-      when 9
-        # at line 1:90: SEPARADORES
+      when 8
+        # at line 1:81: SEPARADORES
         separadores!
 
-      when 10
-        # at line 1:102: OPERADORES_FACTOR
+      when 9
+        # at line 1:93: OPERADORES_FACTOR
         operadores_factor!
 
-      when 11
-        # at line 1:120: OPERADORES_TERMINO
+      when 10
+        # at line 1:111: OPERADORES_TERMINO
         operadores_termino!
 
-      when 12
-        # at line 1:139: OPERADORES_COMPARACION
+      when 11
+        # at line 1:130: OPERADORES_COMPARACION
         operadores_comparacion!
 
-      when 13
-        # at line 1:162: OPERADORES_ASIGNACION
+      when 12
+        # at line 1:153: OPERADORES_ASIGNACION
         operadores_asignacion!
 
       end
@@ -942,35 +910,33 @@ module Pohua
 
       def description
         <<-'__dfa_description__'.strip!
-          57:39: ( DIGITO | LETRA_MIN | LETRA_MAY | OPERADORES_ASIGNACION | OPERADORES_COMPARACION | OPERADORES_FACTOR | OPERADORES_TERMINO | SEPARADORES )
+          55:39: ( DIGITO | LETRA_MIN | LETRA_MAY | OPERADORES_ASIGNACION | OPERADORES_COMPARACION | OPERADORES_FACTOR | OPERADORES_TERMINO | SEPARADORES )
         __dfa_description__
       end
     end
     class DFA11 < ANTLR3::DFA
-      EOT = unpack( 3, -1, 1, 13, 7, -1, 1, 16, 5, -1 )
-      EOF = unpack( 17, -1 )
-      MIN = unpack( 1, 9, 2, -1, 1, 46, 7, -1, 1, 61, 5, -1 )
-      MAX = unpack( 1, 124, 2, -1, 1, 57, 7, -1, 1, 61, 5, -1 )
-      ACCEPT = unpack( 1, -1, 1, 1, 1, 2, 1, -1, 1, 5, 1, 6, 1, 7, 1, 8, 
-                       1, 9, 1, 10, 1, 11, 1, -1, 1, 12, 1, 3, 1, 4, 1, 
-                       8, 1, 13 )
-      SPECIAL = unpack( 17, -1 )
+      EOT = unpack( 2, -1, 1, 12, 7, -1, 1, 15, 5, -1 )
+      EOF = unpack( 16, -1 )
+      MIN = unpack( 1, 9, 1, -1, 1, 46, 7, -1, 1, 61, 5, -1 )
+      MAX = unpack( 1, 124, 1, -1, 1, 57, 7, -1, 1, 61, 5, -1 )
+      ACCEPT = unpack( 1, -1, 1, 1, 1, -1, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 
+                       1, 9, 1, 10, 1, -1, 1, 11, 1, 2, 1, 3, 1, 7, 1, 12 )
+      SPECIAL = unpack( 16, -1 )
       TRANSITION = [
-        unpack( 2, 7, 2, -1, 1, 7, 18, -1, 1, 7, 1, 12, 1, 4, 1, 6, 2, -1, 
-                1, 12, 1, -1, 2, 8, 1, 9, 1, 10, 1, 8, 1, 10, 1, -1, 1, 
-                9, 10, 3, 2, 8, 1, 12, 1, 11, 1, 12, 1, -1, 1, 2, 26, 5, 
-                6, -1, 26, 1, 1, -1, 1, 12 ),
+        unpack( 2, 6, 2, -1, 1, 6, 18, -1, 1, 6, 1, 11, 1, 3, 1, 5, 2, -1, 
+                1, 11, 1, -1, 2, 7, 1, 8, 1, 9, 1, 7, 1, 9, 1, -1, 1, 8, 
+                10, 2, 2, 7, 1, 11, 1, 10, 1, 11, 2, -1, 26, 4, 6, -1, 26, 
+                1, 1, -1, 1, 11 ),
         unpack(  ),
-        unpack(  ),
-        unpack( 1, 14, 1, -1, 10, 3 ),
-        unpack(  ),
-        unpack(  ),
+        unpack( 1, 13, 1, -1, 10, 2 ),
         unpack(  ),
         unpack(  ),
         unpack(  ),
         unpack(  ),
         unpack(  ),
-        unpack( 1, 12 ),
+        unpack(  ),
+        unpack(  ),
+        unpack( 1, 11 ),
         unpack(  ),
         unpack(  ),
         unpack(  ),
@@ -989,7 +955,7 @@ module Pohua
 
       def description
         <<-'__dfa_description__'.strip!
-          1:1: Tokens : ( ID | VARIABLE | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CLASES_OB | COMENTARIOS | WHITESPACE | SEPARADORES | OPERADORES_FACTOR | OPERADORES_TERMINO | OPERADORES_COMPARACION | OPERADORES_ASIGNACION );
+          1:1: Tokens : ( ID | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CLASES_OB | COMENTARIOS | WHITESPACE | SEPARADORES | OPERADORES_FACTOR | OPERADORES_TERMINO | OPERADORES_COMPARACION | OPERADORES_ASIGNACION );
         __dfa_description__
       end
     end
