@@ -1,0 +1,25 @@
+clase Abi:
+  
+fin
+
+
+
+clase Principal:
+
+  metodo vacuo principal:
+
+     flot exponente;
+     exponente = 10.1e+10;
+
+     imprime(exponente);
+
+
+  fin
+
+  metodo vacuo calcula(ent numero, flot dos):
+    ent numero;
+    numero = 1 + 2;
+  fin
+     
+fin
+
