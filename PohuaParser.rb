@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.2.1-SNAPSHOT Jul 31, 2010 19:34:52
 # Ruby runtime library version: 1.8.11
 # Input grammar file: Pohua.g
-# Generated at: 2012-09-28 21:41:06
+# Generated at: 2012-09-29 14:53:45
 # 
 
 # ~~~> start load path setup
@@ -70,16 +70,16 @@ module Pohua
                    :T__27 => 27, :T__26 => 26, :DIGITO => 17, :T__25 => 25, 
                    :CTE_ENTERA => 10, :OCTAL_ESC => 24, :COMENTARIOS => 20, 
                    :CTE_FLOTANTE => 11, :ID => 5, :EOF => -1, :ESC_SEQ => 19, 
-                   :T__51 => 51, :T__52 => 52, :T__53 => 53, :OPERADOR_LOGICO => 6, 
-                   :OPERADOR_FACTOR => 9, :T__50 => 50, :T__42 => 42, :T__43 => 43, 
-                   :T__40 => 40, :T__41 => 41, :T__46 => 46, :T__47 => 47, 
-                   :T__44 => 44, :T__45 => 45, :T__48 => 48, :T__49 => 49, 
-                   :OPERADOR_COMPARACION => 7, :UNICODE_ESC => 23, :LETRA_MIN => 15, 
-                   :EXPONENTE => 18, :HEX_DIGIT => 22, :WHITESPACE => 21, 
-                   :T__30 => 30, :T__31 => 31, :CTE_STRING => 12, :T__32 => 32, 
-                   :T__33 => 33, :T__34 => 34, :T__35 => 35, :T__36 => 36, 
-                   :T__37 => 37, :T__38 => 38, :OPERADOR_TERMINO => 8, :T__39 => 39, 
-                   :CTE_BOLEANA => 13, :LETRA_MAY => 16 )
+                   :T__51 => 51, :T__52 => 52, :OPERADOR_LOGICO => 6, :OPERADOR_FACTOR => 9, 
+                   :T__50 => 50, :T__42 => 42, :T__43 => 43, :T__40 => 40, 
+                   :T__41 => 41, :T__46 => 46, :T__47 => 47, :T__44 => 44, 
+                   :T__45 => 45, :T__48 => 48, :T__49 => 49, :OPERADOR_COMPARACION => 7, 
+                   :UNICODE_ESC => 23, :LETRA_MIN => 15, :EXPONENTE => 18, 
+                   :HEX_DIGIT => 22, :WHITESPACE => 21, :T__30 => 30, :T__31 => 31, 
+                   :CTE_STRING => 12, :T__32 => 32, :T__33 => 33, :T__34 => 34, 
+                   :T__35 => 35, :T__36 => 36, :T__37 => 37, :T__38 => 38, 
+                   :OPERADOR_TERMINO => 8, :T__39 => 39, :CTE_BOLEANA => 13, 
+                   :LETRA_MAY => 16 )
 
     # register the proper human-readable name or literal value
     # for each token type
@@ -95,9 +95,9 @@ module Pohua
                     "OCTAL_ESC", "'clase'", "'extiende'", "':'", "'fin'", 
                     "'Principal'", "'metodo'", "'vacuo'", "'principal'", 
                     "';'", "'regresa'", "'ent'", "'flot'", "'string'", "'bol'", 
-                    "'char'", "'('", "','", "')'", "'.'", "'='", "'si?'", 
-                    "'sino'", "'imprime'", "'+'", "'lee'", "'mientras'", 
-                    "'para'", "'este'", "'nuevo'" )
+                    "'char'", "'('", "','", "')'", "'este'", "'.'", "'='", 
+                    "'si?'", "'sino'", "'imprime'", "'lee'", "'mientras'", 
+                    "'para'", "'nuevo'" )
     
   end
 
@@ -342,7 +342,7 @@ module Pohua
           alt_6 = 2
           look_6_0 = @input.peek( 1 )
 
-          if ( look_6_0.between?( CLASE_OB, ID ) || look_6_0.between?( T__35, T__39 ) || look_6_0 == T__45 || look_6_0 == T__47 || look_6_0.between?( T__50, T__51 ) )
+          if ( look_6_0.between?( CLASE_OB, ID ) || look_6_0.between?( T__35, T__39 ) || look_6_0 == T__43 || look_6_0 == T__46 || look_6_0 == T__48 || look_6_0.between?( T__50, T__51 ) )
             alt_6 = 1
 
           end
@@ -390,7 +390,7 @@ module Pohua
 
         if ( look_7_0 == CLASE_OB || look_7_0.between?( T__35, T__39 ) )
           alt_7 = 1
-        elsif ( look_7_0 == ID || look_7_0 == T__45 || look_7_0 == T__47 || look_7_0.between?( T__50, T__51 ) )
+        elsif ( look_7_0 == ID || look_7_0 == T__43 || look_7_0 == T__46 || look_7_0 == T__48 || look_7_0.between?( T__50, T__51 ) )
           alt_7 = 2
         else
           raise NoViableAlternative( "", 7, 0 )
@@ -545,7 +545,7 @@ module Pohua
           alt_10 = 2
           look_10_0 = @input.peek( 1 )
 
-          if ( look_10_0.between?( CLASE_OB, ID ) || look_10_0.between?( T__35, T__39 ) || look_10_0 == T__45 || look_10_0 == T__47 || look_10_0.between?( T__50, T__51 ) )
+          if ( look_10_0.between?( CLASE_OB, ID ) || look_10_0.between?( T__35, T__39 ) || look_10_0 == T__43 || look_10_0 == T__46 || look_10_0 == T__48 || look_10_0.between?( T__50, T__51 ) )
             alt_10 = 1
 
           end
@@ -615,7 +615,7 @@ module Pohua
           alt_12 = 2
           look_12_0 = @input.peek( 1 )
 
-          if ( look_12_0.between?( CLASE_OB, ID ) || look_12_0.between?( T__35, T__39 ) || look_12_0 == T__45 || look_12_0 == T__47 || look_12_0.between?( T__50, T__51 ) )
+          if ( look_12_0.between?( CLASE_OB, ID ) || look_12_0.between?( T__35, T__39 ) || look_12_0 == T__43 || look_12_0 == T__46 || look_12_0 == T__48 || look_12_0.between?( T__50, T__51 ) )
             alt_12 = 1
 
           end
@@ -741,20 +741,43 @@ module Pohua
     # parser rule estatuto
     # 
     # (in Pohua.g)
-    # 47:1: estatuto : ( asignacion | condicion | escritura | ciclo );
+    # 47:1: estatuto : ( asignacion | condicion | escritura | ciclo | ID invocacion );
     # 
     def estatuto
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 12 )
 
       begin
-        # at line 48:2: ( asignacion | condicion | escritura | ciclo )
-        alt_14 = 4
+        # at line 48:2: ( asignacion | condicion | escritura | ciclo | ID invocacion )
+        alt_14 = 5
         case look_14 = @input.peek( 1 )
-        when ID then alt_14 = 1
-        when T__45 then alt_14 = 2
-        when T__47 then alt_14 = 3
+        when ID then look_14_1 = @input.peek( 2 )
+
+        if ( look_14_1 == T__44 )
+          look_14_6 = @input.peek( 3 )
+
+          if ( look_14_6 == ID )
+            look_14_7 = @input.peek( 4 )
+
+            if ( look_14_7 == T__40 )
+              alt_14 = 5
+            elsif ( look_14_7 == T__45 )
+              alt_14 = 1
+            else
+              raise NoViableAlternative( "", 14, 7 )
+            end
+          else
+            raise NoViableAlternative( "", 14, 6 )
+          end
+        elsif ( look_14_1 == T__45 )
+          alt_14 = 1
+        else
+          raise NoViableAlternative( "", 14, 1 )
+        end
+        when T__46 then alt_14 = 2
+        when T__48 then alt_14 = 3
         when T__50, T__51 then alt_14 = 4
+        when T__43 then alt_14 = 1
         else
           raise NoViableAlternative( "", 14, 0 )
         end
@@ -783,6 +806,13 @@ module Pohua
           ciclo
           @state.following.pop
 
+        when 5
+          # at line 52:4: ID invocacion
+          match( ID, TOKENS_FOLLOWING_ID_IN_estatuto_284 )
+          @state.following.push( TOKENS_FOLLOWING_invocacion_IN_estatuto_286 )
+          invocacion
+          @state.following.pop
+
         end
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -802,35 +832,43 @@ module Pohua
     # parser rule asignacion
     # 
     # (in Pohua.g)
-    # 54:1: asignacion : ID ( '.' ID )? '=' ( expresion | lectura ) ';' ;
+    # 55:1: asignacion : ( 'este' | ID ) ( '.' ID )? '=' ( expresion | lectura ) ';' ;
     # 
     def asignacion
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 13 )
 
       begin
-        # at line 55:4: ID ( '.' ID )? '=' ( expresion | lectura ) ';'
-        match( ID, TOKENS_FOLLOWING_ID_IN_asignacion_291 )
-        # at line 55:7: ( '.' ID )?
+        # at line 56:5: ( 'este' | ID ) ( '.' ID )? '=' ( expresion | lectura ) ';'
+        if @input.peek(1) == ID || @input.peek(1) == T__43
+          @input.consume
+          @state.error_recovery = false
+        else
+          mse = MismatchedSet( nil )
+          raise mse
+        end
+
+
+        # at line 56:19: ( '.' ID )?
         alt_15 = 2
         look_15_0 = @input.peek( 1 )
 
-        if ( look_15_0 == T__43 )
+        if ( look_15_0 == T__44 )
           alt_15 = 1
         end
         case alt_15
         when 1
-          # at line 55:8: '.' ID
-          match( T__43, TOKENS_FOLLOWING_T__43_IN_asignacion_294 )
-          match( ID, TOKENS_FOLLOWING_ID_IN_asignacion_296 )
+          # at line 56:21: '.' ID
+          match( T__44, TOKENS_FOLLOWING_T__44_IN_asignacion_309 )
+          match( ID, TOKENS_FOLLOWING_ID_IN_asignacion_311 )
 
         end
-        match( T__44, TOKENS_FOLLOWING_T__44_IN_asignacion_300 )
-        # at line 55:21: ( expresion | lectura )
+        match( T__45, TOKENS_FOLLOWING_T__45_IN_asignacion_315 )
+        # at line 56:35: ( expresion | lectura )
         alt_16 = 2
         look_16_0 = @input.peek( 1 )
 
-        if ( look_16_0 == ID || look_16_0 == OPERADOR_TERMINO || look_16_0.between?( CTE_ENTERA, CTE_CHAR ) || look_16_0 == T__40 || look_16_0.between?( T__52, T__53 ) )
+        if ( look_16_0 == ID || look_16_0 == OPERADOR_TERMINO || look_16_0.between?( CTE_ENTERA, CTE_CHAR ) || look_16_0 == T__40 || look_16_0 == T__43 || look_16_0 == T__52 )
           alt_16 = 1
         elsif ( look_16_0 == T__49 )
           alt_16 = 2
@@ -839,19 +877,19 @@ module Pohua
         end
         case alt_16
         when 1
-          # at line 55:23: expresion
-          @state.following.push( TOKENS_FOLLOWING_expresion_IN_asignacion_304 )
+          # at line 56:37: expresion
+          @state.following.push( TOKENS_FOLLOWING_expresion_IN_asignacion_320 )
           expresion
           @state.following.pop
 
         when 2
-          # at line 55:35: lectura
-          @state.following.push( TOKENS_FOLLOWING_lectura_IN_asignacion_308 )
+          # at line 56:49: lectura
+          @state.following.push( TOKENS_FOLLOWING_lectura_IN_asignacion_324 )
           lectura
           @state.following.pop
 
         end
-        match( T__33, TOKENS_FOLLOWING_T__33_IN_asignacion_312 )
+        match( T__33, TOKENS_FOLLOWING_T__33_IN_asignacion_328 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -879,26 +917,26 @@ module Pohua
 
       begin
         # at line 59:4: 'si?' '(' expresion ')' ':' ( estatuto )* ( 'sino' estatuto )? 'fin'
-        match( T__45, TOKENS_FOLLOWING_T__45_IN_condicion_324 )
-        match( T__40, TOKENS_FOLLOWING_T__40_IN_condicion_326 )
-        @state.following.push( TOKENS_FOLLOWING_expresion_IN_condicion_328 )
+        match( T__46, TOKENS_FOLLOWING_T__46_IN_condicion_338 )
+        match( T__40, TOKENS_FOLLOWING_T__40_IN_condicion_340 )
+        @state.following.push( TOKENS_FOLLOWING_expresion_IN_condicion_342 )
         expresion
         @state.following.pop
-        match( T__42, TOKENS_FOLLOWING_T__42_IN_condicion_330 )
-        match( T__27, TOKENS_FOLLOWING_T__27_IN_condicion_332 )
+        match( T__42, TOKENS_FOLLOWING_T__42_IN_condicion_344 )
+        match( T__27, TOKENS_FOLLOWING_T__27_IN_condicion_346 )
         # at line 59:32: ( estatuto )*
         while true # decision 17
           alt_17 = 2
           look_17_0 = @input.peek( 1 )
 
-          if ( look_17_0 == ID || look_17_0 == T__45 || look_17_0 == T__47 || look_17_0.between?( T__50, T__51 ) )
+          if ( look_17_0 == ID || look_17_0 == T__43 || look_17_0 == T__46 || look_17_0 == T__48 || look_17_0.between?( T__50, T__51 ) )
             alt_17 = 1
 
           end
           case alt_17
           when 1
             # at line 59:32: estatuto
-            @state.following.push( TOKENS_FOLLOWING_estatuto_IN_condicion_334 )
+            @state.following.push( TOKENS_FOLLOWING_estatuto_IN_condicion_348 )
             estatuto
             @state.following.pop
 
@@ -910,19 +948,19 @@ module Pohua
         alt_18 = 2
         look_18_0 = @input.peek( 1 )
 
-        if ( look_18_0 == T__46 )
+        if ( look_18_0 == T__47 )
           alt_18 = 1
         end
         case alt_18
         when 1
           # at line 59:44: 'sino' estatuto
-          match( T__46, TOKENS_FOLLOWING_T__46_IN_condicion_339 )
-          @state.following.push( TOKENS_FOLLOWING_estatuto_IN_condicion_341 )
+          match( T__47, TOKENS_FOLLOWING_T__47_IN_condicion_353 )
+          @state.following.push( TOKENS_FOLLOWING_estatuto_IN_condicion_355 )
           estatuto
           @state.following.pop
 
         end
-        match( T__28, TOKENS_FOLLOWING_T__28_IN_condicion_346 )
+        match( T__28, TOKENS_FOLLOWING_T__28_IN_condicion_360 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -942,33 +980,33 @@ module Pohua
     # parser rule escritura
     # 
     # (in Pohua.g)
-    # 62:1: escritura : 'imprime' '(' expresion ( '+' expresion )* ')' ';' ;
+    # 62:1: escritura : 'imprime' '(' expresion ( ',' expresion )* ')' ';' ;
     # 
     def escritura
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 15 )
 
       begin
-        # at line 63:4: 'imprime' '(' expresion ( '+' expresion )* ')' ';'
-        match( T__47, TOKENS_FOLLOWING_T__47_IN_escritura_358 )
-        match( T__40, TOKENS_FOLLOWING_T__40_IN_escritura_360 )
-        @state.following.push( TOKENS_FOLLOWING_expresion_IN_escritura_362 )
+        # at line 63:4: 'imprime' '(' expresion ( ',' expresion )* ')' ';'
+        match( T__48, TOKENS_FOLLOWING_T__48_IN_escritura_372 )
+        match( T__40, TOKENS_FOLLOWING_T__40_IN_escritura_374 )
+        @state.following.push( TOKENS_FOLLOWING_expresion_IN_escritura_376 )
         expresion
         @state.following.pop
-        # at line 63:28: ( '+' expresion )*
+        # at line 63:28: ( ',' expresion )*
         while true # decision 19
           alt_19 = 2
           look_19_0 = @input.peek( 1 )
 
-          if ( look_19_0 == T__48 )
+          if ( look_19_0 == T__41 )
             alt_19 = 1
 
           end
           case alt_19
           when 1
-            # at line 63:30: '+' expresion
-            match( T__48, TOKENS_FOLLOWING_T__48_IN_escritura_366 )
-            @state.following.push( TOKENS_FOLLOWING_expresion_IN_escritura_368 )
+            # at line 63:30: ',' expresion
+            match( T__41, TOKENS_FOLLOWING_T__41_IN_escritura_380 )
+            @state.following.push( TOKENS_FOLLOWING_expresion_IN_escritura_382 )
             expresion
             @state.following.pop
 
@@ -976,8 +1014,8 @@ module Pohua
             break # out of loop for decision 19
           end
         end # loop for decision 19
-        match( T__42, TOKENS_FOLLOWING_T__42_IN_escritura_373 )
-        match( T__33, TOKENS_FOLLOWING_T__33_IN_escritura_375 )
+        match( T__42, TOKENS_FOLLOWING_T__42_IN_escritura_387 )
+        match( T__33, TOKENS_FOLLOWING_T__33_IN_escritura_389 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -997,18 +1035,17 @@ module Pohua
     # parser rule lectura
     # 
     # (in Pohua.g)
-    # 66:1: lectura : 'lee' '(' ')' ';' ;
+    # 66:1: lectura : 'lee' '(' ')' ;
     # 
     def lectura
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 16 )
 
       begin
-        # at line 66:11: 'lee' '(' ')' ';'
-        match( T__49, TOKENS_FOLLOWING_T__49_IN_lectura_386 )
-        match( T__40, TOKENS_FOLLOWING_T__40_IN_lectura_388 )
-        match( T__42, TOKENS_FOLLOWING_T__42_IN_lectura_390 )
-        match( T__33, TOKENS_FOLLOWING_T__33_IN_lectura_392 )
+        # at line 66:11: 'lee' '(' ')'
+        match( T__49, TOKENS_FOLLOWING_T__49_IN_lectura_400 )
+        match( T__40, TOKENS_FOLLOWING_T__40_IN_lectura_402 )
+        match( T__42, TOKENS_FOLLOWING_T__42_IN_lectura_404 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -1049,13 +1086,13 @@ module Pohua
         case alt_20
         when 1
           # at line 69:9: mientras
-          @state.following.push( TOKENS_FOLLOWING_mientras_IN_ciclo_402 )
+          @state.following.push( TOKENS_FOLLOWING_mientras_IN_ciclo_415 )
           mientras
           @state.following.pop
 
         when 2
           # at line 70:4: para
-          @state.following.push( TOKENS_FOLLOWING_para_IN_ciclo_407 )
+          @state.following.push( TOKENS_FOLLOWING_para_IN_ciclo_420 )
           para
           @state.following.pop
 
@@ -1086,17 +1123,17 @@ module Pohua
 
       begin
         # at line 74:4: 'mientras' '(' expresion ')' ':' estatuto 'fin'
-        match( T__50, TOKENS_FOLLOWING_T__50_IN_mientras_419 )
-        match( T__40, TOKENS_FOLLOWING_T__40_IN_mientras_421 )
-        @state.following.push( TOKENS_FOLLOWING_expresion_IN_mientras_423 )
+        match( T__50, TOKENS_FOLLOWING_T__50_IN_mientras_432 )
+        match( T__40, TOKENS_FOLLOWING_T__40_IN_mientras_434 )
+        @state.following.push( TOKENS_FOLLOWING_expresion_IN_mientras_436 )
         expresion
         @state.following.pop
-        match( T__42, TOKENS_FOLLOWING_T__42_IN_mientras_425 )
-        match( T__27, TOKENS_FOLLOWING_T__27_IN_mientras_427 )
-        @state.following.push( TOKENS_FOLLOWING_estatuto_IN_mientras_429 )
+        match( T__42, TOKENS_FOLLOWING_T__42_IN_mientras_438 )
+        match( T__27, TOKENS_FOLLOWING_T__27_IN_mientras_440 )
+        @state.following.push( TOKENS_FOLLOWING_estatuto_IN_mientras_442 )
         estatuto
         @state.following.pop
-        match( T__28, TOKENS_FOLLOWING_T__28_IN_mientras_431 )
+        match( T__28, TOKENS_FOLLOWING_T__28_IN_mientras_444 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -1124,25 +1161,25 @@ module Pohua
 
       begin
         # at line 76:9: 'para' '(' asignacion ';' expresion ';' expresion ';' ')' estatuto 'fin'
-        match( T__51, TOKENS_FOLLOWING_T__51_IN_para_441 )
-        match( T__40, TOKENS_FOLLOWING_T__40_IN_para_443 )
-        @state.following.push( TOKENS_FOLLOWING_asignacion_IN_para_445 )
+        match( T__51, TOKENS_FOLLOWING_T__51_IN_para_454 )
+        match( T__40, TOKENS_FOLLOWING_T__40_IN_para_456 )
+        @state.following.push( TOKENS_FOLLOWING_asignacion_IN_para_458 )
         asignacion
         @state.following.pop
-        match( T__33, TOKENS_FOLLOWING_T__33_IN_para_447 )
-        @state.following.push( TOKENS_FOLLOWING_expresion_IN_para_449 )
+        match( T__33, TOKENS_FOLLOWING_T__33_IN_para_460 )
+        @state.following.push( TOKENS_FOLLOWING_expresion_IN_para_462 )
         expresion
         @state.following.pop
-        match( T__33, TOKENS_FOLLOWING_T__33_IN_para_451 )
-        @state.following.push( TOKENS_FOLLOWING_expresion_IN_para_453 )
+        match( T__33, TOKENS_FOLLOWING_T__33_IN_para_464 )
+        @state.following.push( TOKENS_FOLLOWING_expresion_IN_para_466 )
         expresion
         @state.following.pop
-        match( T__33, TOKENS_FOLLOWING_T__33_IN_para_455 )
-        match( T__42, TOKENS_FOLLOWING_T__42_IN_para_457 )
-        @state.following.push( TOKENS_FOLLOWING_estatuto_IN_para_459 )
+        match( T__33, TOKENS_FOLLOWING_T__33_IN_para_468 )
+        match( T__42, TOKENS_FOLLOWING_T__42_IN_para_470 )
+        @state.following.push( TOKENS_FOLLOWING_estatuto_IN_para_472 )
         estatuto
         @state.following.pop
-        match( T__28, TOKENS_FOLLOWING_T__28_IN_para_461 )
+        match( T__28, TOKENS_FOLLOWING_T__28_IN_para_474 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -1162,18 +1199,18 @@ module Pohua
     # parser rule expresion
     # 
     # (in Pohua.g)
-    # 78:1: expresion : e ( OPERADOR_LOGICO e )? ;
+    # 77:1: expresion : e ( OPERADOR_LOGICO e )? ;
     # 
     def expresion
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 20 )
 
       begin
-        # at line 79:4: e ( OPERADOR_LOGICO e )?
-        @state.following.push( TOKENS_FOLLOWING_e_IN_expresion_471 )
+        # at line 78:4: e ( OPERADOR_LOGICO e )?
+        @state.following.push( TOKENS_FOLLOWING_e_IN_expresion_483 )
         e
         @state.following.pop
-        # at line 79:6: ( OPERADOR_LOGICO e )?
+        # at line 78:6: ( OPERADOR_LOGICO e )?
         alt_21 = 2
         look_21_0 = @input.peek( 1 )
 
@@ -1182,9 +1219,9 @@ module Pohua
         end
         case alt_21
         when 1
-          # at line 79:8: OPERADOR_LOGICO e
-          match( OPERADOR_LOGICO, TOKENS_FOLLOWING_OPERADOR_LOGICO_IN_expresion_475 )
-          @state.following.push( TOKENS_FOLLOWING_e_IN_expresion_477 )
+          # at line 78:8: OPERADOR_LOGICO e
+          match( OPERADOR_LOGICO, TOKENS_FOLLOWING_OPERADOR_LOGICO_IN_expresion_487 )
+          @state.following.push( TOKENS_FOLLOWING_e_IN_expresion_489 )
           e
           @state.following.pop
 
@@ -1208,18 +1245,18 @@ module Pohua
     # parser rule e
     # 
     # (in Pohua.g)
-    # 82:1: e : exp ( OPERADOR_COMPARACION exp )? ;
+    # 81:1: e : exp ( OPERADOR_COMPARACION exp )? ;
     # 
     def e
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 21 )
 
       begin
-        # at line 82:5: exp ( OPERADOR_COMPARACION exp )?
-        @state.following.push( TOKENS_FOLLOWING_exp_IN_e_491 )
+        # at line 81:5: exp ( OPERADOR_COMPARACION exp )?
+        @state.following.push( TOKENS_FOLLOWING_exp_IN_e_502 )
         exp
         @state.following.pop
-        # at line 82:9: ( OPERADOR_COMPARACION exp )?
+        # at line 81:9: ( OPERADOR_COMPARACION exp )?
         alt_22 = 2
         look_22_0 = @input.peek( 1 )
 
@@ -1228,9 +1265,9 @@ module Pohua
         end
         case alt_22
         when 1
-          # at line 82:11: OPERADOR_COMPARACION exp
-          match( OPERADOR_COMPARACION, TOKENS_FOLLOWING_OPERADOR_COMPARACION_IN_e_495 )
-          @state.following.push( TOKENS_FOLLOWING_exp_IN_e_497 )
+          # at line 81:11: OPERADOR_COMPARACION exp
+          match( OPERADOR_COMPARACION, TOKENS_FOLLOWING_OPERADOR_COMPARACION_IN_e_506 )
+          @state.following.push( TOKENS_FOLLOWING_exp_IN_e_508 )
           exp
           @state.following.pop
 
@@ -1254,18 +1291,18 @@ module Pohua
     # parser rule exp
     # 
     # (in Pohua.g)
-    # 85:1: exp : termino ( OPERADOR_TERMINO exp )* ;
+    # 84:1: exp : termino ( OPERADOR_TERMINO exp )* ;
     # 
     def exp
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 22 )
 
       begin
-        # at line 85:7: termino ( OPERADOR_TERMINO exp )*
-        @state.following.push( TOKENS_FOLLOWING_termino_IN_exp_512 )
+        # at line 84:7: termino ( OPERADOR_TERMINO exp )*
+        @state.following.push( TOKENS_FOLLOWING_termino_IN_exp_522 )
         termino
         @state.following.pop
-        # at line 85:15: ( OPERADOR_TERMINO exp )*
+        # at line 84:15: ( OPERADOR_TERMINO exp )*
         while true # decision 23
           alt_23 = 2
           look_23_0 = @input.peek( 1 )
@@ -1276,9 +1313,9 @@ module Pohua
           end
           case alt_23
           when 1
-            # at line 85:17: OPERADOR_TERMINO exp
-            match( OPERADOR_TERMINO, TOKENS_FOLLOWING_OPERADOR_TERMINO_IN_exp_516 )
-            @state.following.push( TOKENS_FOLLOWING_exp_IN_exp_518 )
+            # at line 84:17: OPERADOR_TERMINO exp
+            match( OPERADOR_TERMINO, TOKENS_FOLLOWING_OPERADOR_TERMINO_IN_exp_526 )
+            @state.following.push( TOKENS_FOLLOWING_exp_IN_exp_528 )
             exp
             @state.following.pop
 
@@ -1305,18 +1342,18 @@ module Pohua
     # parser rule termino
     # 
     # (in Pohua.g)
-    # 87:1: termino : factor ( OPERADOR_FACTOR termino )* ;
+    # 86:1: termino : factor ( OPERADOR_FACTOR termino )* ;
     # 
     def termino
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 23 )
 
       begin
-        # at line 87:11: factor ( OPERADOR_FACTOR termino )*
-        @state.following.push( TOKENS_FOLLOWING_factor_IN_termino_530 )
+        # at line 86:11: factor ( OPERADOR_FACTOR termino )*
+        @state.following.push( TOKENS_FOLLOWING_factor_IN_termino_540 )
         factor
         @state.following.pop
-        # at line 87:18: ( OPERADOR_FACTOR termino )*
+        # at line 86:18: ( OPERADOR_FACTOR termino )*
         while true # decision 24
           alt_24 = 2
           look_24_0 = @input.peek( 1 )
@@ -1327,9 +1364,9 @@ module Pohua
           end
           case alt_24
           when 1
-            # at line 87:20: OPERADOR_FACTOR termino
-            match( OPERADOR_FACTOR, TOKENS_FOLLOWING_OPERADOR_FACTOR_IN_termino_534 )
-            @state.following.push( TOKENS_FOLLOWING_termino_IN_termino_536 )
+            # at line 86:20: OPERADOR_FACTOR termino
+            match( OPERADOR_FACTOR, TOKENS_FOLLOWING_OPERADOR_FACTOR_IN_termino_544 )
+            @state.following.push( TOKENS_FOLLOWING_termino_IN_termino_546 )
             termino
             @state.following.pop
 
@@ -1356,36 +1393,36 @@ module Pohua
     # parser rule factor
     # 
     # (in Pohua.g)
-    # 89:1: factor : ( '(' expresion ')' | ( OPERADOR_TERMINO )? var_cte );
+    # 88:1: factor : ( '(' expresion ')' | ( OPERADOR_TERMINO )? var_cte );
     # 
     def factor
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 24 )
 
       begin
-        # at line 89:9: ( '(' expresion ')' | ( OPERADOR_TERMINO )? var_cte )
+        # at line 88:9: ( '(' expresion ')' | ( OPERADOR_TERMINO )? var_cte )
         alt_26 = 2
         look_26_0 = @input.peek( 1 )
 
         if ( look_26_0 == T__40 )
           alt_26 = 1
-        elsif ( look_26_0 == ID || look_26_0 == OPERADOR_TERMINO || look_26_0.between?( CTE_ENTERA, CTE_CHAR ) || look_26_0.between?( T__52, T__53 ) )
+        elsif ( look_26_0 == ID || look_26_0 == OPERADOR_TERMINO || look_26_0.between?( CTE_ENTERA, CTE_CHAR ) || look_26_0 == T__43 || look_26_0 == T__52 )
           alt_26 = 2
         else
           raise NoViableAlternative( "", 26, 0 )
         end
         case alt_26
         when 1
-          # at line 89:11: '(' expresion ')'
-          match( T__40, TOKENS_FOLLOWING_T__40_IN_factor_549 )
-          @state.following.push( TOKENS_FOLLOWING_expresion_IN_factor_551 )
+          # at line 88:11: '(' expresion ')'
+          match( T__40, TOKENS_FOLLOWING_T__40_IN_factor_559 )
+          @state.following.push( TOKENS_FOLLOWING_expresion_IN_factor_561 )
           expresion
           @state.following.pop
-          match( T__42, TOKENS_FOLLOWING_T__42_IN_factor_553 )
+          match( T__42, TOKENS_FOLLOWING_T__42_IN_factor_563 )
 
         when 2
-          # at line 90:4: ( OPERADOR_TERMINO )? var_cte
-          # at line 90:4: ( OPERADOR_TERMINO )?
+          # at line 89:4: ( OPERADOR_TERMINO )? var_cte
+          # at line 89:4: ( OPERADOR_TERMINO )?
           alt_25 = 2
           look_25_0 = @input.peek( 1 )
 
@@ -1394,11 +1431,11 @@ module Pohua
           end
           case alt_25
           when 1
-            # at line 90:4: OPERADOR_TERMINO
-            match( OPERADOR_TERMINO, TOKENS_FOLLOWING_OPERADOR_TERMINO_IN_factor_559 )
+            # at line 89:4: OPERADOR_TERMINO
+            match( OPERADOR_TERMINO, TOKENS_FOLLOWING_OPERADOR_TERMINO_IN_factor_569 )
 
           end
-          @state.following.push( TOKENS_FOLLOWING_var_cte_IN_factor_562 )
+          @state.following.push( TOKENS_FOLLOWING_var_cte_IN_factor_572 )
           var_cte
           @state.following.pop
 
@@ -1421,15 +1458,15 @@ module Pohua
     # parser rule var_cte
     # 
     # (in Pohua.g)
-    # 93:1: var_cte : ( ID | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CTE_BOLEANA | CTE_CHAR | 'este' | 'nuevo' CLASE_OB ) ( invocacion )? ;
+    # 92:1: var_cte : ( ID | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CTE_BOLEANA | CTE_CHAR | 'este' | 'nuevo' CLASE_OB ) ( invocacion )? ;
     # 
     def var_cte
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 25 )
 
       begin
-        # at line 93:12: ( ID | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CTE_BOLEANA | CTE_CHAR | 'este' | 'nuevo' CLASE_OB ) ( invocacion )?
-        # at line 93:12: ( ID | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CTE_BOLEANA | CTE_CHAR | 'este' | 'nuevo' CLASE_OB )
+        # at line 92:12: ( ID | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CTE_BOLEANA | CTE_CHAR | 'este' | 'nuevo' CLASE_OB ) ( invocacion )?
+        # at line 92:12: ( ID | CTE_ENTERA | CTE_FLOTANTE | CTE_STRING | CTE_BOLEANA | CTE_CHAR | 'este' | 'nuevo' CLASE_OB )
         alt_27 = 8
         case look_27 = @input.peek( 1 )
         when ID then alt_27 = 1
@@ -1438,65 +1475,57 @@ module Pohua
         when CTE_STRING then alt_27 = 4
         when CTE_BOLEANA then alt_27 = 5
         when CTE_CHAR then alt_27 = 6
-        when T__52 then alt_27 = 7
-        when T__53 then alt_27 = 8
+        when T__43 then alt_27 = 7
+        when T__52 then alt_27 = 8
         else
           raise NoViableAlternative( "", 27, 0 )
         end
         case alt_27
         when 1
-          # at line 93:14: ID
-          match( ID, TOKENS_FOLLOWING_ID_IN_var_cte_576 )
+          # at line 92:14: ID
+          match( ID, TOKENS_FOLLOWING_ID_IN_var_cte_585 )
 
         when 2
-          # at line 94:4: CTE_ENTERA
-          match( CTE_ENTERA, TOKENS_FOLLOWING_CTE_ENTERA_IN_var_cte_581 )
+          # at line 93:4: CTE_ENTERA
+          match( CTE_ENTERA, TOKENS_FOLLOWING_CTE_ENTERA_IN_var_cte_590 )
 
         when 3
-          # at line 95:4: CTE_FLOTANTE
-          match( CTE_FLOTANTE, TOKENS_FOLLOWING_CTE_FLOTANTE_IN_var_cte_586 )
+          # at line 94:4: CTE_FLOTANTE
+          match( CTE_FLOTANTE, TOKENS_FOLLOWING_CTE_FLOTANTE_IN_var_cte_595 )
 
         when 4
-          # at line 96:4: CTE_STRING
-          match( CTE_STRING, TOKENS_FOLLOWING_CTE_STRING_IN_var_cte_591 )
+          # at line 95:4: CTE_STRING
+          match( CTE_STRING, TOKENS_FOLLOWING_CTE_STRING_IN_var_cte_600 )
 
         when 5
-          # at line 97:4: CTE_BOLEANA
-          match( CTE_BOLEANA, TOKENS_FOLLOWING_CTE_BOLEANA_IN_var_cte_596 )
+          # at line 96:4: CTE_BOLEANA
+          match( CTE_BOLEANA, TOKENS_FOLLOWING_CTE_BOLEANA_IN_var_cte_605 )
 
         when 6
-          # at line 98:4: CTE_CHAR
-          match( CTE_CHAR, TOKENS_FOLLOWING_CTE_CHAR_IN_var_cte_601 )
+          # at line 97:4: CTE_CHAR
+          match( CTE_CHAR, TOKENS_FOLLOWING_CTE_CHAR_IN_var_cte_610 )
 
         when 7
-          # at line 99:4: 'este'
-          match( T__52, TOKENS_FOLLOWING_T__52_IN_var_cte_606 )
+          # at line 98:4: 'este'
+          match( T__43, TOKENS_FOLLOWING_T__43_IN_var_cte_615 )
 
         when 8
-          # at line 100:4: 'nuevo' CLASE_OB
-          match( T__53, TOKENS_FOLLOWING_T__53_IN_var_cte_611 )
-          match( CLASE_OB, TOKENS_FOLLOWING_CLASE_OB_IN_var_cte_613 )
+          # at line 99:4: 'nuevo' CLASE_OB
+          match( T__52, TOKENS_FOLLOWING_T__52_IN_var_cte_620 )
+          match( CLASE_OB, TOKENS_FOLLOWING_CLASE_OB_IN_var_cte_622 )
 
         end
-        # at line 100:23: ( invocacion )?
+        # at line 99:23: ( invocacion )?
         alt_28 = 2
         look_28_0 = @input.peek( 1 )
 
-        if ( look_28_0 == T__43 )
-          look_28_1 = @input.peek( 2 )
-
-          if ( look_28_1 == ID )
-            look_28_3 = @input.peek( 3 )
-
-            if ( look_28_3 == T__40 )
-              alt_28 = 1
-            end
-          end
+        if ( look_28_0 == T__44 )
+          alt_28 = 1
         end
         case alt_28
         when 1
-          # at line 100:23: invocacion
-          @state.following.push( TOKENS_FOLLOWING_invocacion_IN_var_cte_617 )
+          # at line 99:23: invocacion
+          @state.following.push( TOKENS_FOLLOWING_invocacion_IN_var_cte_626 )
           invocacion
           @state.following.pop
 
@@ -1520,27 +1549,31 @@ module Pohua
     # parser rule invocacion
     # 
     # (in Pohua.g)
-    # 103:1: invocacion : '.' ID '(' ( expresion ( ',' expresion )* )? ( invocacion )? ;
+    # 102:1: invocacion : '.' ID '(' ( expresion ( ',' expresion )* )? ')' ( invocacion )? ';' ;
     # 
     def invocacion
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 26 )
 
       begin
-        # at line 104:4: '.' ID '(' ( expresion ( ',' expresion )* )? ( invocacion )?
-        match( T__43, TOKENS_FOLLOWING_T__43_IN_invocacion_629 )
-        match( ID, TOKENS_FOLLOWING_ID_IN_invocacion_631 )
-        match( T__40, TOKENS_FOLLOWING_T__40_IN_invocacion_633 )
-        # at line 104:15: ( expresion ( ',' expresion )* )?
+        # at line 103:4: '.' ID '(' ( expresion ( ',' expresion )* )? ')' ( invocacion )? ';'
+        match( T__44, TOKENS_FOLLOWING_T__44_IN_invocacion_638 )
+        match( ID, TOKENS_FOLLOWING_ID_IN_invocacion_640 )
+        match( T__40, TOKENS_FOLLOWING_T__40_IN_invocacion_642 )
+        # at line 103:15: ( expresion ( ',' expresion )* )?
         alt_30 = 2
-        alt_30 = @dfa30.predict( @input )
+        look_30_0 = @input.peek( 1 )
+
+        if ( look_30_0 == ID || look_30_0 == OPERADOR_TERMINO || look_30_0.between?( CTE_ENTERA, CTE_CHAR ) || look_30_0 == T__40 || look_30_0 == T__43 || look_30_0 == T__52 )
+          alt_30 = 1
+        end
         case alt_30
         when 1
-          # at line 104:17: expresion ( ',' expresion )*
-          @state.following.push( TOKENS_FOLLOWING_expresion_IN_invocacion_637 )
+          # at line 103:17: expresion ( ',' expresion )*
+          @state.following.push( TOKENS_FOLLOWING_expresion_IN_invocacion_646 )
           expresion
           @state.following.pop
-          # at line 104:27: ( ',' expresion )*
+          # at line 103:27: ( ',' expresion )*
           while true # decision 29
             alt_29 = 2
             look_29_0 = @input.peek( 1 )
@@ -1551,9 +1584,9 @@ module Pohua
             end
             case alt_29
             when 1
-              # at line 104:29: ',' expresion
-              match( T__41, TOKENS_FOLLOWING_T__41_IN_invocacion_641 )
-              @state.following.push( TOKENS_FOLLOWING_expresion_IN_invocacion_643 )
+              # at line 103:29: ',' expresion
+              match( T__41, TOKENS_FOLLOWING_T__41_IN_invocacion_650 )
+              @state.following.push( TOKENS_FOLLOWING_expresion_IN_invocacion_652 )
               expresion
               @state.following.pop
 
@@ -1563,21 +1596,23 @@ module Pohua
           end # loop for decision 29
 
         end
-        # at line 104:49: ( invocacion )?
+        match( T__42, TOKENS_FOLLOWING_T__42_IN_invocacion_660 )
+        # at line 103:53: ( invocacion )?
         alt_31 = 2
         look_31_0 = @input.peek( 1 )
 
-        if ( look_31_0 == T__43 )
+        if ( look_31_0 == T__44 )
           alt_31 = 1
         end
         case alt_31
         when 1
-          # at line 104:49: invocacion
-          @state.following.push( TOKENS_FOLLOWING_invocacion_IN_invocacion_651 )
+          # at line 103:53: invocacion
+          @state.following.push( TOKENS_FOLLOWING_invocacion_IN_invocacion_662 )
           invocacion
           @state.following.pop
 
         end
+        match( T__33, TOKENS_FOLLOWING_T__33_IN_invocacion_665 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -1594,56 +1629,6 @@ module Pohua
 
 
 
-    # - - - - - - - - - - DFA definitions - - - - - - - - - - -
-    class DFA30 < ANTLR3::DFA
-      EOT = unpack( 13, -1 )
-      EOF = unpack( 13, -1 )
-      MIN = unpack( 1, 5, 1, -1, 1, 5, 8, -1, 1, 4, 1, -1 )
-      MAX = unpack( 1, 53, 1, -1, 1, 53, 8, -1, 1, 4, 1, -1 )
-      ACCEPT = unpack( 1, -1, 1, 1, 1, -1, 1, 2, 7, 1, 1, -1, 1, 1 )
-      SPECIAL = unpack( 13, -1 )
-      TRANSITION = [
-        unpack( 1, 1, 2, 3, 1, 2, 1, 3, 5, 1, 13, -1, 1, 3, 4, -1, 1, 3, 
-                6, -1, 1, 1, 3, 3, 4, -1, 1, 3, 3, -1, 2, 1 ),
-        unpack(  ),
-        unpack( 1, 4, 2, -1, 1, 3, 1, -1, 1, 5, 1, 6, 1, 7, 1, 8, 1, 9, 
-                 25, -1, 1, 3, 11, -1, 1, 10, 1, 11 ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack( 1, 12 ),
-        unpack(  )
-      ].freeze
-      
-      ( 0 ... MIN.length ).zip( MIN, MAX ) do | i, a, z |
-        if a > 0 and z < 0
-          MAX[ i ] %= 0x10000
-        end
-      end
-      
-      @decision = 30
-      
-
-      def description
-        <<-'__dfa_description__'.strip!
-          104:15: ( expresion ( ',' expresion )* )?
-        __dfa_description__
-      end
-    end
-
-
-    private
-
-    def initialize_dfas
-      super rescue nil
-      @dfa30 = DFA30.new( self, 30 )
-
-    end
     TOKENS_FOLLOWING_clase_IN_programa_12 = Set[ 25 ]
     TOKENS_FOLLOWING_clase_principal_IN_programa_16 = Set[ 1 ]
     TOKENS_FOLLOWING_T__25_IN_clase_27 = Set[ 4 ]
@@ -1663,8 +1648,8 @@ module Pohua
     TOKENS_FOLLOWING_T__30_IN_met_principal_78 = Set[ 31 ]
     TOKENS_FOLLOWING_T__31_IN_met_principal_80 = Set[ 32 ]
     TOKENS_FOLLOWING_T__32_IN_met_principal_82 = Set[ 27 ]
-    TOKENS_FOLLOWING_T__27_IN_met_principal_84 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
-    TOKENS_FOLLOWING_bloque_IN_met_principal_86 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
+    TOKENS_FOLLOWING_T__27_IN_met_principal_84 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
+    TOKENS_FOLLOWING_bloque_IN_met_principal_86 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
     TOKENS_FOLLOWING_T__28_IN_met_principal_89 = Set[ 1 ]
     TOKENS_FOLLOWING_dec_variable_IN_bloque_99 = Set[ 1 ]
     TOKENS_FOLLOWING_estatuto_IN_bloque_104 = Set[ 1 ]
@@ -1677,16 +1662,16 @@ module Pohua
     TOKENS_FOLLOWING_tipo_IN_met_tipado_148 = Set[ 5 ]
     TOKENS_FOLLOWING_ID_IN_met_tipado_150 = Set[ 27, 40 ]
     TOKENS_FOLLOWING_parametro_IN_met_tipado_152 = Set[ 27 ]
-    TOKENS_FOLLOWING_T__27_IN_met_tipado_155 = Set[ 4, 5, 34, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
-    TOKENS_FOLLOWING_bloque_IN_met_tipado_157 = Set[ 4, 5, 34, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
-    TOKENS_FOLLOWING_T__34_IN_met_tipado_160 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
+    TOKENS_FOLLOWING_T__27_IN_met_tipado_155 = Set[ 4, 5, 34, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
+    TOKENS_FOLLOWING_bloque_IN_met_tipado_157 = Set[ 4, 5, 34, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
+    TOKENS_FOLLOWING_T__34_IN_met_tipado_160 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
     TOKENS_FOLLOWING_expresion_IN_met_tipado_162 = Set[ 28 ]
     TOKENS_FOLLOWING_T__28_IN_met_tipado_164 = Set[ 1 ]
     TOKENS_FOLLOWING_T__31_IN_met_vacuo_176 = Set[ 5 ]
     TOKENS_FOLLOWING_ID_IN_met_vacuo_178 = Set[ 27, 40 ]
     TOKENS_FOLLOWING_parametro_IN_met_vacuo_180 = Set[ 27 ]
-    TOKENS_FOLLOWING_T__27_IN_met_vacuo_183 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
-    TOKENS_FOLLOWING_bloque_IN_met_vacuo_185 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
+    TOKENS_FOLLOWING_T__27_IN_met_vacuo_183 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
+    TOKENS_FOLLOWING_bloque_IN_met_vacuo_185 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
     TOKENS_FOLLOWING_T__28_IN_met_vacuo_188 = Set[ 1 ]
     TOKENS_FOLLOWING_set_IN_tipo_0 = Set[ 1 ]
     TOKENS_FOLLOWING_T__40_IN_parametro_236 = Set[ 4, 35, 36, 37, 38, 39 ]
@@ -1700,87 +1685,90 @@ module Pohua
     TOKENS_FOLLOWING_condicion_IN_estatuto_269 = Set[ 1 ]
     TOKENS_FOLLOWING_escritura_IN_estatuto_274 = Set[ 1 ]
     TOKENS_FOLLOWING_ciclo_IN_estatuto_279 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_asignacion_291 = Set[ 43, 44 ]
-    TOKENS_FOLLOWING_T__43_IN_asignacion_294 = Set[ 5 ]
-    TOKENS_FOLLOWING_ID_IN_asignacion_296 = Set[ 44 ]
-    TOKENS_FOLLOWING_T__44_IN_asignacion_300 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 49, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_asignacion_304 = Set[ 33 ]
-    TOKENS_FOLLOWING_lectura_IN_asignacion_308 = Set[ 33 ]
-    TOKENS_FOLLOWING_T__33_IN_asignacion_312 = Set[ 1 ]
-    TOKENS_FOLLOWING_T__45_IN_condicion_324 = Set[ 40 ]
-    TOKENS_FOLLOWING_T__40_IN_condicion_326 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_condicion_328 = Set[ 42 ]
-    TOKENS_FOLLOWING_T__42_IN_condicion_330 = Set[ 27 ]
-    TOKENS_FOLLOWING_T__27_IN_condicion_332 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 45, 46, 47, 50, 51 ]
-    TOKENS_FOLLOWING_estatuto_IN_condicion_334 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 45, 46, 47, 50, 51 ]
-    TOKENS_FOLLOWING_T__46_IN_condicion_339 = Set[ 4, 5, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
-    TOKENS_FOLLOWING_estatuto_IN_condicion_341 = Set[ 28 ]
-    TOKENS_FOLLOWING_T__28_IN_condicion_346 = Set[ 1 ]
-    TOKENS_FOLLOWING_T__47_IN_escritura_358 = Set[ 40 ]
-    TOKENS_FOLLOWING_T__40_IN_escritura_360 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_escritura_362 = Set[ 42, 48 ]
-    TOKENS_FOLLOWING_T__48_IN_escritura_366 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_escritura_368 = Set[ 42, 48 ]
-    TOKENS_FOLLOWING_T__42_IN_escritura_373 = Set[ 33 ]
-    TOKENS_FOLLOWING_T__33_IN_escritura_375 = Set[ 1 ]
-    TOKENS_FOLLOWING_T__49_IN_lectura_386 = Set[ 40 ]
-    TOKENS_FOLLOWING_T__40_IN_lectura_388 = Set[ 42 ]
-    TOKENS_FOLLOWING_T__42_IN_lectura_390 = Set[ 33 ]
-    TOKENS_FOLLOWING_T__33_IN_lectura_392 = Set[ 1 ]
-    TOKENS_FOLLOWING_mientras_IN_ciclo_402 = Set[ 1 ]
-    TOKENS_FOLLOWING_para_IN_ciclo_407 = Set[ 1 ]
-    TOKENS_FOLLOWING_T__50_IN_mientras_419 = Set[ 40 ]
-    TOKENS_FOLLOWING_T__40_IN_mientras_421 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_mientras_423 = Set[ 42 ]
-    TOKENS_FOLLOWING_T__42_IN_mientras_425 = Set[ 27 ]
-    TOKENS_FOLLOWING_T__27_IN_mientras_427 = Set[ 4, 5, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
-    TOKENS_FOLLOWING_estatuto_IN_mientras_429 = Set[ 28 ]
-    TOKENS_FOLLOWING_T__28_IN_mientras_431 = Set[ 1 ]
-    TOKENS_FOLLOWING_T__51_IN_para_441 = Set[ 40 ]
-    TOKENS_FOLLOWING_T__40_IN_para_443 = Set[ 5 ]
-    TOKENS_FOLLOWING_asignacion_IN_para_445 = Set[ 33 ]
-    TOKENS_FOLLOWING_T__33_IN_para_447 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_para_449 = Set[ 33 ]
-    TOKENS_FOLLOWING_T__33_IN_para_451 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_para_453 = Set[ 33 ]
-    TOKENS_FOLLOWING_T__33_IN_para_455 = Set[ 42 ]
-    TOKENS_FOLLOWING_T__42_IN_para_457 = Set[ 4, 5, 35, 36, 37, 38, 39, 45, 47, 50, 51 ]
-    TOKENS_FOLLOWING_estatuto_IN_para_459 = Set[ 28 ]
-    TOKENS_FOLLOWING_T__28_IN_para_461 = Set[ 1 ]
-    TOKENS_FOLLOWING_e_IN_expresion_471 = Set[ 1, 6 ]
-    TOKENS_FOLLOWING_OPERADOR_LOGICO_IN_expresion_475 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_e_IN_expresion_477 = Set[ 1 ]
-    TOKENS_FOLLOWING_exp_IN_e_491 = Set[ 1, 7 ]
-    TOKENS_FOLLOWING_OPERADOR_COMPARACION_IN_e_495 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_exp_IN_e_497 = Set[ 1 ]
-    TOKENS_FOLLOWING_termino_IN_exp_512 = Set[ 1, 8 ]
-    TOKENS_FOLLOWING_OPERADOR_TERMINO_IN_exp_516 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_exp_IN_exp_518 = Set[ 1, 8 ]
-    TOKENS_FOLLOWING_factor_IN_termino_530 = Set[ 1, 9 ]
-    TOKENS_FOLLOWING_OPERADOR_FACTOR_IN_termino_534 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_termino_IN_termino_536 = Set[ 1, 9 ]
-    TOKENS_FOLLOWING_T__40_IN_factor_549 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_factor_551 = Set[ 42 ]
-    TOKENS_FOLLOWING_T__42_IN_factor_553 = Set[ 1 ]
-    TOKENS_FOLLOWING_OPERADOR_TERMINO_IN_factor_559 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_var_cte_IN_factor_562 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_var_cte_576 = Set[ 1, 43 ]
-    TOKENS_FOLLOWING_CTE_ENTERA_IN_var_cte_581 = Set[ 1, 43 ]
-    TOKENS_FOLLOWING_CTE_FLOTANTE_IN_var_cte_586 = Set[ 1, 43 ]
-    TOKENS_FOLLOWING_CTE_STRING_IN_var_cte_591 = Set[ 1, 43 ]
-    TOKENS_FOLLOWING_CTE_BOLEANA_IN_var_cte_596 = Set[ 1, 43 ]
-    TOKENS_FOLLOWING_CTE_CHAR_IN_var_cte_601 = Set[ 1, 43 ]
-    TOKENS_FOLLOWING_T__52_IN_var_cte_606 = Set[ 1, 43 ]
-    TOKENS_FOLLOWING_T__53_IN_var_cte_611 = Set[ 4 ]
-    TOKENS_FOLLOWING_CLASE_OB_IN_var_cte_613 = Set[ 1, 43 ]
-    TOKENS_FOLLOWING_invocacion_IN_var_cte_617 = Set[ 1 ]
-    TOKENS_FOLLOWING_T__43_IN_invocacion_629 = Set[ 5 ]
-    TOKENS_FOLLOWING_ID_IN_invocacion_631 = Set[ 40 ]
-    TOKENS_FOLLOWING_T__40_IN_invocacion_633 = Set[ 1, 5, 8, 10, 11, 12, 13, 14, 40, 43, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_invocacion_637 = Set[ 1, 41, 43 ]
-    TOKENS_FOLLOWING_T__41_IN_invocacion_641 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 52, 53 ]
-    TOKENS_FOLLOWING_expresion_IN_invocacion_643 = Set[ 1, 41, 43 ]
-    TOKENS_FOLLOWING_invocacion_IN_invocacion_651 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_estatuto_284 = Set[ 44 ]
+    TOKENS_FOLLOWING_invocacion_IN_estatuto_286 = Set[ 1 ]
+    TOKENS_FOLLOWING_set_IN_asignacion_299 = Set[ 44, 45 ]
+    TOKENS_FOLLOWING_T__44_IN_asignacion_309 = Set[ 5 ]
+    TOKENS_FOLLOWING_ID_IN_asignacion_311 = Set[ 45 ]
+    TOKENS_FOLLOWING_T__45_IN_asignacion_315 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 49, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_asignacion_320 = Set[ 33 ]
+    TOKENS_FOLLOWING_lectura_IN_asignacion_324 = Set[ 33 ]
+    TOKENS_FOLLOWING_T__33_IN_asignacion_328 = Set[ 1 ]
+    TOKENS_FOLLOWING_T__46_IN_condicion_338 = Set[ 40 ]
+    TOKENS_FOLLOWING_T__40_IN_condicion_340 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_condicion_342 = Set[ 42 ]
+    TOKENS_FOLLOWING_T__42_IN_condicion_344 = Set[ 27 ]
+    TOKENS_FOLLOWING_T__27_IN_condicion_346 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 43, 46, 47, 48, 50, 51 ]
+    TOKENS_FOLLOWING_estatuto_IN_condicion_348 = Set[ 4, 5, 28, 35, 36, 37, 38, 39, 43, 46, 47, 48, 50, 51 ]
+    TOKENS_FOLLOWING_T__47_IN_condicion_353 = Set[ 4, 5, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
+    TOKENS_FOLLOWING_estatuto_IN_condicion_355 = Set[ 28 ]
+    TOKENS_FOLLOWING_T__28_IN_condicion_360 = Set[ 1 ]
+    TOKENS_FOLLOWING_T__48_IN_escritura_372 = Set[ 40 ]
+    TOKENS_FOLLOWING_T__40_IN_escritura_374 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_escritura_376 = Set[ 41, 42 ]
+    TOKENS_FOLLOWING_T__41_IN_escritura_380 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_escritura_382 = Set[ 41, 42 ]
+    TOKENS_FOLLOWING_T__42_IN_escritura_387 = Set[ 33 ]
+    TOKENS_FOLLOWING_T__33_IN_escritura_389 = Set[ 1 ]
+    TOKENS_FOLLOWING_T__49_IN_lectura_400 = Set[ 40 ]
+    TOKENS_FOLLOWING_T__40_IN_lectura_402 = Set[ 42 ]
+    TOKENS_FOLLOWING_T__42_IN_lectura_404 = Set[ 1 ]
+    TOKENS_FOLLOWING_mientras_IN_ciclo_415 = Set[ 1 ]
+    TOKENS_FOLLOWING_para_IN_ciclo_420 = Set[ 1 ]
+    TOKENS_FOLLOWING_T__50_IN_mientras_432 = Set[ 40 ]
+    TOKENS_FOLLOWING_T__40_IN_mientras_434 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_mientras_436 = Set[ 42 ]
+    TOKENS_FOLLOWING_T__42_IN_mientras_438 = Set[ 27 ]
+    TOKENS_FOLLOWING_T__27_IN_mientras_440 = Set[ 4, 5, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
+    TOKENS_FOLLOWING_estatuto_IN_mientras_442 = Set[ 28 ]
+    TOKENS_FOLLOWING_T__28_IN_mientras_444 = Set[ 1 ]
+    TOKENS_FOLLOWING_T__51_IN_para_454 = Set[ 40 ]
+    TOKENS_FOLLOWING_T__40_IN_para_456 = Set[ 5, 43 ]
+    TOKENS_FOLLOWING_asignacion_IN_para_458 = Set[ 33 ]
+    TOKENS_FOLLOWING_T__33_IN_para_460 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_para_462 = Set[ 33 ]
+    TOKENS_FOLLOWING_T__33_IN_para_464 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_para_466 = Set[ 33 ]
+    TOKENS_FOLLOWING_T__33_IN_para_468 = Set[ 42 ]
+    TOKENS_FOLLOWING_T__42_IN_para_470 = Set[ 4, 5, 35, 36, 37, 38, 39, 43, 46, 48, 50, 51 ]
+    TOKENS_FOLLOWING_estatuto_IN_para_472 = Set[ 28 ]
+    TOKENS_FOLLOWING_T__28_IN_para_474 = Set[ 1 ]
+    TOKENS_FOLLOWING_e_IN_expresion_483 = Set[ 1, 6 ]
+    TOKENS_FOLLOWING_OPERADOR_LOGICO_IN_expresion_487 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_e_IN_expresion_489 = Set[ 1 ]
+    TOKENS_FOLLOWING_exp_IN_e_502 = Set[ 1, 7 ]
+    TOKENS_FOLLOWING_OPERADOR_COMPARACION_IN_e_506 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_exp_IN_e_508 = Set[ 1 ]
+    TOKENS_FOLLOWING_termino_IN_exp_522 = Set[ 1, 8 ]
+    TOKENS_FOLLOWING_OPERADOR_TERMINO_IN_exp_526 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_exp_IN_exp_528 = Set[ 1, 8 ]
+    TOKENS_FOLLOWING_factor_IN_termino_540 = Set[ 1, 9 ]
+    TOKENS_FOLLOWING_OPERADOR_FACTOR_IN_termino_544 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_termino_IN_termino_546 = Set[ 1, 9 ]
+    TOKENS_FOLLOWING_T__40_IN_factor_559 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_factor_561 = Set[ 42 ]
+    TOKENS_FOLLOWING_T__42_IN_factor_563 = Set[ 1 ]
+    TOKENS_FOLLOWING_OPERADOR_TERMINO_IN_factor_569 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_var_cte_IN_factor_572 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_var_cte_585 = Set[ 1, 44 ]
+    TOKENS_FOLLOWING_CTE_ENTERA_IN_var_cte_590 = Set[ 1, 44 ]
+    TOKENS_FOLLOWING_CTE_FLOTANTE_IN_var_cte_595 = Set[ 1, 44 ]
+    TOKENS_FOLLOWING_CTE_STRING_IN_var_cte_600 = Set[ 1, 44 ]
+    TOKENS_FOLLOWING_CTE_BOLEANA_IN_var_cte_605 = Set[ 1, 44 ]
+    TOKENS_FOLLOWING_CTE_CHAR_IN_var_cte_610 = Set[ 1, 44 ]
+    TOKENS_FOLLOWING_T__43_IN_var_cte_615 = Set[ 1, 44 ]
+    TOKENS_FOLLOWING_T__52_IN_var_cte_620 = Set[ 4 ]
+    TOKENS_FOLLOWING_CLASE_OB_IN_var_cte_622 = Set[ 1, 44 ]
+    TOKENS_FOLLOWING_invocacion_IN_var_cte_626 = Set[ 1 ]
+    TOKENS_FOLLOWING_T__44_IN_invocacion_638 = Set[ 5 ]
+    TOKENS_FOLLOWING_ID_IN_invocacion_640 = Set[ 40 ]
+    TOKENS_FOLLOWING_T__40_IN_invocacion_642 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 42, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_invocacion_646 = Set[ 41, 42 ]
+    TOKENS_FOLLOWING_T__41_IN_invocacion_650 = Set[ 5, 8, 10, 11, 12, 13, 14, 40, 43, 52 ]
+    TOKENS_FOLLOWING_expresion_IN_invocacion_652 = Set[ 41, 42 ]
+    TOKENS_FOLLOWING_T__42_IN_invocacion_660 = Set[ 33, 44 ]
+    TOKENS_FOLLOWING_invocacion_IN_invocacion_662 = Set[ 33 ]
+    TOKENS_FOLLOWING_T__33_IN_invocacion_665 = Set[ 1 ]
 
   end # class Parser < ANTLR3::Parser
 

@@ -1,7 +1,7 @@
 grammar Pohua;
 
 programa 
-	:	clase* 	clase_principal 
+	:	clase*  clase_principal 
 	;
 
 clase	:	'clase' CLASE_OB ('extiende' CLASE_OB)? ':' dec_variable* metodo* 'fin';
@@ -49,21 +49,21 @@ estatuto
 	|	condicion
 	|	escritura
 	|	ciclo
+	|	ID invocacion
 	;
 	
 asignacion
-	:	ID ('.' ID)? '=' ( expresion | lectura ) ';'
+	: 	('este' | ID) ( '.' ID)? '='  ( expresion | lectura ) ';'
 	;
-	
 condicion
 	:	'si?' '(' expresion ')' ':' estatuto* ( 'sino' estatuto )? 'fin'
 	;
 	
 escritura
-	:	'imprime' '(' expresion ( '+' expresion )* ')' ';'
+	:	'imprime' '(' expresion ( ',' expresion )* ')' ';'
 	;
 	
-lectura	:	'lee' '(' ')' ';'
+lectura	:	'lee' '(' ')' 
 	;
 
 ciclo	:	mientras
@@ -74,14 +74,13 @@ mientras
 	:	'mientras' '(' expresion ')' ':' estatuto 'fin' ;
 
 para 	:	'para' '(' asignacion ';' expresion ';' expresion ';' ')' estatuto 'fin' ;
-
 expresion
 	:	e ( OPERADOR_LOGICO e )?
 	;
-	
+
 e	:	exp ( OPERADOR_COMPARACION exp )? 
 	;
-	
+
 exp	:	termino ( OPERADOR_TERMINO exp )* ;
 
 termino :	factor ( OPERADOR_FACTOR termino )* ;
@@ -89,7 +88,7 @@ termino :	factor ( OPERADOR_FACTOR termino )* ;
 factor 	:	'(' expresion ')' 
 	|	OPERADOR_TERMINO? var_cte
 	;
-	
+
 var_cte	: 	( ID
 	|	CTE_ENTERA
 	|	CTE_FLOTANTE
@@ -101,7 +100,7 @@ var_cte	: 	( ID
 	;
 
 invocacion
-	:	'.' ID '(' ( expresion ( ',' expresion )* )? invocacion? 
+	:	'.' ID '(' ( expresion ( ',' expresion )* )? ')' invocacion? ';'
 	;
 
 
@@ -130,13 +129,15 @@ COMENTARIOS
 WHITESPACE:   ( ' ' | '\t' | '\r' | '\n') {$channel=HIDDEN;} ;
 
 // SEPARADOR: ( ':' | '(' | ')' | ';' | WHITESPACE | ',' );
+OPERADOR_TERMINO
+	:	'+'
+	|	'-'
+	;
 
 OPERADOR_FACTOR 
 	:	'*'
 	|	'/'
 	;
-
-OPERADOR_TERMINO: '+'  | '-';
 
 OPERADOR_LOGICO
 	:	'&&'
