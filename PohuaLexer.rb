@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.2.1-SNAPSHOT Jul 31, 2010 19:34:52
 # Ruby runtime library version: 1.8.11
 # Input grammar file: Pohua.g
-# Generated at: 2012-09-29 14:53:45
+# Generated at: 2012-10-02 21:55:07
 # 
 
 # ~~~> start load path setup
@@ -807,9 +807,9 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 108:6: LETRA_MIN ( LETRA_MIN | LETRA_MAY | '_' | DIGITO )*
+      # at line 111:6: LETRA_MIN ( LETRA_MIN | LETRA_MAY | '_' | DIGITO )*
       letra_min!
-      # at line 108:17: ( LETRA_MIN | LETRA_MAY | '_' | DIGITO )*
+      # at line 111:17: ( LETRA_MIN | LETRA_MAY | '_' | DIGITO )*
       while true # decision 1
         alt_1 = 5
         case look_1 = @input.peek( 1 )
@@ -820,19 +820,19 @@ module Pohua
         end
         case alt_1
         when 1
-          # at line 108:19: LETRA_MIN
+          # at line 111:19: LETRA_MIN
           letra_min!
 
         when 2
-          # at line 108:31: LETRA_MAY
+          # at line 111:31: LETRA_MAY
           letra_may!
 
         when 3
-          # at line 108:43: '_'
+          # at line 111:43: '_'
           match( 0x5f )
 
         when 4
-          # at line 108:49: DIGITO
+          # at line 111:49: DIGITO
           digito!
 
         else
@@ -861,8 +861,8 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 110:13: ( DIGITO )+
-      # at file 110:13: ( DIGITO )+
+      # at line 113:13: ( DIGITO )+
+      # at file 113:13: ( DIGITO )+
       match_count_2 = 0
       while true
         alt_2 = 2
@@ -874,7 +874,7 @@ module Pohua
         end
         case alt_2
         when 1
-          # at line 110:13: DIGITO
+          # at line 113:13: DIGITO
           digito!
 
         else
@@ -909,11 +909,11 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 112:15: CTE_ENTERA '.' CTE_ENTERA ( EXPONENTE )?
+      # at line 115:15: CTE_ENTERA '.' CTE_ENTERA ( EXPONENTE )?
       cte_entera!
       match( 0x2e )
       cte_entera!
-      # at line 112:41: ( EXPONENTE )?
+      # at line 115:41: ( EXPONENTE )?
       alt_3 = 2
       look_3_0 = @input.peek( 1 )
 
@@ -922,7 +922,7 @@ module Pohua
       end
       case alt_3
       when 1
-        # at line 112:42: EXPONENTE
+        # at line 115:42: EXPONENTE
         exponente!
 
       end
@@ -948,9 +948,9 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 115:8: '\"' ( ESC_SEQ | ~ ( '\\\\' | '\"' ) )* '\"'
+      # at line 118:8: '\"' ( ESC_SEQ | ~ ( '\\\\' | '\"' ) )* '\"'
       match( 0x22 )
-      # at line 115:12: ( ESC_SEQ | ~ ( '\\\\' | '\"' ) )*
+      # at line 118:12: ( ESC_SEQ | ~ ( '\\\\' | '\"' ) )*
       while true # decision 4
         alt_4 = 3
         look_4_0 = @input.peek( 1 )
@@ -963,11 +963,11 @@ module Pohua
         end
         case alt_4
         when 1
-          # at line 115:14: ESC_SEQ
+          # at line 118:14: ESC_SEQ
           esc_seq!
 
         when 2
-          # at line 115:24: ~ ( '\\\\' | '\"' )
+          # at line 118:24: ~ ( '\\\\' | '\"' )
           if @input.peek( 1 ).between?( 0x0, 0x21 ) || @input.peek( 1 ).between?( 0x23, 0x5b ) || @input.peek( 1 ).between?( 0x5d, 0xff )
             @input.consume
           else
@@ -1005,9 +1005,9 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 118:12: '\\'' ( ESC_SEQ | ~ ( '\\'' | '\\\\' ) ) '\\''
+      # at line 121:12: '\\'' ( ESC_SEQ | ~ ( '\\'' | '\\\\' ) ) '\\''
       match( 0x27 )
-      # at line 118:17: ( ESC_SEQ | ~ ( '\\'' | '\\\\' ) )
+      # at line 121:17: ( ESC_SEQ | ~ ( '\\'' | '\\\\' ) )
       alt_5 = 2
       look_5_0 = @input.peek( 1 )
 
@@ -1020,11 +1020,11 @@ module Pohua
       end
       case alt_5
       when 1
-        # at line 118:19: ESC_SEQ
+        # at line 121:19: ESC_SEQ
         esc_seq!
 
       when 2
-        # at line 118:29: ~ ( '\\'' | '\\\\' )
+        # at line 121:29: ~ ( '\\'' | '\\\\' )
         if @input.peek( 1 ).between?( 0x0, 0x26 ) || @input.peek( 1 ).between?( 0x28, 0x5b ) || @input.peek( 1 ).between?( 0x5d, 0xff )
           @input.consume
         else
@@ -1059,8 +1059,8 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 121:14: ( 'SI' | 'NO' )
-      # at line 121:14: ( 'SI' | 'NO' )
+      # at line 124:14: ( 'SI' | 'NO' )
+      # at line 124:14: ( 'SI' | 'NO' )
       alt_6 = 2
       look_6_0 = @input.peek( 1 )
 
@@ -1073,11 +1073,11 @@ module Pohua
       end
       case alt_6
       when 1
-        # at line 121:16: 'SI'
+        # at line 124:16: 'SI'
         match( "SI" )
 
       when 2
-        # at line 121:23: 'NO'
+        # at line 124:23: 'NO'
         match( "NO" )
 
       end
@@ -1103,9 +1103,9 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 123:11: LETRA_MAY ( LETRA_MAY | LETRA_MIN | DIGITO )*
+      # at line 126:11: LETRA_MAY ( LETRA_MAY | LETRA_MIN | DIGITO )*
       letra_may!
-      # at line 123:21: ( LETRA_MAY | LETRA_MIN | DIGITO )*
+      # at line 126:21: ( LETRA_MAY | LETRA_MIN | DIGITO )*
       while true # decision 7
         alt_7 = 4
         case look_7 = @input.peek( 1 )
@@ -1115,15 +1115,15 @@ module Pohua
         end
         case alt_7
         when 1
-          # at line 123:23: LETRA_MAY
+          # at line 126:23: LETRA_MAY
           letra_may!
 
         when 2
-          # at line 123:35: LETRA_MIN
+          # at line 126:35: LETRA_MIN
           letra_min!
 
         when 3
-          # at line 123:47: DIGITO
+          # at line 126:47: DIGITO
           digito!
 
         else
@@ -1152,9 +1152,9 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 126:9: '#' ( options {greedy=false; } : . )* '#'
+      # at line 129:9: '#' ( options {greedy=false; } : . )* '#'
       match( 0x23 )
-      # at line 126:13: ( options {greedy=false; } : . )*
+      # at line 129:13: ( options {greedy=false; } : . )*
       while true # decision 8
         alt_8 = 2
         look_8_0 = @input.peek( 1 )
@@ -1167,7 +1167,7 @@ module Pohua
         end
         case alt_8
         when 1
-          # at line 126:41: .
+          # at line 129:41: .
           match_any
 
         else
@@ -1200,7 +1200,7 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 129:15: ( ' ' | '\\t' | '\\r' | '\\n' )
+      # at line 132:15: ( ' ' | '\\t' | '\\r' | '\\n' )
       if @input.peek( 1 ).between?( 0x9, 0xa ) || @input.peek(1) == 0xd || @input.peek(1) == 0x20
         @input.consume
       else
@@ -1299,7 +1299,7 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 143:2: ( '&&' | '!=' )
+      # at line 146:2: ( '&&' | '!=' )
       alt_9 = 2
       look_9_0 = @input.peek( 1 )
 
@@ -1312,11 +1312,11 @@ module Pohua
       end
       case alt_9
       when 1
-        # at line 143:4: '&&'
+        # at line 146:4: '&&'
         match( "&&" )
 
       when 2
-        # at line 144:4: '!='
+        # at line 147:4: '!='
         match( "!=" )
 
       end
@@ -1341,7 +1341,7 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 147:21: ( '==' | '<' | '>' | '!=' )
+      # at line 150:21: ( '==' | '<' | '>' | '!=' )
       alt_10 = 4
       case look_10 = @input.peek( 1 )
       when 0x3d then alt_10 = 1
@@ -1353,19 +1353,19 @@ module Pohua
       end
       case alt_10
       when 1
-        # at line 147:23: '=='
+        # at line 150:23: '=='
         match( "==" )
 
       when 2
-        # at line 147:30: '<'
+        # at line 150:30: '<'
         match( 0x3c )
 
       when 3
-        # at line 147:36: '>'
+        # at line 150:36: '>'
         match( 0x3e )
 
       when 4
-        # at line 147:42: '!='
+        # at line 150:42: '!='
         match( "!=" )
 
       end
@@ -1387,9 +1387,9 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 150:13: ( 'A' .. 'Z' )
-      # at line 150:13: ( 'A' .. 'Z' )
-      # at line 150:15: 'A' .. 'Z'
+      # at line 153:13: ( 'A' .. 'Z' )
+      # at line 153:13: ( 'A' .. 'Z' )
+      # at line 153:15: 'A' .. 'Z'
       match_range( 0x41, 0x5a )
 
 
@@ -1407,9 +1407,9 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 153:13: ( 'a' .. 'z' )
-      # at line 153:13: ( 'a' .. 'z' )
-      # at line 153:15: 'a' .. 'z'
+      # at line 156:13: ( 'a' .. 'z' )
+      # at line 156:13: ( 'a' .. 'z' )
+      # at line 156:15: 'a' .. 'z'
       match_range( 0x61, 0x7a )
 
 
@@ -1427,9 +1427,9 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 156:11: ( '0' .. '9' )
-      # at line 156:11: ( '0' .. '9' )
-      # at line 156:13: '0' .. '9'
+      # at line 159:11: ( '0' .. '9' )
+      # at line 159:11: ( '0' .. '9' )
+      # at line 159:13: '0' .. '9'
       match_range( 0x30, 0x39 )
 
 
@@ -1447,7 +1447,7 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 159:13: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+      # at line 162:13: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
       if @input.peek(1) == 0x45 || @input.peek(1) == 0x65
         @input.consume
       else
@@ -1457,7 +1457,7 @@ module Pohua
       end
 
 
-      # at line 159:23: ( '+' | '-' )?
+      # at line 162:23: ( '+' | '-' )?
       alt_11 = 2
       look_11_0 = @input.peek( 1 )
 
@@ -1478,7 +1478,7 @@ module Pohua
 
 
       end
-      # at file 159:34: ( '0' .. '9' )+
+      # at file 162:34: ( '0' .. '9' )+
       match_count_12 = 0
       while true
         alt_12 = 2
@@ -1490,7 +1490,7 @@ module Pohua
         end
         case alt_12
         when 1
-          # at line 159:35: '0' .. '9'
+          # at line 162:35: '0' .. '9'
           match_range( 0x30, 0x39 )
 
         else
@@ -1518,7 +1518,7 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 163:13: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
+      # at line 166:13: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
       if @input.peek( 1 ).between?( 0x30, 0x39 ) || @input.peek( 1 ).between?( 0x41, 0x46 ) || @input.peek( 1 ).between?( 0x61, 0x66 )
         @input.consume
       else
@@ -1543,7 +1543,7 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 167:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UNICODE_ESC | OCTAL_ESC )
+      # at line 170:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UNICODE_ESC | OCTAL_ESC )
       alt_13 = 3
       look_13_0 = @input.peek( 1 )
 
@@ -1560,7 +1560,7 @@ module Pohua
       end
       case alt_13
       when 1
-        # at line 167:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+        # at line 170:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
         match( 0x5c )
         if @input.peek(1) == 0x22 || @input.peek(1) == 0x27 || @input.peek(1) == 0x5c || @input.peek(1) == 0x62 || @input.peek(1) == 0x66 || @input.peek(1) == 0x6e || @input.peek(1) == 0x72 || @input.peek(1) == 0x74
           @input.consume
@@ -1573,11 +1573,11 @@ module Pohua
 
 
       when 2
-        # at line 168:9: UNICODE_ESC
+        # at line 171:9: UNICODE_ESC
         unicode_esc!
 
       when 3
-        # at line 169:9: OCTAL_ESC
+        # at line 172:9: OCTAL_ESC
         octal_esc!
 
       end
@@ -1595,7 +1595,7 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 174:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
+      # at line 177:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
       alt_14 = 3
       look_14_0 = @input.peek( 1 )
 
@@ -1632,38 +1632,38 @@ module Pohua
       end
       case alt_14
       when 1
-        # at line 174:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
+        # at line 177:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
         match( 0x5c )
-        # at line 174:14: ( '0' .. '3' )
-        # at line 174:15: '0' .. '3'
+        # at line 177:14: ( '0' .. '3' )
+        # at line 177:15: '0' .. '3'
         match_range( 0x30, 0x33 )
 
-        # at line 174:25: ( '0' .. '7' )
-        # at line 174:26: '0' .. '7'
+        # at line 177:25: ( '0' .. '7' )
+        # at line 177:26: '0' .. '7'
         match_range( 0x30, 0x37 )
 
-        # at line 174:36: ( '0' .. '7' )
-        # at line 174:37: '0' .. '7'
+        # at line 177:36: ( '0' .. '7' )
+        # at line 177:37: '0' .. '7'
         match_range( 0x30, 0x37 )
 
 
       when 2
-        # at line 175:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
+        # at line 178:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
         match( 0x5c )
-        # at line 175:14: ( '0' .. '7' )
-        # at line 175:15: '0' .. '7'
+        # at line 178:14: ( '0' .. '7' )
+        # at line 178:15: '0' .. '7'
         match_range( 0x30, 0x37 )
 
-        # at line 175:25: ( '0' .. '7' )
-        # at line 175:26: '0' .. '7'
+        # at line 178:25: ( '0' .. '7' )
+        # at line 178:26: '0' .. '7'
         match_range( 0x30, 0x37 )
 
 
       when 3
-        # at line 176:9: '\\\\' ( '0' .. '7' )
+        # at line 179:9: '\\\\' ( '0' .. '7' )
         match( 0x5c )
-        # at line 176:14: ( '0' .. '7' )
-        # at line 176:15: '0' .. '7'
+        # at line 179:14: ( '0' .. '7' )
+        # at line 179:15: '0' .. '7'
         match_range( 0x30, 0x37 )
 
 
@@ -1682,7 +1682,7 @@ module Pohua
 
       
       # - - - - main rule block - - - -
-      # at line 181:9: '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+      # at line 184:9: '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
       match( 0x5c )
       match( 0x75 )
       hex_digit!

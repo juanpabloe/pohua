@@ -49,7 +49,7 @@ estatuto
 	|	condicion
 	|	escritura
 	|	ciclo
-	|	ID invocacion
+	|	invocacion
 	;
 	
 asignacion
@@ -74,6 +74,7 @@ mientras
 	:	'mientras' '(' expresion ')' ':' estatuto 'fin' ;
 
 para 	:	'para' '(' asignacion ';' expresion ';' expresion ';' ')' estatuto 'fin' ;
+
 expresion
 	:	e ( OPERADOR_LOGICO e )?
 	;
@@ -86,21 +87,23 @@ exp	:	termino ( OPERADOR_TERMINO exp )* ;
 termino :	factor ( OPERADOR_FACTOR termino )* ;
 
 factor 	:	'(' expresion ')' 
-	|	OPERADOR_TERMINO? var_cte
+	|	var_cte
 	;
 
-var_cte	: 	( ID
+var_cte	: 	ID
 	|	CTE_ENTERA
 	|	CTE_FLOTANTE
 	|	CTE_STRING
 	|	CTE_BOLEANA
 	|	CTE_CHAR
-	|	'este'
-	|	'nuevo' CLASE_OB ) invocacion?
+	|	invocacion
+	|	'nuevo' CLASE_OB
+	|	ID '.' ID
+	|	'este' '.' ID
 	;
 
 invocacion
-	:	'.' ID '(' ( expresion ( ',' expresion )* )? ')' invocacion? ';'
+	:	('este' | ID) '.' ID '(' ( expresion ( ',' expresion )* )? ')' ';'
 	;
 
 
