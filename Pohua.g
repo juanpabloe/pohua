@@ -1,5 +1,59 @@
 grammar Pohua;
 
+options { language = Ruby; }
+
+@members {
+
+class Variable
+  attr_accessor :nombre, :direccion, :tipo
+
+  def initialize(nombre, tipo)
+    @nombre = nombre
+    @direccion = nil
+    @tipo = tipo
+  end
+
+end
+
+class Metodo
+  attr_accessor :nombre, :variables_locales, :parametros, :tipo_de_retorno
+
+  def initialize(nombre, tipo_de_retorno)
+    @nombre = nombre
+    @tipo_de_retorno = tipo_de_retorno  # De la clase Clase
+    @variables_locales = Hash.new # Hash con objetos de la clase Variable
+    @parametros = Hash.new # Hash con objetos de la clase Variable
+  end
+
+end
+
+class Clase
+  attr_accessor :nombre, :variables_instancia, :metodos_instancia
+  # To-do: Agregar un atributo para la clase padre en el caso de herencia
+
+  def initialize(nombre)
+    @nombre = nombre
+    @variables_instancia = Hash.new # Hash con objetos de la clase Variable
+    @metodos_instancia = Hash.new # Hash con objetos de la clase Metodo
+  end
+
+end
+
+}
+
+@parser::init {
+  p_operadores = [] #Pila de operadores en la generacion de cuadruplos
+  p_operandos = [] #Pila de operando en la generacion de cuadruplos
+  p_tipos = [] #Tipos de los operandos
+  p_saltos = [] #Pila de saltos
+
+  @clase_actual = nil
+  @metodo_actual = nil
+
+  @clases = {}  # Hash para indexar las clases detectadas en el programa
+}
+
+
 programa 
 	:	clase*  clase_principal 
 	;

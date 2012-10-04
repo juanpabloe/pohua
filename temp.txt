@@ -1,0 +1,48 @@
+  def tabla_semantica(tipo_op1, tipo_op2, operador)
+    case operador
+    when '+'
+      case tipo_op1
+      when 'ent'
+        if tipo_op2 == 'ent'
+          return 'ent'
+        elsif tipo_op2 == 'flot'
+          return 'flot'
+        else
+          raise "Error"
+        end
+      when 'flot'
+        if tipo_op2 == 'flot'
+          return 'flot'
+        else
+          raise "Error"
+        end
+      when 'string'
+        if tipo_op2 == 'string' or tipo_op2 == 'char'
+          return 'string'
+        else
+          raise "Error"
+        end
+      when 'char'
+        if tipo_op2 == 'char'
+          return 'string'
+        else
+          raise "Error"
+        end
+      when 'bol'
+        raise "Error"
+
+    when '-'
+    when '/'
+    when '*'
+
+    when '<', '>'
+      if( tipo_op1 == tipo_op2 )
+      end
+
+    when '&&'
+    when '||'
+    when '='
+    when '!='
+    end
+end
+
