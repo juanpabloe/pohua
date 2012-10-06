@@ -1,3 +1,8 @@
+// Pohua - Lenguaje de programación
+// Abigail Sosa Hdz.
+// Juan Pablo Escobar L.
+// Septiembre 2012
+
 grammar Pohua;
 
 options { language = Ruby; }
