@@ -2,6 +2,10 @@ grammar Pohua;
 
 options { language = Ruby; }
 
+@header {
+  require 'tabla_semantica.rb'
+}
+
 @members {
 
 class Variable
@@ -52,6 +56,9 @@ end
   @metodo_actual = nil  # Variable que apuntara al metodo actual durante el parseo
 
   @clases = {}          # Hash para indexar las clases detectadas en el programa
+
+  @tabla = TablaSemantica.new   # Creamos nuestra tabla semantica. Para acceder a los valores usa @tabla.t
+
 }
 
 
