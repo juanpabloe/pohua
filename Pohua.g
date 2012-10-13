@@ -1,8 +1,3 @@
-// Pohua - Lenguaje de programación
-// Abigail Sosa Hdz.
-// Juan Pablo Escobar L.
-// Septiembre 2012
-
 grammar Pohua;
 
 options { language = Ruby; }
@@ -184,8 +179,9 @@ estatuto
 asignacion
 	: 	('este' | ID) ( '.' ID)? '='  ( expresion | lectura ) ';'
 	;
+
 condicion
-	:	'si?' '(' expresion ')' ':' estatuto* ( 'sino' estatuto )? 'fin'
+	:	'si?' '(' expresion ')' ':' estatuto* ( 'sino' estatuto* )? 'fin'
 	;
 	
 escritura
@@ -200,9 +196,9 @@ ciclo	:	mientras
 	;
 
 mientras 
-	:	'mientras' '(' expresion ')' ':' estatuto 'fin' ;
+	:	'mientras' '(' expresion ')' ':' estatuto* 'fin' ;
 
-para 	:	'para' '(' asignacion ';' expresion ';' expresion ';' ')' estatuto 'fin' ;
+para 	:	'para' '(' asignacion ';' expresion ';' expresion ';' ')' estatuto* 'fin' ;
 
 expresion
 	:	e ( OPERADOR_LOGICO e )?
