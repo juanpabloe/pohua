@@ -47,10 +47,13 @@ end
 }
 
 @parser::init {
-  p_operadores = []     #Pila de operadores en la generacion de cuadruplos
-  p_operandos = []      #Pila de operando en la generacion de cuadruplos
-  p_tipos = []          #Tipos de los operandos
-  p_saltos = []         #Pila de saltos
+  @p_operadores = []     #Pila de operadores en la generacion de cuadruplos
+  @p_operandos = []      #Pila de operando en la generacion de cuadruplos
+  @p_tipos = []          #Tipos de los operandos
+  @p_saltos = []         #Pila de saltos
+
+  @p_cuadruplos = []    # Pila de cuadruplos final
+  @cont = 0             # Contador de cuadruplos
 
   @clase_actual = nil   # Variable que apuntara a la clase actual durante el parseo
   @metodo_actual = nil  # Variable que apuntara al metodo actual durante el parseo
@@ -59,6 +62,45 @@ end
 
   @tabla = TablaSemantica.new   # Creamos nuestra tabla semantica. Para acceder a los valores usa @tabla.t
 
+  # Direcciones de memoria virtual para constantes
+  @dir_cons = []
+  lambda { 100.times { |i| @dir_cons.push (i+200).to_s } }.call   # Crea 100 direcciones iniciando en 200
+
+  # Direcciones de memoria virtual para registros temporales
+  @dir_temps = []
+  lambda { 100.times { |i| @dir_temps.push (i+300).to_s } }.call   # Crea 100 direcciones iniciando en 300
+
+  # Metodos para obtener una direccion disponible
+  def dir_constante_disponible
+    @dir_cons.shift
+  end
+
+  def dir_temporal_disponible
+    @dir_temps.shift
+  end
+  
+  def genera_cuadruplo(op, operando1, operando2, dir_resultado)
+    # To-do: por lo pronto solo regresa un arreglo de 4 posiciones, 
+    # pero se debe aqui imprimir al archivo que leera la maquina virtual
+    @p_cuadruplos << [op, operando1, operando2, dir_resultado].to_s
+    @cont = @cont + 1
+  end
+
+  # Metodo que inserta el resultado generado por el cuadruplo en la pila de operandos y su tipo en la PTipos
+  # Utilizado en la etapa de Generacion de Codigo para expresiones
+  def inserta_nuevo_resultado_en_pila_operandos(operador)
+    ultimos_dos_tipos = @p_tipos.last(2)
+    if(not @tabla.t[operador][ultimos_dos_tipos.first][ultimos_dos_tipos.last].nil?)
+      @p_tipos.pop(2)
+      # Aqui se generaria el cuadruplo
+      dir = dir_temporal_disponible
+      puts genera_cuadruplo(@p_operadores.pop, @p_operandos.pop, @p_operandos.pop, dir)
+      @p_operandos << dir
+      @p_tipos << @tabla.t[operador][ultimos_dos_tipos.first][ultimos_dos_tipos.last]
+    else
+      raise "Tipos incompatibles entre #{ultimos_dos_tipos.first} y #{ultimos_dos_tipos.last}"
+    end
+  end
 }
 
 
@@ -71,12 +113,10 @@ clase
   {
     @clases[$c1.text] = Clase.new($c1.text)
     @clase_actual = @clases[$c1.text]
-    puts "Se guardo clase #{$c1.text}"
   }
   ':' dec_variable* metodo* 'fin'
   {
     @clase_actual = nil
-    puts "Final de clase"
   }
   ;
 
@@ -85,12 +125,10 @@ clase_principal
   {
     @clases['Principal'] = Clase.new('Principal')
     @clase_actual = @clases['Principal']
-    puts "Se guardo clase Principal"
   }
 		':' met_principal metodo* 'fin'
   {
     @clase_actual = nil
-    puts "Final de clase Principal"
   }
 	;
 	
@@ -99,12 +137,10 @@ met_principal
     {
       @clase_actual.metodos_instancia['principal'] = Metodo.new('principal', 'vacuo', @clase_actual)
       @metodo_actual = @clase_actual.metodos_instancia['principal']
-      puts "Se guardo metodo principal"
     }
     ':' bloque* 'fin'
     {
       @metodo_actual = nil
-      puts "Final de metodo principal"
     }
 	;
 
@@ -118,11 +154,9 @@ dec_variable
       unless @metodo_actual.nil?
         # Si la variable se declara dentro de un metodo. TO-do: pendiente enviar direcciones de la variable
         @metodo_actual.variables_locales[$ID.text] = Variable.new($ID.text, $t.valor)
-        puts "Se guardo variable #{$ID.text} de tipo -#{$t.valor}- en metodo #{@metodo_actual.nombre}"
       else
         # Si la variable se declara dentro de una clase.
         @clase_actual.variables_instancia[$ID.text] = Variable.new($ID.text, $t.valor)
-        puts "Se guardo variable #{$ID.text} de tipo -#{$t.valor}- en clase #{@clase_actual.nombre}"
       end
     }
     ';'
@@ -135,11 +169,9 @@ met_tipado
   {
     @clase_actual.metodos_instancia[$ID.text] = Metodo.new($ID.text, $t.valor, @clase_actual)
     @metodo_actual = @clase_actual.metodos_instancia[$ID.text]
-    puts "Se guardo metodo #{$ID.text} de tipo -#{$t.valor}- en clase #{@clase_actual.nombre}"
   }
   ':' bloque* 'regresa' expresion 'fin'
   {
-    puts "Fin de metodo #{@metodo_actual.nombre}"
     @metodo_actual = nil
   }
 	;
@@ -149,11 +181,9 @@ met_vacuo
   {
     @clase_actual.metodos_instancia[$ID.text] = Metodo.new($ID.text, 'vacuo', @clase_actual)
     @metodo_actual = @clase_actual.metodos_instancia[$ID.text]
-    puts "Se guardo metodo #{$ID.text} de tipo -vacuo- en clase #{@clase_actual.nombre}"
   }
   ':' bloque* 'fin' 
   {
-    puts "Fin de metodo #{@metodo_actual.nombre}"
     @metodo_actual = nil
   }
 	;
@@ -173,7 +203,7 @@ estatuto
 	|	condicion
 	|	escritura
 	|	ciclo
-	|	invocacion
+	|	invocacion ';'
 	;
 	
 asignacion
@@ -181,7 +211,11 @@ asignacion
 	;
 
 condicion
-	:	'si?' '(' expresion ')' ':' estatuto* ( 'sino' estatuto* )? 'fin'
+	:	'si?' '(' expresion ')' ':' 
+  {
+    # Regla 1 - Generacion Codigo estatuto condicional
+  }
+  estatuto* ( 'sino' estatuto* )? 'fin'
 	;
 	
 escritura
@@ -201,26 +235,131 @@ mientras
 para 	:	'para' '(' asignacion ';' expresion ';' expresion ';' ')' estatuto* 'fin' ;
 
 expresion
-	:	e ( OPERADOR_LOGICO e )?
+	:	e ( OPERADOR_LOGICO 
+	{
+	  # Regla 10 - Meter operador logico a pila de operadores
+	  @p_operadores << $OPERADOR_LOGICO.text
+	}
+	e 
+	{
+	  # Regla 11 - Igual a regla 4
+	  if(@p_operadores.last == '&&' or @p_operadores.last == '||')
+      inserta_nuevo_resultado_en_pila_operandos(@p_operadores.last)
+    end
+	} )?
 	;
 
-e	:	exp ( OPERADOR_COMPARACION exp )? 
+e	:	exp ( OPERADOR_COMPARACION
+  {
+    # Regla 8 - Meter operador de comparacion a pila de operadores
+    @p_operadores << $OPERADOR_COMPARACION.text
+  } 
+  exp 
+  {
+    # Regla 9 - Igual a regla 4 pero para operadores de comparacion 
+    if(@p_operadores.last == '<' or @p_operadores.last == '>' or @p_operadores.last == '==' or @p_operadores.last == '!=')
+      inserta_nuevo_resultado_en_pila_operandos(@p_operadores.last)
+    end
+  } )? 
 	;
 
-exp	:	termino ( OPERADOR_TERMINO exp )* ;
+exp	:	termino ( OPERADOR_TERMINO 
+    {
+      # Regla 2 - Meter + o - a pila operadores
+      @p_operadores << $OPERADOR_TERMINO.text
+    }  
+    exp 
+    {
+      # Regla 4
+      if(@p_operadores.last == '+' or @p_operadores.last == '-')
+        inserta_nuevo_resultado_en_pila_operandos(@p_operadores.last)
+      end
+    }  )* ;
 
-termino :	factor ( OPERADOR_FACTOR termino )* ;
+termino :	factor ( OPERADOR_FACTOR 
+    {
+      # Regla 3 - Meter * o / a pila operadores
+      @p_operadores << $OPERADOR_FACTOR.text
+    } 
+    termino
+    {
+      # Regla 4
+      if(@p_operadores.last == '*' or @p_operadores.last == '/')
+        inserta_nuevo_resultado_en_pila_operandos(@p_operadores.last)
+      end
+    }  )* ;
 
-factor 	:	'(' expresion ')' 
-	|	var_cte
+factor 	:	'(' 
+  {
+    # Regla 6 - Meter fondo falso a pila de operadores
+    @p_operadores << '(' 
+  } 
+  expresion ')'
+  {
+    # Regla 7 - Sacar fondo falso de pila de operadores
+    @p_operadores.pop
+  } 
+	|	var_cte 
 	;
 
-var_cte	: 	ID
-	|	CTE_ENTERA
+var_cte	:	
+  ID
+  {
+  # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
+  if !@metodo_actual.nil?
+    if !@metodo_actual.variables_locales[$ID.text].nil?
+      @p_operandos << @metodo_actual.variables_locales[$ID.text].direccion
+      @p_tipos << @metodo_actual.variables_locales[$ID.text].tipo
+    elsif !@clase_actual.variables_instancia[$ID.text].nil?
+      @p_operandos << @clase_actual.variables_instancia[$ID.text].direccion
+      @p_tipos << @clase_actual.variables_instancia[$ID.text].tipo
+    else
+      raise "La variable -#{$ID.text}- no ha sido declarada en ningun metodo ni clase."
+    end
+  else
+    if !@clase_actual.variables_instancia[$ID.text].nil?
+      @p_operandos << @clase_actual.variables_instancia[$ID.text].direccion
+      @p_tipos << @clase_actual.variables_instancia[$ID.text].tipo
+    else
+      raise "La variable -#{$ID.text}- no ha sido declarada."
+    end
+  end
+  }
+	|	CTE_ENTERA 
+    {
+      # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
+      direccion = dir_constante_disponible
+      @p_operandos << direccion
+      @p_tipos << 'ent'
+    }
 	|	CTE_FLOTANTE
+	  {
+	    # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
+      direccion = dir_constante_disponible
+      @p_operandos << direccion
+      @p_tipos << 'flot'
+	  }
 	|	CTE_STRING
+	  {
+	    # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
+      direccion = dir_constante_disponible
+      @p_operandos << direccion
+      @p_tipos << 'string'
+	  }
 	|	CTE_BOLEANA
+	  {
+	    # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
+      direccion = dir_constante_disponible
+      @p_operandos << direccion
+      @p_tipos << 'bol'
+	  }
 	|	CTE_CHAR
+	  {
+	    # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
+      direccion = dir_constante_disponible
+      @p_operandos << direccion
+      @p_tipos << 'char'
+	  }
 	|	invocacion
 	|	'nuevo' CLASE_OB
 	|	ID '.' ID
@@ -228,7 +367,7 @@ var_cte	: 	ID
 	;
 
 invocacion
-	:	('este' | ID) '.' ID '(' ( expresion ( ',' expresion )* )? ')' ';'
+	:	('este' | ID) '.' ID '(' ( expresion ( ',' expresion )* )? ')' 
 	;
 
 
@@ -269,7 +408,7 @@ OPERADOR_FACTOR
 
 OPERADOR_LOGICO
 	:	'&&'
-	|	'!='
+  | '||'
 	;
 
 OPERADOR_COMPARACION: '==' | '<' | '>' | '!=';

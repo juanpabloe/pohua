@@ -18,7 +18,7 @@ clase Principal:
 
      flot exponente;
      ent foo;
-     exp = 10.1e+3;
+     exp = 10.8;
      foo = lee();
 
      mientras(exp > 0):

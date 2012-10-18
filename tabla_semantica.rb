@@ -90,6 +90,20 @@ class TablaSemantica
           'bol' => 'bol'
         }
       },
+      # Con el operador igualdad ==
+      '==' => {
+        'ent' => {
+          'ent' => 'bol',
+          'flot' => 'bol'
+        },
+        'flot' => {
+          'flot' => 'bol',
+          'ent' => 'bol',
+        },
+        'bol' => {
+          'bol' => 'bol'
+        }
+      },
       # Con el operador de asignacion =
       '=' => {
         'ent' => {

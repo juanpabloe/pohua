@@ -1,0 +1,27 @@
+clase Principal:
+
+  metodo vacuo principal:
+
+     ent numero;
+     numero = 1 + 52;
+     
+      flot resta;
+      resta = numero - 15;
+      
+      ent multiplicacion;
+      multiplicacion = resta * 20 * (2+2);
+
+      bol comparacion;
+      comparacion = multiplicacion > resta;
+
+      bol comparacion2;
+      comparacion2 = multiplicacion != resta;
+
+      bol complogica;
+      complogica = multiplicacion == 20 || multiplicacion > resta;
+
+  fin
+
+fin
+
+
