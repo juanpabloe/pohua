@@ -85,6 +85,9 @@ end
   @p_cuadruplos = []    # Pila de cuadruplos final
   @cont = 0             # Contador de cuadruplos
 
+  @p_temp_cuadruplos = [] # Pila temporal de cuadruplos utilizada en ciclo PARA
+  @for_flag = false  # Bandera que indica si el programa se encuentra en ciclo PARA
+
   @clase_actual = nil   # Variable que apuntara a la clase actual durante el parseo
   @metodo_actual = nil  # Variable que apuntara al metodo actual durante el parseo
 
@@ -108,13 +111,21 @@ end
   def dir_temporal_disponible
     @dir_temps.shift
   end
-  
+
   def genera_cuadruplo(op, operando1, operando2, dir_resultado)
     # To-do: por lo pronto solo regresa un arreglo de 4 posiciones, 
     # pero se debe aqui imprimir al archivo que leera la maquina virtual
     cuad = [op, operando1, operando2, dir_resultado]
-    @p_cuadruplos << cuad
-    @cont = @cont + 1
+
+    # Si el programa se encuentra en un ciclo PARA (estilo for) se utilizara una pila temporal de cuadruplos 
+    # para guardar los cuadruplos de la asignacion del ciclo for, y dejara intacta la pila general de cuadruplos.
+    # Al final del ciclo para, agregara los cuadruplos a la pila general.
+    if @estatuto_for
+      @p_temp_cuadruplos << cuad
+    else
+      @p_cuadruplos << cuad
+      @cont = @cont + 1
+    end
   end
 
   # Metodo que inserta el resultado generado por el cuadruplo en la pila de operandos y su tipo en la PTipos
@@ -341,7 +352,13 @@ condicion
 	;
 	
 escritura
-	:	'imprime' '(' expresion ( ',' expresion )* ')' ';'
+	:	'imprime' '(' expresion
+  {
+    resultado = @p_operandos.pop
+    @p_tipos.pop
+    genera_cuadruplo('imp', nil, nil, resultado)
+  }
+  ( ',' expresion )* ')' ';'
 	;
 	
 lectura	:	'lee' '(' ')' 
@@ -352,9 +369,71 @@ ciclo	:	mientras
 	;
 
 mientras 
-	:	'mientras' '(' expresion ')' ':' estatuto* 'fin' ;
+	:	'mientras' 
+  {
+    # Regla 1 - Estatuto While
+    @p_saltos << @cont
+  }
+  '(' expresion ')' ':'
+  {
+    # Regla 2 - Estatuto While
+    aux = @p_tipos.pop
+    if aux != 'bol'
+      raise "No se permite evaluar -#{aux}- en un estatuto condicional mientras"
+    else
+      resultado = @p_operandos.pop
+      genera_cuadruplo('gotof', resultado, nil, nil)
+      @p_saltos << @cont-1
+    end
+  }
+  estatuto* 
+  {
+    # Regla 3 - Estatuto while
+    salto_al_falso = @p_saltos.pop
+    salto_a_mientras = @p_saltos.pop
+    genera_cuadruplo('goto', nil, nil, salto_a_mientras)
+    resuelve_salto_en_cuadruplo(salto_al_falso, @cont)
+  }
+  'fin' ;
 
-para 	:	'para' '(' asignacion ';' expresion ';' expresion ';' ')' estatuto* 'fin' ;
+para 	:	'para' '(' asignacion
+  {
+   # Regla 1 - Ciclo PARA
+   @p_saltos << @cont
+  }
+  expresion ';'
+  {
+    # Regla 2 - Ciclo PARA
+    aux = @p_tipos.pop
+    if aux != 'bol'
+      raise "No se permite evaluar -#{aux}- en un estatuto condicional PARA"
+    else
+      resultado = @p_operandos.pop
+      genera_cuadruplo('gotof', resultado, nil, nil)
+      @p_saltos << @cont-1
+      @for_flag = true
+    end
+  }
+  asignacion ')' ':'
+  {
+    # Regla 3 - Ciclo PARA
+    @for_flag = false
+  }
+  estatuto* 
+  {
+    # Regla 4 - Ciclo PARA
+    # Append de cuadruplos temporales de ciclo para a pila general de cuadruplos
+    @p_cuadruplos += @p_temp_cuadruplos
+    @cont += @p_temp_cuadruplos.size
+    @p_temp_cuadruplos.clear
+
+    # Resolver saltos del Ciclo PARA
+    salto_al_falso = @p_saltos.pop
+    salto_a_para = @p_saltos.pop
+    genera_cuadruplo('goto', nil, nil, salto_a_para)
+    resuelve_salto_en_cuadruplo(salto_al_falso, @cont)
+  }
+  'fin' ;
 
 expresion
 	:	e ( OPERADOR_LOGICO 

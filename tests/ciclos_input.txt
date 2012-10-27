@@ -1,0 +1,33 @@
+clase Principal:
+
+  metodo vacuo principal:
+
+     ent numero;
+     numero = 1 + 52;
+
+      mientras( numero > 15 ):
+        numero = numero - 2;
+      fin
+
+      ent condicional;
+      condicional = 10 * 5;
+
+      ent x;
+      ent y;
+      x = 10;
+      y = 20;
+
+      ent i;
+      ent j;
+      para(i = 0; i < x; i = i + 1;):
+        para(j = 0; j < y; j = j + 1;):
+          imprime(i);
+        fin
+      fin
+      
+      condicional = 20 / 10;
+
+  fin
+
+fin
+
