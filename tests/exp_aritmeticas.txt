@@ -6,9 +6,10 @@ clase Principal:
      numero = 1 + 52;
      
       flot resta;
-      resta = numero - 15;
+      flot temp;
+      temp = resta = numero - 15.0;
       
-      ent multiplicacion;
+      flot multiplicacion;
       multiplicacion = resta * 20 * (2+2);
 
       bol comparacion;
@@ -19,6 +20,15 @@ clase Principal:
 
       bol complogica;
       complogica = multiplicacion == 20 || multiplicacion > resta;
+
+      ent condicional;
+      si?( 10 < 30 ):
+        condicional = 10 + 5;
+      sino
+        condicional = 10 - 5;
+      fin
+
+      condicional = 10 * 5;
 
   fin
 

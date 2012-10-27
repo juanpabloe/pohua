@@ -82,24 +82,32 @@ end
   def genera_cuadruplo(op, operando1, operando2, dir_resultado)
     # To-do: por lo pronto solo regresa un arreglo de 4 posiciones, 
     # pero se debe aqui imprimir al archivo que leera la maquina virtual
-    @p_cuadruplos << [op, operando1, operando2, dir_resultado].to_s
+    cuad = [op, operando1, operando2, dir_resultado]
+    @p_cuadruplos << cuad
     @cont = @cont + 1
+    puts "#{@cont} - #{cuad.to_s}"
   end
 
   # Metodo que inserta el resultado generado por el cuadruplo en la pila de operandos y su tipo en la PTipos
-  # Utilizado en la etapa de Generacion de Codigo para expresiones
+  # Utilizado en la etapa de Generacion de Codigo
   def inserta_nuevo_resultado_en_pila_operandos(operador)
     ultimos_dos_tipos = @p_tipos.last(2)
     if(not @tabla.t[operador][ultimos_dos_tipos.first][ultimos_dos_tipos.last].nil?)
       @p_tipos.pop(2)
       # Aqui se generaria el cuadruplo
       dir = dir_temporal_disponible
-      puts genera_cuadruplo(@p_operadores.pop, @p_operandos.pop, @p_operandos.pop, dir)
+      genera_cuadruplo(@p_operadores.pop, @p_operandos.pop, @p_operandos.pop, dir)
       @p_operandos << dir
       @p_tipos << @tabla.t[operador][ultimos_dos_tipos.first][ultimos_dos_tipos.last]
     else
       raise "Tipos incompatibles entre #{ultimos_dos_tipos.first} y #{ultimos_dos_tipos.last}"
     end
+  end
+
+  def resuelve_salto_en_cuadruplo(posicion_cuadruplo, valor)
+    # Busca el cuadruplo en la pila de cuadruplos, 
+    # y en la cuarta posicion del cuadruplo le asigna el valor pendiente
+    @p_cuadruplos[posicion_cuadruplo][3] = valor
   end
 }
 
@@ -207,15 +215,93 @@ estatuto
 	;
 	
 asignacion
-	: 	('este' | ID) ( '.' ID)? '='  ( expresion | lectura ) ';'
+	: 	('este' '.' ID) // Pendiente resolver asignacion del tipo este.atributo
+  | (ID '.' ID) // Pendiente resolver el tipo objeto.atributo
+  | ID
+  {
+    # Regla 1 GC - Asignacion
+    # Validamos si se encuentra dentro de un metodo
+    if !@metodo_actual.nil?
+      # Revisamos si esa variable fue declarada previamente dentro del metodo
+      if !@metodo_actual.variables_locales[$ID.text].nil?
+        @p_operandos << @metodo_actual.variables_locales[$ID.text].direccion
+        @p_tipos << @metodo_actual.variables_locales[$ID.text].tipo
+      elsif !@clase_actual.variables_instancia[$ID.text].nil?
+        @p_operandos << @clase_actual.variables_instancia[$ID.text].direccion
+        @p_tipos << @clase_actual.variables_instancia[$ID.text].tipo
+      else
+        raise "La variable -#{$ID.text}- no ha sido declarada en ningun metodo ni clase."
+      end
+    else
+      if !@clase_actual.variables_instancia[$ID.text].nil?
+        @p_operandos << @clase_actual.variables_instancia[$ID.text].direccion
+        @p_tipos << @clase_actual.variables_instancia[$ID.text].tipo
+      else
+        raise "La variable -#{$ID.text}- no ha sido declarada."
+      end
+    end
+  }
+  '='
+  {
+    # Regla 2 - Metemos '=' a pila operadores
+    @p_operadores << '='
+  } 
+  ( expresion | lectura )
+  {
+    # Regla 3 - Asignacion
+    while @p_operadores.last == '=' do
+      # Sacamos los ultimos dos tipos
+      ultimos_dos_tipos = @p_tipos.last(2)
+      # Revisamos en tabla semantica si son compatibles
+      if(not @tabla.t['='][ultimos_dos_tipos.first][ultimos_dos_tipos.last].nil?)
+        @p_tipos.pop(2)
+        resultado_a_asignar = @p_operandos.pop
+        # Sacamos la variable a la que se asignara el valor
+        variable_asignada = @p_operandos.pop
+        # Aqui se generaria el cuadruplo
+        genera_cuadruplo(@p_operadores.pop, resultado_a_asignar, '', variable_asignada)
+        @p_operandos << variable_asignada
+        @p_tipos << @tabla.t['='][ultimos_dos_tipos.first][ultimos_dos_tipos.last]
+      else
+        raise "Tipos incompatibles entre #{ultimos_dos_tipos.first} y #{ultimos_dos_tipos.last}"
+      end
+
+    end
+  } ( '=' ( expresion | lectura ) )*  ';'
+  {
+    #FIX-ME: Revisar si tenemos que sacar este token de la pila de operandos
+    @p_operandos.pop
+    @p_tipos.pop
+  }
 	;
 
 condicion
 	:	'si?' '(' expresion ')' ':' 
   {
     # Regla 1 - Generacion Codigo estatuto condicional
+    aux = @p_tipos.pop
+    if aux != 'bol'
+      raise "No se permite evaluar -#{aux}- en un estatuto condicional si?"
+    else
+      resultado = @p_operandos.pop
+      genera_cuadruplo('gotof', resultado, nil, nil)
+      @p_saltos << @cont-1
+    end
   }
-  estatuto* ( 'sino' estatuto* )? 'fin'
+  estatuto* ( 'sino' 
+  {
+    # Regla 2
+    genera_cuadruplo('goto', nil, nil, nil)
+    salto_al_falso = @p_saltos.pop
+    resuelve_salto_en_cuadruplo(salto_al_falso, @cont)
+    @p_saltos << @cont-1
+  } 
+  estatuto* )? 'fin'
+  {
+    # Regla 3
+    salto_al_resto = @p_saltos.pop
+    resuelve_salto_en_cuadruplo(salto_al_resto, @cont)
+  }
 	;
 	
 escritura
