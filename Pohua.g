@@ -13,8 +13,8 @@ class Variable
 
   def initialize(nombre, tipo)
     @nombre = nombre
-    @direccion = nil
     @tipo = tipo
+    @direccion = nil
   end
 
 end
@@ -22,12 +22,27 @@ end
 class Metodo
   attr_accessor :nombre, :variables_locales, :parametros, :tipo_de_retorno
 
+  DIR_INICIAL = 2000
+  DIR_FINAL = 2500
+
   def initialize(nombre, tipo_de_retorno = 'vacuo', clase_envase = nil)
     @nombre = nombre
     @tipo_de_retorno = tipo_de_retorno  # Tipo como Ent, Flot, Vacuo, Boolean.
     @clase_envase = clase_envase        # Clase en la que se encuentra el metodo
     @variables_locales = Hash.new       # Hash con objetos de la clase Variable
     @parametros = Hash.new              # Hash con objetos de la clase Variable
+    @sig_direccion = DIR_INICIAL  # Se ubica en la primer direccion disponible para variables
+  end
+
+  def guardar_en_variables_locales(nombre, var)
+    var.direccion = @sig_direccion
+    @sig_direccion = @sig_direccion + 1
+    # Revisamos la unicidad de la variable
+    if(@variables_locales[nombre].nil?)
+      @variables_locales[nombre] = var
+    else
+      raise "La variable #{nombre} ya habia sido declarada en el metodo #{@nombre}"
+    end
   end
 
 end
@@ -36,10 +51,25 @@ class Clase
   attr_accessor :nombre, :variables_instancia, :metodos_instancia
   # To-do: Agregar un atributo para la clase padre en el caso de herencia
 
+  DIR_INICIAL = 1000
+  DIR_FINAL = 1500
+
   def initialize(nombre)
     @nombre = nombre
     @variables_instancia = Hash.new      # Hash con objetos de la clase Variable
     @metodos_instancia = Hash.new        # Hash con objetos de la clase Metodo
+    @sig_direccion = DIR_INICIAL         # Se ubica en la primer direccion disponible para variables
+  end
+
+  def guardar_en_variables_de_instancia(nombre, var)
+    var.direccion = @sig_direccion
+    @sig_direccion = @sig_direccion + 1
+    # Revisamos la unicidad de la variable
+    if(@variables_instancia[nombre].nil?)
+      @variables_instancia[nombre] = var
+    else
+      raise "La variable #{nombre} ya habia sido declarada en #{@nombre}"
+    end
   end
 
 end
@@ -85,7 +115,6 @@ end
     cuad = [op, operando1, operando2, dir_resultado]
     @p_cuadruplos << cuad
     @cont = @cont + 1
-    puts "#{@cont} - #{cuad.to_s}"
   end
 
   # Metodo que inserta el resultado generado por el cuadruplo en la pila de operandos y su tipo en la PTipos
@@ -96,7 +125,9 @@ end
       @p_tipos.pop(2)
       # Aqui se generaria el cuadruplo
       dir = dir_temporal_disponible
-      genera_cuadruplo(@p_operadores.pop, @p_operandos.pop, @p_operandos.pop, dir)
+      op2 = @p_operandos.pop
+      op1 = @p_operandos.pop
+      genera_cuadruplo(@p_operadores.pop, op1, op2, dir)
       @p_operandos << dir
       @p_tipos << @tabla.t[operador][ultimos_dos_tipos.first][ultimos_dos_tipos.last]
     else
@@ -107,13 +138,18 @@ end
   def resuelve_salto_en_cuadruplo(posicion_cuadruplo, valor)
     # Busca el cuadruplo en la pila de cuadruplos, 
     # y en la cuarta posicion del cuadruplo le asigna el valor pendiente
-    @p_cuadruplos[posicion_cuadruplo][3] = valor
+    @p_cuadruplos[posicion_cuadruplo][3] = valor.to_s
   end
 }
 
 
 programa 
-	:	clase*  clase_principal 
+	:	clase*  clase_principal
+  {
+    @p_cuadruplos.each_with_index do |cuadruplo, i|
+      puts "#{i} -- #{cuadruplo}"
+    end
+  }
 	;
 
 clase	
@@ -160,11 +196,11 @@ dec_variable
 	: t =	tipo ID // Revisar el scope de t para ver si el t = tipo es necesario
     {
       unless @metodo_actual.nil?
-        # Si la variable se declara dentro de un metodo. TO-do: pendiente enviar direcciones de la variable
-        @metodo_actual.variables_locales[$ID.text] = Variable.new($ID.text, $t.valor)
+        # Si la variable se declara dentro de un metodo.
+        @metodo_actual.guardar_en_variables_locales($ID.text, Variable.new($ID.text, $t.valor))
       else
         # Si la variable se declara dentro de una clase.
-        @clase_actual.variables_instancia[$ID.text] = Variable.new($ID.text, $t.valor)
+        @clase_actual.guardar_en_variables_de_instancia($ID.text, Variable.new($ID.text, $t.valor))
       end
     }
     ';'
@@ -259,7 +295,7 @@ asignacion
         # Sacamos la variable a la que se asignara el valor
         variable_asignada = @p_operandos.pop
         # Aqui se generaria el cuadruplo
-        genera_cuadruplo(@p_operadores.pop, resultado_a_asignar, '', variable_asignada)
+        genera_cuadruplo(@p_operadores.pop, resultado_a_asignar, nil, variable_asignada)
         @p_operandos << variable_asignada
         @p_tipos << @tabla.t['='][ultimos_dos_tipos.first][ultimos_dos_tipos.last]
       else

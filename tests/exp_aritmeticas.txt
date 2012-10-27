@@ -6,8 +6,7 @@ clase Principal:
      numero = 1 + 52;
      
       flot resta;
-      flot temp;
-      temp = resta = numero - 15.0;
+      resta = numero - 15.0;
       
       flot multiplicacion;
       multiplicacion = resta * 20 * (2+2);
