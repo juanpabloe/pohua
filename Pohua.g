@@ -20,7 +20,8 @@ class Variable
 end
 
 class Metodo
-  attr_accessor :nombre, :variables_locales, :parametros, :tipo_de_retorno
+  attr_accessor :nombre, :variables_locales, :parametros, :tipo_de_retorno,
+                :clase_envase, :sig_direccion, :primer_cuadruplo
 
   DIR_INICIAL = 2000
   DIR_FINAL = 2500
@@ -48,7 +49,9 @@ class Metodo
 end
 
 class Clase
-  attr_accessor :nombre, :variables_instancia, :metodos_instancia
+  attr_accessor :nombre, :variables_instancia, :metodos_instancia, :sig_direccion, 
+                :primer_cuadruplo
+
   # To-do: Agregar un atributo para la clase padre en el caso de herencia
 
   DIR_INICIAL = 1000
@@ -74,6 +77,17 @@ class Clase
 
 end
 
+class Constante
+  attr_accessor :valor, :tipo, :direccion
+
+  def initialize(valor, tipo, direccion)
+    @valor = valor
+    @tipo = tipo
+    @direccion = direccion
+  end
+
+end
+
 }
 
 @parser::init {
@@ -92,6 +106,7 @@ end
   @metodo_actual = nil  # Variable que apuntara al metodo actual durante el parseo
 
   @clases = {}          # Hash para indexar las clases detectadas en el programa
+  @constantes = {}  # Hash para indexar las constantes detectadas en el programa
 
   @tabla = TablaSemantica.new   # Creamos nuestra tabla semantica. Para acceder a los valores usa @tabla.t
 
@@ -151,15 +166,44 @@ end
     # y en la cuarta posicion del cuadruplo le asigna el valor pendiente
     @p_cuadruplos[posicion_cuadruplo][3] = valor.to_s
   end
+
+  def imprime_clases
+    puts "--- Clases ---"
+    @clases.each do |nombre, contenido|
+      puts "Clase: #{nombre}"
+      contenido.variables_instancia.each_with_index do |(nv, cv), i|
+      puts "Variable #{i}: #{nv}, tipo: #{cv.tipo}, direccion: #{cv.direccion}"
+      end
+      contenido.metodos_instancia.each do |nombre_m, contenido_m|
+        puts "Metodo: #{nombre_m}"
+        puts "Primer cuadruplo: #{contenido_m.primer_cuadruplo}"
+        contenido_m.variables_locales.each_with_index do |(nombre_v, attrs), i|
+        puts "Variable #{i}: #{nombre_v}, tipo: #{attrs.tipo}, direccion: #{attrs.direccion}"
+        end
+      end
+    end
+  end
+
+  def imprime_cuadruplos
+    @p_cuadruplos.each_with_index do |cuadruplo, i|
+      puts "#{i} -- #{cuadruplo}"
+    end
+  end
+
+  def imprime_constantes
+    @constantes.each_with_index do |(constante_n, contenido_n), i|
+      puts "Constante#{i}: #{constante_n}, tipo: #{contenido_n.tipo}, direccion: #{contenido_n.direccion}"
+    end
+  end
 }
 
 
 programa 
 	:	clase*  clase_principal
   {
-    @p_cuadruplos.each_with_index do |cuadruplo, i|
-      puts "#{i} -- #{cuadruplo}"
-    end
+    imprime_cuadruplos
+    imprime_clases
+    imprime_constantes
   }
 	;
 
@@ -192,6 +236,7 @@ met_principal
     {
       @clase_actual.metodos_instancia['principal'] = Metodo.new('principal', 'vacuo', @clase_actual)
       @metodo_actual = @clase_actual.metodos_instancia['principal']
+      @metodo_actual.primer_cuadruplo = @cont
     }
     ':' bloque* 'fin'
     {
@@ -224,6 +269,7 @@ met_tipado
   {
     @clase_actual.metodos_instancia[$ID.text] = Metodo.new($ID.text, $t.valor, @clase_actual)
     @metodo_actual = @clase_actual.metodos_instancia[$ID.text]
+    @metodo_actual.primer_cuadruplo = @cont
   }
   ':' bloque* 'regresa' expresion 'fin'
   {
@@ -236,6 +282,7 @@ met_vacuo
   {
     @clase_actual.metodos_instancia[$ID.text] = Metodo.new($ID.text, 'vacuo', @clase_actual)
     @metodo_actual = @clase_actual.metodos_instancia[$ID.text]
+    @metodo_actual.primer_cuadruplo = @cont
   }
   ':' bloque* 'fin' 
   {
@@ -529,35 +576,80 @@ var_cte	:
 	|	CTE_ENTERA 
     {
       # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
-      direccion = dir_constante_disponible
+      # Si esta constante no habia sido indexada previamente, se crea y se genera el cuadruplo
+      if(@constantes[$CTE_ENTERA.text].nil?)
+        direccion = dir_constante_disponible
+        cons = Constante.new($CTE_ENTERA.text, 'ent', direccion)
+        @constantes[cons.valor] = cons
+        genera_cuadruplo('iconst', cons.valor, nil, direccion)
+      else
+        # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
+        direccion = @constantes[$CTE_ENTERA.text].direccion
+      end
       @p_operandos << direccion
       @p_tipos << 'ent'
     }
 	|	CTE_FLOTANTE
 	  {
 	    # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
-      direccion = dir_constante_disponible
+      # Si esta constante no habia sido indexada previamente, se crea y se genera el cuadruplo
+      if(@constantes[$CTE_FLOTANTE.text].nil?)
+        direccion = dir_constante_disponible
+        cons = Constante.new($CTE_FLOTANTE.text, 'flot', direccion)
+        @constantes[cons.valor] = cons
+        genera_cuadruplo('fconst', cons.valor, nil, direccion)
+      else
+        # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
+        direccion = @constantes[$CTE_FLOTANTE.text].direccion
+      end
       @p_operandos << direccion
       @p_tipos << 'flot'
 	  }
 	|	CTE_STRING
 	  {
 	    # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
-      direccion = dir_constante_disponible
+      # Si esta constante no habia sido indexada previamente, se crea y se genera el cuadruplo
+      if(@constantes[$CTE_STRING.text].nil?)
+        direccion = dir_constante_disponible
+        cons = Constante.new($CTE_STRING.text, 'string', direccion)
+        @constantes[cons.valor] = cons
+        genera_cuadruplo('sconst', cons.valor, nil, direccion)
+      else
+        # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
+        direccion = @constantes[$CTE_STRING.text].direccion
+      end
       @p_operandos << direccion
       @p_tipos << 'string'
 	  }
 	|	CTE_BOLEANA
 	  {
 	    # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
-      direccion = dir_constante_disponible
+      # Si esta constante no habia sido indexada previamente, se crea y se genera el cuadruplo
+      if(@constantes[$CTE_BOLEANA.text].nil?)
+        direccion = dir_constante_disponible
+        cons = Constante.new($CTE_BOLEANA.text, 'bol', direccion)
+        @constantes[cons.valor] = cons
+        genera_cuadruplo('bconst', cons.valor, nil, direccion)
+      else
+        # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
+        direccion = @constantes[$CTE_BOLEANA.text].direccion
+      end
       @p_operandos << direccion
       @p_tipos << 'bol'
 	  }
 	|	CTE_CHAR
 	  {
 	    # Regla 1 - Metemos a pila de operandos la direccion de la variable. Metemos a pila de tipos el tipo de variable
-      direccion = dir_constante_disponible
+      # Si esta constante no habia sido indexada previamente, se crea y se genera el cuadruplo
+      if(@constantes[$CTE_CHAR.text].nil?)
+        direccion = dir_constante_disponible
+        cons = Constante.new($CTE_CHAR.text, 'char', direccion)
+        @constantes[cons.valor] = cons
+        genera_cuadruplo('cconst', cons.valor, nil, direccion)
+      else
+        # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
+        direccion = @constantes[$CTE_CHAR.text].direccion
+      end
       @p_operandos << direccion
       @p_tipos << 'char'
 	  }

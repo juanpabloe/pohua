@@ -1,20 +1,10 @@
 clase Pelicula:
+
 	string titulo;
 	ent minutos;
 	flot precio;
+  	flot descuento;
 
-   metodo vacuo setTitulo(string titulo):
-   	este.titulo = titulo;
-   fin
- 
-   metodo string getTitulo:
-	regresa titulo
-   fin
-
-   metodo flot descuento(flot descuento):
-   	precio = precio - descuento;
-	regresa precio
-   fin
 fin
 
 
@@ -28,10 +18,7 @@ clase Principal:
      exponente = 10.1e+10;
      foo = lee();
 
-     imprime("El exponente es:", exponente);
-
      Pelicula p;
-     p = nuevo Pelicula;
      p.setTitulo("Pinocho");
      p.getTitulo();
 
