@@ -46,6 +46,24 @@ class Metodo
     end
   end
 
+  def guardar_en_parametros(nombre, var)
+    # Revisamos si el parametro no viene repetido
+    if @parametros[nombre].nil?
+      @parametros[nombre] = var
+      guardar_en_variables_locales(nombre, var)
+    else
+      raise "El parametro #{nombre} ya habia sido enviado en el metodo #{@nombre}"
+    end
+  end
+
+  def cantidad_de_parametros
+    @parametros.count
+  end
+
+  def cantidad_de_variables_locales
+    @variables_locales.count
+  end
+
 end
 
 class Clase
@@ -104,6 +122,7 @@ end
 
   @clase_actual = nil   # Variable que apuntara a la clase actual durante el parseo
   @metodo_actual = nil  # Variable que apuntara al metodo actual durante el parseo
+  @instancia_actual = nil   # Variable que indicara el scope de clase donde se llama a un metodo
 
   @clases = {}          # Hash para indexar las clases detectadas en el programa
   @constantes = {}  # Hash para indexar las constantes detectadas en el programa
@@ -254,6 +273,11 @@ met_principal
       @clase_actual.metodos_instancia['principal'] = Metodo.new('principal', 'vacuo', @clase_actual)
       @metodo_actual = @clase_actual.metodos_instancia['principal']
       @metodo_actual.primer_cuadruplo = @cont
+
+      # Enviamos el primer parametro de todo metodo que es la clase a la que pertenece
+      var_instancia = Variable.new('principal', 'Principal')
+      @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
+      @instancia_actual = var_instancia.tipo
     }
     ':' bloque* 'fin'
     {
@@ -282,40 +306,59 @@ dec_variable
 metodo	:	'metodo' (met_tipado | met_vacuo) ;
 
 met_tipado
-	: t =	tipo ID parametro? 
+	: t =	tipo ID
   {
     @clase_actual.metodos_instancia[$ID.text] = Metodo.new($ID.text, $t.valor, @clase_actual)
     @metodo_actual = @clase_actual.metodos_instancia[$ID.text]
     @metodo_actual.primer_cuadruplo = @cont
+
+    # Enviamos el primer parametro de todo metodo que es la clase a la que pertenece
+    var_instancia = Variable.new('instancia', @clase_actual.nombre)
+    @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
+    @instancia_actual = var_instancia.tipo
   }
-  ':' bloque* 'regresa' expresion 'fin'
+  '(' parametros? ')'
+  ':' bloque* devolucion 'fin'
   {
     @metodo_actual = nil
   }
 	;
 	
 met_vacuo
-	:	'vacuo' ID parametro? 
+	:	'vacuo' ID 
   {
     @clase_actual.metodos_instancia[$ID.text] = Metodo.new($ID.text, 'vacuo', @clase_actual)
     @metodo_actual = @clase_actual.metodos_instancia[$ID.text]
     @metodo_actual.primer_cuadruplo = @cont
+
+    # Enviamos el primer parametro de todo metodo que es la clase a la que pertenece
+    var_instancia = Variable.new('instancia', @clase_actual.nombre)
+    @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
+    @instancia_actual = var_instancia.tipo
   }
-  ':' bloque* 'fin' 
+  '(' parametros? ')'
+  ':' bloque* 'fin'
   {
+    genera_cuadruplo('ret', nil, nil, nil)
     @metodo_actual = nil
   }
 	;
 	
 tipo
   returns [valor]:
-  // No estamos seguros que el .text regrese el texto de CLASE_OB
   t = ( 'ent'	|	'flot' |	'string' |	'bol' |	'char' |	CLASE_OB ) { $valor = $t.text }
 	;
 	
-parametro
-	:	'(' tipo ID ( ',' tipo ID)* ')'
+parametros
+	:	param ( ',' param )*
 	;
+
+param 
+  : tipo ID
+  {
+    @metodo_actual.guardar_en_parametros($ID.text, Variable.new($ID.text, tipo))
+  }
+  ;
 	
 estatuto
 	:	asignacion
@@ -325,6 +368,23 @@ estatuto
 	|	invocacion ';'
 	;
 	
+devolucion
+  : 'regresa' expresion 
+  {
+    resultado = @p_operandos.pop
+    resultado_tipo = @p_tipos.pop
+    if(resultado_tipo == @metodo_actual.tipo_de_retorno)
+      genera_cuadruplo('ret', nil, nil, resultado)
+    else
+      if(@metodo_actual.tipo_de_retorno == 'vacuo')
+        raise "El metodo #{@metodo_actual} no debe regresar ningun valor debido a que es vacuo"
+      else
+        raise "El metodo #{@metodo_actual} debe regresar un tipo #{@metodo_actual.tipo_de_retorno}"
+      end
+    end
+  }
+  ;
+
 asignacion
 	: 	('este' '.' ID) // Pendiente resolver asignacion del tipo este.atributo
   | (ID '.' ID) // Pendiente resolver el tipo objeto.atributo
@@ -425,7 +485,22 @@ escritura
   ( ',' expresion )* ')' ';'
 	;
 	
-lectura	:	'lee' '(' ')' 
+lectura	:	'lee' '(' ')'
+  {
+    resultado = @p_operandos.last
+    tipo = @p_tipos.last
+    dir = dir_temporal_disponible
+    case tipo
+    when 'ent'
+      genera_cuadruplo('elee', nil, nil, dir)
+    when 'flot'
+      genera_cuadruplo('flee', nil, nil, dir)
+    when 'string'
+      genera_cuadruplo('slee', nil, nil, dir)
+    end
+    @p_operandos << dir
+    @p_tipos << tipo
+  }
 	;
 
 ciclo	:	mientras
@@ -677,8 +752,44 @@ var_cte	:
 	;
 
 invocacion
-	:	('este' | ID) '.' ID '(' ( expresion ( ',' expresion )* )? ')' 
+	:	invocacion_de_clase ID
+  {
+    unless @clase_invocada.metodos_instancia[$ID.text].nil?
+      @metodo_invocado = @clase_invocada.metodos_instancia[$ID.text]
+      genera_cuadruplo('era', nil, @clase_invocada.nombre, @metodo_invocado.primer_cuadruplo)
+    else
+        raise "El metodo #{$ID.text} no existe para la clase #{@clase_invocada.nombre}"
+    end
+  }
+  '(' argumentos? ')'
+  {
+    # TO-DO: Pendiente terminar generacion de cuadruplo gosub
+    genera_cuadruplo('gosub', @instancia_invocada.direccion, @clase_invocada.nombre, @metodo_invocado.primer_cuadruplo)
+  }
 	;
+
+invocacion_de_clase
+  : ( (t = 'este' | t = ID) '.')?
+  {
+    if($t.nil? || $t.text == 'este')
+      # Si la invocacion no recibio una instancia o bien indica es una llamada dentro de la clase actual
+      @clase_invocada = @clase_actual
+      @instancia_invocada = @instancia_actual
+    else
+      # Si la invocacion recibio una instancia, se busca en el metodo o en la clase donde se encuentra
+      @instancia_invocada = @metodo_actual.variables_locales[$ID.text] || @clase_actual.variables_instancia[$ID.text]
+      if @instancia_invocada.nil?
+        raise "La variable #{$ID.text} no ha sido declarada para la clase #{@clase_actual.nombre}"
+      end
+      # Buscamos la clase a la que pertenece la instancia invocada
+      @clase_invocada = @clases[@instancia_invocada.tipo]
+    end
+  }
+  ;
+
+argumentos
+  : expresion ( ',' expresion )*
+  ;
 
 
 // TOKENS del lexico

@@ -72,6 +72,16 @@ class VirtualPohua
         reg_act[cuad_act[3]] = cuad_act[1]
       when 'fconst'
         reg_act[cuad_act[3]] = cuad_act[1]
+      when 'sconst'
+        reg_act[cuad_act[3]] = cuad_act[1]
+      when 'cconst'
+        reg_act[cuad_act[3]] = cuad_act[1]
+      when 'bconst'
+        if cuad_act[1] == 'SI'
+          reg_act[cuad_act[3]] = true
+        elsif cuad_act[1] == 'NO'
+          reg_act[cuad_act[3]] = false
+        end
 
       # Saltos
       when 'gotof'
@@ -79,10 +89,26 @@ class VirtualPohua
       when 'goto'
         @inst_pointer = cuad_act[3]
 
-      # Impresiones a consola
+      # Impresiones y lecturas a consola
       when 'imp'
-        puts reg_act[cuad_act[3]]
-
+        var = reg_act[cuad_act[3]]
+        # Para reemplazar true y false por SI y NO
+        var = var.to_s.gsub(/true/, 'SI')
+        var = var.to_s.gsub(/false/, 'NO')
+        # Para eliminar comillas finales e iniciales de strings
+        var = var.to_s.gsub(/\"/, '')
+        puts var
+      when 'elee'
+        var = STDIN.gets.chomp
+        raise "Se esperaba un entero" unless var.entero?
+        reg_act[cuad_act[3]] = var.to_i
+      when 'flee'
+        var = STDIN.gets.chomp
+        raise "Se esperaba un flotante" unless var.flotante?
+        reg_act[cuad_act[3]] = var.to_f
+      when 'slee'
+        var = STDIN.gets.chomp
+        reg_act[cuad_act[3]] = var.to_s
       end
 
       cuad_act = @cuadruplos[@inst_pointer]
