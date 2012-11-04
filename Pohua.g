@@ -97,7 +97,7 @@ end
   @p_saltos = []         #Pila de saltos
 
   @p_cuadruplos = []    # Pila de cuadruplos final
-  @cont = 0             # Contador de cuadruplos
+  @cont = 1             # Contador de cuadruplos.
 
   @p_temp_cuadruplos = [] # Pila temporal de cuadruplos utilizada en ciclo PARA
   @for_flag = false  # Bandera que indica si el programa se encuentra en ciclo PARA
@@ -164,7 +164,7 @@ end
   def resuelve_salto_en_cuadruplo(posicion_cuadruplo, valor)
     # Busca el cuadruplo en la pila de cuadruplos, 
     # y en la cuarta posicion del cuadruplo le asigna el valor pendiente
-    @p_cuadruplos[posicion_cuadruplo][3] = valor.to_s
+    @p_cuadruplos[posicion_cuadruplo - 1][3] = valor.to_s
   end
 
   def imprime_clases
@@ -190,10 +190,22 @@ end
     end
   end
 
+  def imprime_cuadruplos_archivo
+    lineas = ""
+    @p_cuadruplos.each do |cuadruplo|
+      lineas << cuadruplo.join(",") + "\n"
+    end
+    lineas
+  end
+
   def imprime_constantes
     @constantes.each_with_index do |(constante_n, contenido_n), i|
       puts "Constante#{i}: #{constante_n}, tipo: #{contenido_n.tipo}, direccion: #{contenido_n.direccion}"
     end
+  end
+
+  def genera_archivo_cuadruplos
+    File.open('codobj', 'w') { |arch| arch.write(imprime_cuadruplos_archivo)  }
   end
 }
 
@@ -201,9 +213,12 @@ end
 programa 
 	:	clase*  clase_principal
   {
+    # Se agrega el cuadruplo inicial que indica el numero del cuadruplo del metodo principal
+    @p_cuadruplos.insert(0, ['goto', nil, nil, @clases['Principal'].metodos_instancia['principal'].primer_cuadruplo])
     imprime_cuadruplos
     imprime_clases
     imprime_constantes
+    genera_archivo_cuadruplos
   }
 	;
 
@@ -228,6 +243,8 @@ clase_principal
 		':' met_principal metodo* 'fin'
   {
     @clase_actual = nil
+    # El cuadruplo halt indica el fin del programa
+    genera_cuadruplo('halt', nil, nil, nil)
   }
 	;
 	

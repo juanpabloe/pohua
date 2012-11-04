@@ -6,6 +6,7 @@ clase Principal:
      numero = 1 + 52;
 
       mientras( numero > 15 ):
+        imprime(numero);
         numero = numero - 2;
       fin
 

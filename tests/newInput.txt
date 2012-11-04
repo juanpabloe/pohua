@@ -3,7 +3,11 @@ clase Pelicula:
 	string titulo;
 	ent minutos;
 	flot precio;
-  	flot descuento;
+  flot descuento;
+
+  metodo string getTitulo:
+    regresa este.titulo;
+  fin
 
 fin
 
