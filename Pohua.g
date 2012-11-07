@@ -186,6 +186,20 @@ end
     @p_cuadruplos[posicion_cuadruplo - 1][3] = valor.to_s
   end
 
+  def maneja_argumentos
+    argumento = @p_operandos.pop
+    arg_tipo = @p_tipos.pop
+    if @metodo_invocado.cantidad_de_parametros <= @arg_cont
+      raise ArgumentError, "El metodo #{@metodo_invocado.nombre} debe contener #{@metodo_invocado.cantidad_de_parametros} argumentos."
+    end
+    param_tipo = @metodo_invocado.parametros.values[@arg_cont].tipo
+    if arg_tipo != param_tipo
+      raise ArgumentError, "El argumento #{@arg_cont+1} del metodo #{@metodo_invocado.nombre} espera un tipo #{param_tipo}"
+    end
+    @arg_cont = @arg_cont + 1
+    genera_cuadruplo('param', argumento, nil, @arg_cont)
+  end
+
   def imprime_clases
     puts "--- Clases ---"
     @clases.each do |nombre, contenido|
@@ -354,9 +368,10 @@ parametros
 	;
 
 param 
-  : tipo ID
+  : t = tipo ID
   {
-    @metodo_actual.guardar_en_parametros($ID.text, Variable.new($ID.text, tipo))
+    @metodo_actual.guardar_en_parametros($ID.text, Variable.new($ID.text, $t.valor))
+    puts "Se guardo parametro #{@metodo_actual.parametros[$ID.text].nombre} en metodo #{@metodo_actual.nombre}"
   }
   ;
 	
@@ -377,12 +392,12 @@ devolucion
       genera_cuadruplo('ret', nil, nil, resultado)
     else
       if(@metodo_actual.tipo_de_retorno == 'vacuo')
-        raise "El metodo #{@metodo_actual} no debe regresar ningun valor debido a que es vacuo"
+        raise "El metodo #{@metodo_actual.nombre} no debe regresar ningun valor debido a que es vacuo"
       else
-        raise "El metodo #{@metodo_actual} debe regresar un tipo #{@metodo_actual.tipo_de_retorno}"
+        raise "El metodo #{@metodo_actual.nombre} debe regresar un tipo #{@metodo_actual.tipo_de_retorno}"
       end
     end
-  }
+  } ';'
   ;
 
 asignacion
@@ -745,26 +760,44 @@ var_cte	:
       @p_operandos << direccion
       @p_tipos << 'char'
 	  }
-	|	invocacion
+	| t =	invocacion 
+  {
+    dir = dir_constante_disponible
+    genera_cuadruplo('get', nil, nil, dir)
+    @p_operandos << dir
+    @p_tipos << $t.tipo
+  }
 	|	'nuevo' CLASE_OB
 	|	ID '.' ID
-	|	'este' '.' ID
+	|	'este' '.' ID 
+  {
+    unless @clase_actual.variables_instancia[$ID.text].nil?
+      @p_operandos << @clase_actual.variables_instancia[$ID.text].direccion
+      @p_tipos << @clase_actual.variables_instancia[$ID.text].tipo
+    else
+      raise "La variable #{$ID.text} no ha sido declarada dentro de la clase #{@clase_actual.nombre}"
+    end
+  }
 	;
 
 invocacion
-	:	invocacion_de_clase ID
+  returns [tipo] :
+    invocacion_de_clase ID
   {
     unless @clase_invocada.metodos_instancia[$ID.text].nil?
       @metodo_invocado = @clase_invocada.metodos_instancia[$ID.text]
-      genera_cuadruplo('era', nil, @clase_invocada.nombre, @metodo_invocado.primer_cuadruplo)
+      genera_cuadruplo('era', @clase_invocada.nombre, nil, @metodo_invocado.primer_cuadruplo)
     else
         raise "El metodo #{$ID.text} no existe para la clase #{@clase_invocada.nombre}"
     end
   }
   '(' argumentos? ')'
   {
-    # TO-DO: Pendiente terminar generacion de cuadruplo gosub
-    genera_cuadruplo('gosub', @instancia_invocada.direccion, @clase_invocada.nombre, @metodo_invocado.primer_cuadruplo)
+    genera_cuadruplo('gosub', @instancia_invocada.direccion, nil, @metodo_invocado.primer_cuadruplo)
+    $tipo = @metodo_invocado.tipo_de_retorno
+    @instancia_invocada = nil
+    @metodo_invocado = nil
+    @clase_invocada = nil
   }
 	;
 
@@ -788,7 +821,23 @@ invocacion_de_clase
   ;
 
 argumentos
-  : expresion ( ',' expresion )*
+  : expresion 
+  {
+    @arg_cont = 0
+    maneja_argumentos
+  }
+  ( ',' expresion
+  {
+    maneja_argumentos
+  } 
+  )*
+  {
+    if @metodo_invocado.cantidad_de_parametros != @arg_cont
+      raise ArgumentError, "El metodo #{@metodo_invocado.nombre} debe contener #{@metodo_invocado.cantidad_de_parametros} argumentos."
+    end
+  # TO-DO: Eliminar la reinicializacion a 0
+  @arg_cont = 0
+  }
   ;
 
 

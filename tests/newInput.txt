@@ -5,13 +5,18 @@ clase Pelicula:
 	flot precio;
   flot descuento;
 
-  metodo string getTitulo:
+  metodo string getTitulo():
     regresa este.titulo;
+  fin
+
+  metodo vacuo setTitulo(string titulo):
   fin
 
 fin
 
-
+clase Animal:
+  string nombre;
+fin
 
 clase Principal:
 
@@ -29,7 +34,6 @@ clase Principal:
   fin
 
   metodo vacuo calcula(ent numero, flot dos):
-    ent numero;
     numero = 1 + 2;
   fin
      
