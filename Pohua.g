@@ -392,7 +392,23 @@ devolucion
   ;
 
 asignacion
-	: 	('este' '.' ID) // Pendiente resolver asignacion del tipo este.atributo
+	: lado_izq_asignacion '='
+  {
+    # Regla 2 - Metemos '=' a pila operadores
+    @p_operadores << '='
+  }
+  lado_der_asignacion ';' ;
+
+lado_izq_asignacion
+  : ('este' '.' ID)
+  {
+    unless @clase_actual.variables_instancia[$ID.text].nil?
+      @p_operandos << @clase_actual.variables_instancia[$ID.text].direccion
+      @p_tipos << @clase_actual.variables_instancia[$ID.text].tipo
+    else
+      raise "La variable #{$ID.text} no existe para la clase #{@clase_actual.nombre}"
+    end
+  }
   | ID
   {
     # Regla 1 GC - Asignacion
@@ -417,11 +433,10 @@ asignacion
       end
     end
   }
-  '='
-  {
-    # Regla 2 - Metemos '=' a pila operadores
-    @p_operadores << '='
-  } 
+  ;
+
+lado_der_asignacion
+  :
   ( ( expresion | lectura )
   {
     # Regla 3 - Asignacion
@@ -457,7 +472,7 @@ asignacion
       # Si la clase no es igual al tipo de la variable declarada, lanzamos error
       raise "Tipos incompatibles entre #{variable_tipo} y #{nombre_instancia}"
     end
-  } )  ';'
+  } )
 	;
 
 condicion
