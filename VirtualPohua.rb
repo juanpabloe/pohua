@@ -1,10 +1,49 @@
 class Frame
-  attr_accessor :registro, :cuadruplo_al_salir, :clase_al_salir
+  attr_accessor :registros, :cuadruplo_al_salir, :clase_al_salir
 
-  def initialize(cuadruplo_al_salir = 0, cantidad_registros = 300)
-    @registro = Array.new(cantidad_registros)
+  def initialize(cuadruplo_al_salir = 0, cantidad_registros = 1000)
+    @registros = Registros.new(cantidad_registros)
     @cuadruplo_al_salir = cuadruplo_al_salir
   end
+end
+
+class Registros < Array
+
+  def initialize(cantidad_registros)
+    super
+    # Creamos espacio en la primer posicion del registro para los objeto el objeto del frame del principal
+    # To-do: pasar un parametro con la cantidad especifica de atributos del objeto
+    self[50] = Objeto.new 100
+  end
+
+  # Al asignar un valor a un registro, verificamos si es un atributo para un objeto
+  def []=(indice, atributo)
+    lim_inf = 100    # Limite inferior de las direcciones de Clase
+    lim_sup = 149    # Limite superior de las direcciones de Clase
+    case indice
+    when lim_inf..lim_sup # Si el indice es una direccion de Clase
+      self[50][indice - lim_inf] = atributo    # Guardamos el atributo en el Objeto
+    else
+      super(indice, atributo)     # Si no es una dir de clase, asigna el valor del registro normal
+    end
+  end
+
+  # Al acceder a un atributo de un registro, verificamos si es un atributo de un objeto
+  def [](indice)
+    lim_inf = 100    # Limite inferior de las direcciones de Clase
+    lim_sup = 149    # Limite superior de las direcciones de Clase
+    case indice
+    when lim_inf..lim_sup # Si el indice es una direccion de Clase
+      return self[50][indice - lim_inf]    # Regresamos el atributo del objeto
+    else
+      return super(indice)    # Si no es una dir de clase, regresamos el valor del registro normal
+    end
+  end
+
+end
+
+class Objeto < Array
+  # Este vector fungira como receptor de atributos de un objeto al momento de estar leyendo
 end
 
 class String
@@ -32,7 +71,7 @@ class VirtualPohua
     frame_principal = Frame.new(posicion_cuadruplo_halt)    # Creamos el primer frame de la pila
     @p_frames << frame_principal                            # Metemos el primer frame a la pila
     cuad_act = @cuadruplos.first                            # Definimos el cuadruplo actual
-    reg_act = @p_frames.last.registro                       # Definimos el arreglo de registros actual
+    reg_act = @p_frames.last.registros                      # Definimos el arreglo de registros actual
 
     until cuad_act.first == 'halt'
 
@@ -88,41 +127,46 @@ class VirtualPohua
         @p_frames << Frame.new
       when 'gosub'
         # El registro 1 guarda la direccion de la instancia de clase
-        @p_frames.last.registro[1] = reg_act[cuad_act[1]]
+        @p_frames.last.registros[50] = reg_act[cuad_act[1]]
         @p_frames.last.clase_al_salir = cuad_act[1]
         # Al salir de ese frame
         @p_frames.last.cuadruplo_al_salir = @inst_pointer
         # El registro actual ahora seran los registros del nuevo metodo invocado
-        reg_act = @p_frames.last.registro
+        reg_act = @p_frames.last.registros
         # El programa apuntara a la primera instruccion del metodo invocado
         @inst_pointer = cuad_act[3]
 
       when 'param'
         # El parametro se guarda en el indice indicado
-        @p_frames.last.registro[1 + cuad_act[3]] = reg_act[cuad_act[1]]
+        @p_frames.last.registros[50 + cuad_act[3]] = reg_act[cuad_act[1]]
 
       when 'ret'
-        variable_retorno = cuad_act[3]
+        direccion_retorno = cuad_act[3]
         registro_anterior = reg_act
         ultima_clase_invocada = @p_frames.last.clase_al_salir
+
         # Se apunta a donde el programa ira al terminar el metodo
         @inst_pointer = @p_frames.last.cuadruplo_al_salir
         # Se elimina el frame
         @p_frames.pop
-        puts @p_frames.last
         # El apuntador de registro actual se actualiza con el del nuevo
         # frame tope
-        reg_act = @p_frames.last.registro
-        reg_act[ultima_clase_invocada] = registro_anterior[1]
-        unless variable_retorno 
-          variable_retorno = nil
+        reg_act = @p_frames.last.registros
+
+        reg_act[ultima_clase_invocada] = registro_anterior[50]
+        if direccion_retorno.nil?
+          direccion_retorno = nil
           registro_anterior = nil
         end
       when 'get'
         # Guarda el valor de la variable de retorno de un metodo
-        reg_act[cuad_act[3]] = reg_act[variable_retorno]
-        variable_retorno = nil
+        reg_act[cuad_act[3]] = registro_anterior[direccion_retorno]
+        direccion_retorno = nil
         registro_anterior = nil
+
+      when 'nuevo'
+        # En el registro actual creamos un nuevo objeto
+        reg_act[cuad_act[3]] = Objeto.new 100
 
       # Saltos
       when 'gotof'
@@ -156,7 +200,7 @@ class VirtualPohua
     end
 
     @p_frames.each do |frame|
-      frame.registro.each_with_index do |r, i|
+      frame.registros.each_with_index do |r, i|
         puts "Registro #{i}: #{r}" unless r.nil?
       end
     end

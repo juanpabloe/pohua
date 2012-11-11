@@ -9,32 +9,27 @@ clase Pelicula:
     regresa este.titulo;
   fin
 
-  metodo vacuo setTitulo(string titulo):
-  fin
-
-fin
-
-clase Animal:
-  string nombre;
 fin
 
 clase Principal:
 
+  metodo flot calcula(flot numero, flot dos):
+    numero = numero + dos;
+    regresa numero;
+  fin
+
   metodo vacuo principal:
 
      flot exponente;
-     ent foo;
      exponente = 10.1e+10;
-     foo = lee();
+
+     flot foo;
+     foo = calcula(10.0, exponente);
+     
+     imprime(foo);
 
      Pelicula p;
-     p.setTitulo("Pinocho");
-     p.getTitulo();
-
-  fin
-
-  metodo vacuo calcula(ent numero, flot dos):
-    numero = 1 + 2;
+     p = nueva Pelicula();
   fin
      
 fin

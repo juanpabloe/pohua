@@ -23,8 +23,8 @@ class Metodo
   attr_accessor :nombre, :variables_locales, :parametros, :tipo_de_retorno,
                 :clase_envase, :sig_direccion, :primer_cuadruplo
 
-  DIR_INICIAL = 2000
-  DIR_FINAL = 2500
+  DIR_INICIAL = 50
+  DIR_FINAL = 99
 
   def initialize(nombre, tipo_de_retorno = 'vacuo', clase_envase = nil)
     @nombre = nombre
@@ -72,8 +72,8 @@ class Clase
 
   # To-do: Agregar un atributo para la clase padre en el caso de herencia
 
-  DIR_INICIAL = 1000
-  DIR_FINAL = 1500
+  DIR_INICIAL = 100
+  DIR_FINAL = 149
 
   def initialize(nombre)
     @nombre = nombre
@@ -187,17 +187,6 @@ end
   end
 
   def maneja_argumentos
-    argumento = @p_operandos.pop
-    arg_tipo = @p_tipos.pop
-    if @metodo_invocado.cantidad_de_parametros <= @arg_cont
-      raise ArgumentError, "El metodo #{@metodo_invocado.nombre} debe contener #{@metodo_invocado.cantidad_de_parametros} argumentos."
-    end
-    param_tipo = @metodo_invocado.parametros.values[@arg_cont].tipo
-    if arg_tipo != param_tipo
-      raise ArgumentError, "El argumento #{@arg_cont+1} del metodo #{@metodo_invocado.nombre} espera un tipo #{param_tipo}"
-    end
-    @arg_cont = @arg_cont + 1
-    genera_cuadruplo('param', argumento, nil, @arg_cont)
   end
 
   def imprime_clases
@@ -273,11 +262,9 @@ clase_principal
     @clases['Principal'] = Clase.new('Principal')
     @clase_actual = @clases['Principal']
   }
-		':' met_principal metodo* 'fin'
+		':' metodo* met_principal 'fin'
   {
     @clase_actual = nil
-    # El cuadruplo halt indica el fin del programa
-    genera_cuadruplo('halt', nil, nil, nil)
   }
 	;
 	
@@ -291,11 +278,14 @@ met_principal
       # Enviamos el primer parametro de todo metodo que es la clase a la que pertenece
       var_instancia = Variable.new('principal', 'Principal')
       @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
-      @instancia_actual = var_instancia.tipo
+      @instancia_actual = var_instancia
+      puts "Instancia Actual - #{@instancia_actual}"
     }
     ':' bloque* 'fin'
     {
       @metodo_actual = nil
+      # El cuadruplo halt indica el fin del programa
+      genera_cuadruplo('halt', nil, nil, nil)
     }
 	;
 
@@ -330,6 +320,7 @@ met_tipado
     var_instancia = Variable.new('instancia', @clase_actual.nombre)
     @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
     @instancia_actual = var_instancia.tipo
+    puts "Instancia Actual - #{@instancia_actual}"
   }
   '(' parametros? ')'
   ':' bloque* devolucion 'fin'
@@ -349,6 +340,7 @@ met_vacuo
     var_instancia = Variable.new('instancia', @clase_actual.nombre)
     @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
     @instancia_actual = var_instancia.tipo
+    puts "Instancia Actual - #{@instancia_actual}"
   }
   '(' parametros? ')'
   ':' bloque* 'fin'
@@ -371,7 +363,6 @@ param
   : t = tipo ID
   {
     @metodo_actual.guardar_en_parametros($ID.text, Variable.new($ID.text, $t.valor))
-    puts "Se guardo parametro #{@metodo_actual.parametros[$ID.text].nombre} en metodo #{@metodo_actual.nombre}"
   }
   ;
 	
@@ -402,7 +393,6 @@ devolucion
 
 asignacion
 	: 	('este' '.' ID) // Pendiente resolver asignacion del tipo este.atributo
-  | (ID '.' ID) // Pendiente resolver el tipo objeto.atributo
   | ID
   {
     # Regla 1 GC - Asignacion
@@ -432,10 +422,10 @@ asignacion
     # Regla 2 - Metemos '=' a pila operadores
     @p_operadores << '='
   } 
-  ( expresion | lectura )
+  ( ( expresion | lectura )
   {
     # Regla 3 - Asignacion
-    while @p_operadores.last == '=' do
+    if @p_operadores.last == '='
       # Sacamos los ultimos dos tipos
       ultimos_dos_tipos = @p_tipos.last(2)
       # Revisamos en tabla semantica si son compatibles
@@ -453,12 +443,21 @@ asignacion
       end
 
     end
-  } ( '=' ( expresion | lectura ) )*  ';'
+  } 
+  | ( 'nuevo' | 'nueva' ) CLASE_OB '(' ')'
   {
-    #FIX-ME: Revisar si tenemos que sacar este token de la pila de operandos
-    @p_operandos.pop
-    @p_tipos.pop
-  }
+    # Asignacion de un nueva instancia de clase
+    nombre_instancia = $CLASE_OB.text
+    variable = @p_operandos.pop
+    variable_tipo = @p_tipos.pop
+    # Revisamos si la clase es igual al tipo de la variable
+    if nombre_instancia == variable_tipo
+      genera_cuadruplo('nuevo', nombre_instancia, nil, variable)
+    else
+      # Si la clase no es igual al tipo de la variable declarada, lanzamos error
+      raise "Tipos incompatibles entre #{variable_tipo} y #{nombre_instancia}"
+    end
+  } )  ';'
 	;
 
 condicion
@@ -767,8 +766,6 @@ var_cte	:
     @p_operandos << dir
     @p_tipos << $t.tipo
   }
-	|	'nuevo' CLASE_OB
-	|	ID '.' ID
 	|	'este' '.' ID 
   {
     unless @clase_actual.variables_instancia[$ID.text].nil?
@@ -808,9 +805,11 @@ invocacion_de_clase
       # Si la invocacion no recibio una instancia o bien indica es una llamada dentro de la clase actual
       @clase_invocada = @clase_actual
       @instancia_invocada = @instancia_actual
+      puts "Instancia invocada - #{@instancia_invocada}"
     else
       # Si la invocacion recibio una instancia, se busca en el metodo o en la clase donde se encuentra
       @instancia_invocada = @metodo_actual.variables_locales[$ID.text] || @clase_actual.variables_instancia[$ID.text]
+      puts "Instancia invocada - #{@instancia_invocada.nombre}"
       if @instancia_invocada.nil?
         raise "La variable #{$ID.text} no ha sido declarada para la clase #{@clase_actual.nombre}"
       end
@@ -824,11 +823,32 @@ argumentos
   : expresion 
   {
     @arg_cont = 0
-    maneja_argumentos
+    argumento = @p_operandos.pop
+    arg_tipo = @p_tipos.pop
+    puts "Argumentos - #{argumento} - tipo: #{arg_tipo}"
+    if @metodo_invocado.cantidad_de_parametros <= @arg_cont
+      raise ArgumentError, "El metodo #{@metodo_invocado.nombre} debe contener #{@metodo_invocado.cantidad_de_parametros} argumentos."
+    end
+    param_tipo = @metodo_invocado.parametros.values[@arg_cont].tipo
+    if arg_tipo != param_tipo
+      raise ArgumentError, "El argumento #{@arg_cont+1} del metodo #{@metodo_invocado.nombre} espera un tipo #{param_tipo}"
+    end
+    @arg_cont = @arg_cont + 1
+    genera_cuadruplo('param', argumento, nil, @arg_cont)
   }
   ( ',' expresion
   {
-    maneja_argumentos
+    argumento = @p_operandos.pop
+    arg_tipo = @p_tipos.pop
+    if @metodo_invocado.cantidad_de_parametros <= @arg_cont
+      raise ArgumentError, "El metodo #{@metodo_invocado.nombre} debe contener #{@metodo_invocado.cantidad_de_parametros} argumentos."
+    end
+    param_tipo = @metodo_invocado.parametros.values[@arg_cont].tipo
+    if arg_tipo != param_tipo
+      raise ArgumentError, "El argumento #{@arg_cont+1} del metodo #{@metodo_invocado.nombre} espera un tipo #{param_tipo}"
+    end
+    @arg_cont = @arg_cont + 1
+    genera_cuadruplo('param', argumento, nil, @arg_cont)
   } 
   )*
   {
