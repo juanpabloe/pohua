@@ -339,6 +339,7 @@ metodo	:	'metodo' (met_tipado | met_vacuo) ;
 met_tipado
 	: t =	tipo ID
   {
+    @regresa_algo = false  # Flag que ayuda a detectar si el metodo regresa un valor
     @clase_actual.metodos_instancia[$ID.text] = Metodo.new($ID.text, $t.valor, @clase_actual)
     @metodo_actual = @clase_actual.metodos_instancia[$ID.text]
     @metodo_actual.primer_cuadruplo = @cont
@@ -346,11 +347,15 @@ met_tipado
     # Enviamos el primer parametro de todo metodo que es la clase a la que pertenece
     var_instancia = Variable.new('instancia', @clase_actual.nombre)
     @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
-    @instancia_actual = var_instancia.tipo
+    @instancia_actual = var_instancia
   }
   '(' parametros? ')'
-  ':' bloque* devolucion 'fin'
+  ':' bloque* 'fin'
   {
+    # Validamos que el metodo tipado regrese un valor al final
+    unless @regresa_algo
+      raise "El metodo #{@metodo_actual.nombre} debe regresar un tipo #{@metodo_actual.tipo_de_retorno}"
+    end
     @metodo_actual = nil
   }
 	;
@@ -366,7 +371,6 @@ met_vacuo
     var_instancia = Variable.new('instancia', @clase_actual.nombre)
     @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
     @instancia_actual = var_instancia.tipo
-    puts "Instancia Actual - #{@instancia_actual}"
   }
   '(' parametros? ')'
   ':' bloque* 'fin'
@@ -397,6 +401,7 @@ estatuto
 	|	condicion
 	|	escritura
 	|	ciclo
+  | devolucion
 	|	invocacion ';'
 	;
 	
@@ -407,6 +412,7 @@ devolucion
     resultado_tipo = @p_tipos.pop
     if(resultado_tipo == @metodo_actual.tipo_de_retorno)
       genera_cuadruplo('ret', nil, nil, resultado)
+      @regresa_algo = true
     else
       if(@metodo_actual.tipo_de_retorno == 'vacuo')
         raise "El metodo #{@metodo_actual.nombre} no debe regresar ningun valor debido a que es vacuo"
@@ -846,10 +852,8 @@ invocacion_de_clase
       # Si la invocacion no recibio una instancia o bien indica es una llamada dentro de la clase actual
       @clase_invocada = @clase_actual
       @instancia_invocada = @instancia_actual
-      puts "Instancia invocada - #{@instancia_invocada}"
     else
       # Si la invocacion recibio una instancia, se busca en el metodo o en la clase donde se encuentra
-      @instancia_invocada = @metodo_actual.variables_locales[$ID.text] || @clase_actual.variables_instancia[$ID.text]
       puts "Instancia invocada - #{@instancia_invocada.nombre}"
       if @instancia_invocada.nil?
         raise "La variable #{$ID.text} no ha sido declarada para la clase #{@clase_actual.nombre}"
