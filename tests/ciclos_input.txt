@@ -3,11 +3,17 @@ clase Principal:
   metodo vacuo principal:
 
      ent numero;
-     numero = 1 + 52;
+     numero = 1 + 22;
 
-      mientras( numero > 15 ):
+      imprime("Ciclo MIENTRAS");
+      mientras( numero > 5 ):
         imprime(numero);
         numero = numero - 2;
+      fin
+      
+      imprime("Ciclo PARA");
+      para(numero = 23; numero > 5; numero = numero - 2;):
+        imprime(numero);
       fin
 
       ent condicional;
@@ -18,13 +24,6 @@ clase Principal:
       x = 10;
       y = 20;
 
-      ent i;
-      ent j;
-      para(i = 0; i < x; i = i + 1;):
-        para(j = 0; j < y; j = j + 1;):
-          imprime(i);
-        fin
-      fin
       
       condicional = 20 / 10;
 

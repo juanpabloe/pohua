@@ -154,7 +154,7 @@ end
     # Si el programa se encuentra en un ciclo PARA (estilo for) se utilizara una pila temporal de cuadruplos 
     # para guardar los cuadruplos de la asignacion del ciclo for, y dejara intacta la pila general de cuadruplos.
     # Al final del ciclo para, agregara los cuadruplos a la pila general.
-    if @estatuto_for
+    if @for_flag
       @p_temp_cuadruplos << cuad
     else
       @p_cuadruplos << cuad
@@ -279,7 +279,6 @@ met_principal
       var_instancia = Variable.new('principal', 'Principal')
       @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
       @instancia_actual = var_instancia
-      puts "Instancia Actual - #{@instancia_actual}"
     }
     ':' bloque* 'fin'
     {
