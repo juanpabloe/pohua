@@ -68,7 +68,7 @@ end
 
 class Clase
   attr_accessor :nombre, :variables_instancia, :metodos_instancia, :sig_direccion, 
-                :primer_cuadruplo
+                :primer_cuadruplo, :clase_padre
 
   # To-do: Agregar un atributo para la clase padre en el caso de herencia
 
@@ -80,6 +80,7 @@ class Clase
     @variables_instancia = Hash.new      # Hash con objetos de la clase Variable
     @metodos_instancia = Hash.new        # Hash con objetos de la clase Metodo
     @sig_direccion = DIR_INICIAL         # Se ubica en la primer direccion disponible para variables
+    @clase_padre = nil                   # Por default no hay una clase padre
   end
 
   def guardar_en_variables_de_instancia(nombre, var)
@@ -245,10 +246,37 @@ programa
 	;
 
 clase	
-  :	'clase' c1 = CLASE_OB ('extiende' c2 = CLASE_OB)? 
+  :	'clase' c1 = CLASE_OB 
+  ('extiende' c2 = CLASE_OB
+  {
+    # Implementacion de Herencia
+    # Revisamos que la clase padre que se quiere extender haya sido declarada
+    if @clases[$c2.text].nil?
+      raise "La clase #{$c2.text} no ha sido previamente implementada."
+    else
+      # Si ya fue declarada, la buscamos dentro de nuestras clases
+      @clase_padre = @clases[$c2.text]
+    end
+  }
+  )? 
   {
     @clases[$c1.text] = Clase.new($c1.text)
     @clase_actual = @clases[$c1.text]
+
+    # Revisamos si se quiere heredar de una clase
+    if @clase_padre
+      # Si hay una clase padre, le enviaremos sus variables y metodos a la clase actual
+      @clase_padre.variables_instancia.each do |nombre_var, variable|
+        @clase_actual.guardar_en_variables_de_instancia(nombre_var, variable)
+        puts "Se guardo variable #{nombre_var} en clase #{@clase_actual.nombre}"
+      end
+      @clase_padre.metodos_instancia.each do |nombre_metodo, metodo|
+        @clase_actual.metodos_instancia[nombre_metodo] = metodo
+        puts "Se guardo metodo #{nombre_metodo} en clase #{@clase_actual.nombre}"
+      end
+      puts "La clase #{@clase_actual.nombre} ahora hereda de la clase #{@clase_padre.nombre}"
+      @clase_actual.clase_padre = @clase_padre
+    end
   }
   ':' dec_variable* metodo* 'fin'
   {
@@ -319,7 +347,6 @@ met_tipado
     var_instancia = Variable.new('instancia', @clase_actual.nombre)
     @metodo_actual.guardar_en_variables_locales(var_instancia.nombre, var_instancia)
     @instancia_actual = var_instancia.tipo
-    puts "Instancia Actual - #{@instancia_actual}"
   }
   '(' parametros? ')'
   ':' bloque* devolucion 'fin'
