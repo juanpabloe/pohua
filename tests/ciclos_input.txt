@@ -12,7 +12,7 @@ clase Principal:
       fin
       
       imprime("Ciclo PARA");
-      para(numero = 23; numero > 5; numero = numero - 2;):
+      para(numero = 23; numero > 5; numero = numero - 2):
         imprime(numero);
       fin
 

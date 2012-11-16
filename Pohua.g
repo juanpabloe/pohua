@@ -7,6 +7,10 @@ options { language = Ruby; }
 }
 
 @members {
+  # Overriding de metodo que maneja los errores generados por antlr
+ # def displayRecognitionError(e)
+  #  antlr3.BaseRecognizer.displayRecognitionError = displayRecognitionError
+  #end
 
 class Variable
   attr_accessor :nombre, :direccion, :tipo
@@ -295,7 +299,7 @@ clase_principal
     @clase_actual = nil
   }
 	;
-	
+
 met_principal
 	:	'metodo' 'vacuo' 'principal' 
     {
@@ -319,7 +323,7 @@ met_principal
 bloque	:	dec_variable
 	|	estatuto
 	;
-	
+
 dec_variable
 	: t =	tipo ID // Revisar el scope de t para ver si el t = tipo es necesario
     {
@@ -359,7 +363,7 @@ met_tipado
     @metodo_actual = nil
   }
 	;
-	
+
 met_vacuo
 	:	'vacuo' ID 
   {
@@ -379,12 +383,12 @@ met_vacuo
     @metodo_actual = nil
   }
 	;
-	
+
 tipo
   returns [valor]:
   t = ( 'ent'	|	'flot' |	'string' |	'bol' |	'char' |	CLASE_OB ) { $valor = $t.text }
 	;
-	
+
 parametros
 	:	param ( ',' param )*
 	;
@@ -395,7 +399,7 @@ param
     @metodo_actual.guardar_en_parametros($ID.text, Variable.new($ID.text, $t.valor))
   }
   ;
-	
+
 estatuto
 	:	asignacion
 	|	condicion
@@ -404,7 +408,7 @@ estatuto
   | devolucion
 	|	invocacion ';'
 	;
-	
+
 devolucion
   : 'regresa' expresion 
   {
@@ -429,7 +433,8 @@ asignacion
     # Regla 2 - Metemos '=' a pila operadores
     @p_operadores << '='
   }
-  lado_der_asignacion ';' ;
+  lado_der_asignacion ';'
+  ;
 
 lado_izq_asignacion
   : ('este' '.' ID)
@@ -535,7 +540,7 @@ condicion
     resuelve_salto_en_cuadruplo(salto_al_resto, @cont)
   }
 	;
-	
+
 escritura
 	:	'imprime' '(' expresion
   {
@@ -545,7 +550,7 @@ escritura
   }
   ( ',' expresion )* ')' ';'
 	;
-	
+
 lectura	:	'lee' '(' ')'
   {
     resultado = @p_operandos.last
@@ -700,7 +705,32 @@ factor 	:	'('
     # Regla 7 - Sacar fondo falso de pila de operadores
     @p_operadores.pop
   } 
-	|	var_cte 
+	|	(OPERADOR_TERMINO
+    { 
+      if $OPERADOR_TERMINO.text == '-'
+        @bandera_negativo = true
+        @p_operadores << $OPERADOR_TERMINO.text
+
+        if(@constantes['0'].nil?)
+          direccion = dir_constante_disponible
+          cons = Constante.new('0', 'ent', direccion)
+          @constantes[cons.valor] = cons
+          genera_cuadruplo('iconst', cons.valor, nil, direccion)
+        else
+          # Si la constante 0 ya habia sido indexada, se enviara la direccion de esa constante
+          direccion = @constantes['0'].direccion
+        end
+        @p_operandos << direccion
+        @p_tipos << 'ent'
+      end
+      })? var_cte 
+  {
+    if @bandera_negativo
+      puts @p_operadores.last
+      inserta_nuevo_resultado_en_pila_operandos(@p_operadores.last)
+      @bandera_negativo = false
+    end
+  }
 	;
 
 var_cte	:	
@@ -848,12 +878,14 @@ invocacion
 invocacion_de_clase
   : ( (t = 'este' | t = ID) '.')?
   {
+    puts "Esta entrando aqui cuando no deberia"
     if($t.nil? || $t.text == 'este')
       # Si la invocacion no recibio una instancia o bien indica es una llamada dentro de la clase actual
       @clase_invocada = @clase_actual
       @instancia_invocada = @instancia_actual
     else
       # Si la invocacion recibio una instancia, se busca en el metodo o en la clase donde se encuentra
+      @instancia_invocada = @metodo_actual.variables_locales[$ID.text] || @clase_actual.variables_instancia[$ID.text]
       puts "Instancia invocada - #{@instancia_invocada.nombre}"
       if @instancia_invocada.nil?
         raise "La variable #{$ID.text} no ha sido declarada para la clase #{@clase_actual.nombre}"

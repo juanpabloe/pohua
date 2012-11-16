@@ -42,7 +42,6 @@ fin
 clase Principal:
 
   metodo vacuo principal:
-
      Titanic p;
      p = nuevo Titanic();
 
