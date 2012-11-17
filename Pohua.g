@@ -13,12 +13,13 @@ options { language = Ruby; }
   #end
 
 class Variable
-  attr_accessor :nombre, :direccion, :tipo
+  attr_accessor :nombre, :direccion, :tipo, :dimension
 
-  def initialize(nombre, tipo)
+  def initialize(nombre, tipo, dimension = 1)
     @nombre = nombre
     @tipo = tipo
     @direccion = nil
+    @dimension = dimension
   end
 
 end
@@ -41,7 +42,7 @@ class Metodo
 
   def guardar_en_variables_locales(nombre, var)
     var.direccion = @sig_direccion
-    @sig_direccion = @sig_direccion + 1
+    @sig_direccion = @sig_direccion + var.dimension
     # Revisamos la unicidad de la variable
     if(@variables_locales[nombre].nil?)
       @variables_locales[nombre] = var
@@ -89,7 +90,7 @@ class Clase
 
   def guardar_en_variables_de_instancia(nombre, var)
     var.direccion = @sig_direccion
-    @sig_direccion = @sig_direccion + 1
+    @sig_direccion = @sig_direccion + var.dimension
     # Revisamos la unicidad de la variable
     if(@variables_instancia[nombre].nil?)
       @variables_instancia[nombre] = var
@@ -325,7 +326,7 @@ bloque	:	dec_variable
 	;
 
 dec_variable
-	: t =	tipo ID // Revisar el scope de t para ver si el t = tipo es necesario
+	: t =	tipo ID
     {
       unless @metodo_actual.nil?
         # Si la variable se declara dentro de un metodo.
@@ -333,6 +334,16 @@ dec_variable
       else
         # Si la variable se declara dentro de una clase.
         @clase_actual.guardar_en_variables_de_instancia($ID.text, Variable.new($ID.text, $t.valor))
+      end
+    } ';'
+    | t = tipo_arreglo '[' CTE_ENTERA ']' ID  // Declaracion de un vector
+    {
+      # Creamos una variable para el arreglo y la guardamos en la clase o metodo segun en donde sea declarada
+      variable_de_arreglo = Variable.new($ID.text, $t.valor, $CTE_ENTERA.text.to_i)
+      unless @metodo_actual.nil?
+        @metodo_actual.guardar_en_variables_locales(variable_de_arreglo.nombre, variable_de_arreglo)
+      else
+        @clase_actual.guardar_en_variables_de_instancia(variable_de_arreglo.nombre, variable_de_arreglo)
       end
     }
     ';'
@@ -387,6 +398,11 @@ met_vacuo
 tipo
   returns [valor]:
   t = ( 'ent'	|	'flot' |	'string' |	'bol' |	'char' |	CLASE_OB ) { $valor = $t.text }
+	;
+
+tipo_arreglo
+  returns [valor]:
+  t = ( 'ent'	|	'flot' |	'string' ) { $valor = $t.text }
 	;
 
 parametros
@@ -470,6 +486,7 @@ lado_izq_asignacion
       end
     end
   }
+  | acceso_arreglo
   ;
 
 lado_der_asignacion
@@ -852,7 +869,42 @@ var_cte	:
       raise "La variable #{$ID.text} no ha sido declarada dentro de la clase #{@clase_actual.nombre}"
     end
   }
+  | acceso_arreglo
 	;
+
+acceso_arreglo
+  : ID '[' expresion
+  {
+  var_arreglo = nil
+  if !@metodo_actual.nil?
+    if !@metodo_actual.variables_locales[$ID.text].nil?
+      var_arreglo = @metodo_actual.variables_locales[$ID.text]
+    elsif !@clase_actual.variables_instancia[$ID.text].nil?
+      var_arreglo = @clase_actual.variables_instancia[$ID.text]
+    else
+      raise "La variable -#{$ID.text}- no ha sido declarada en ningun metodo ni clase."
+    end
+  else
+    if !@clase_actual.variables_instancia[$ID.text].nil?
+      var_arreglo = @clase_actual.variables_instancia[$ID.text]
+    else
+      raise "La variable -#{$ID.text}- no ha sido declarada."
+    end
+  end
+  # Generamos el cuadruplo ver para acceder al valor de una casilla del arreglo
+  aux = @p_operandos.pop
+  tipo = @p_tipos.pop
+  raise "Para acceder al arreglo se requiere un entero" if tipo != 'ent'
+  genera_cuadruplo('ver', aux, nil, var_arreglo.dimension)
+
+  direccion_base = var_arreglo.direccion
+  direccion_temp = dir_temporal_disponible
+  genera_cuadruplo('desp', direccion_base, aux, direccion_temp)
+
+  @p_operandos << "(#{direccion_temp})"
+  @p_tipos << var_arreglo.tipo
+  } ']'
+  ;
 
 invocacion
   returns [tipo] :

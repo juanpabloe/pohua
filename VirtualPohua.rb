@@ -18,6 +18,10 @@ class Registros < Array
 
   # Al asignar un valor a un registro, verificamos si es un atributo para un objeto
   def []=(indice, atributo)
+
+    # Verificamos si es un indice de acceso a arreglo
+    indice = self[indice.direccion_de_indice_de_arreglo] if indice.class == String and indice.acceso_arreglo?
+
     lim_inf = 100    # Limite inferior de las direcciones de Clase
     lim_sup = 149    # Limite superior de las direcciones de Clase
     case indice
@@ -30,6 +34,10 @@ class Registros < Array
 
   # Al acceder a un atributo de un registro, verificamos si es un atributo de un objeto
   def [](indice)
+
+    # Verificamos si es un indice de acceso a arreglo
+    indice = self[indice.direccion_de_indice_de_arreglo] if indice.class == String and indice.acceso_arreglo?
+
     lim_inf = 100    # Limite inferior de las direcciones de Clase
     lim_sup = 149    # Limite superior de las direcciones de Clase
     case indice
@@ -54,6 +62,14 @@ class String
 
   def flotante?
     not self.match(/^[0-9]+[\.][0-9]+((e|E)(\+|\-)?[0-9]+)?$/).nil?
+  end
+
+  def acceso_arreglo?
+    not self.match(/^\([0-9]+\)$/).nil?
+  end
+
+  def direccion_de_indice_de_arreglo
+     self.gsub(/(\(|\))/, '').to_i
   end
 
 end
@@ -194,16 +210,19 @@ class VirtualPohua
       when 'slee'
         var = STDIN.gets.chomp
         reg_act[cuad_act[3]] = var.to_s
+
+      # Arreglos
+      when 'ver'
+        unless reg_act[cuad_act[1]] < cuad_act[3] and reg_act[cuad_act[1]] >= 0
+          raise "Indice de arreglo fuera de rango"
+        end
+      when 'desp'
+        reg_act[cuad_act[3]] = cuad_act[1] + reg_act[cuad_act[2]]
       end
 
       cuad_act = @cuadruplos[@inst_pointer]
     end
 
-    @p_frames.each do |frame|
-      frame.registros.each_with_index do |r, i|
-        puts "Registro #{i}: #{r}" unless r.nil?
-      end
-    end
   end
 
   def carga_cuadruplos
