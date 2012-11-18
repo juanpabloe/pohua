@@ -15,7 +15,7 @@ clase Principal:
   metodo vacuo principal:
 
      ent foo;
-     foo = fiboRecursivo(10);
+     foo = fiboRecursivo(30);
      imprime(foo);
 
   fin

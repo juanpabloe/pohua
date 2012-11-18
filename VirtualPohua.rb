@@ -228,7 +228,7 @@ class VirtualPohua
   def carga_cuadruplos
     @cuadruplos = []
     # Abrimos el archivo con los cuadruplos
-    File.open("codobj", "r") do |lineas_de_cuadruplos|
+    File.open(ARGV[0], "r") do |lineas_de_cuadruplos|
       lineas_de_cuadruplos.each do |linea|
         cuadruplo = linea.split(",")
         cuadruplo[3] = cuadruplo.last.gsub(/\n/, '')

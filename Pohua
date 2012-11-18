@@ -6,7 +6,7 @@ require 'PohuaParser'
 
 # Pregunta por parametros correctos al compilar
 if(ARGV.size < 1 or ARGV[0][-3..-1] != '.ph')
-  puts "Error. Para compilar utiliza: Po test.ph"
+  puts "Error. Para compilar utiliza: ruby PohuaC archivo_prueba.ph"
   exit
 end
 

@@ -243,9 +243,6 @@ programa
   {
     # Se agrega el cuadruplo inicial que indica el numero del cuadruplo del metodo principal
     @p_cuadruplos.insert(0, ['goto', nil, nil, @clases['Principal'].metodos_instancia['principal'].primer_cuadruplo])
-    imprime_cuadruplos
-    imprime_clases
-    imprime_constantes
     genera_archivo_cuadruplos
   }
 	;
@@ -273,13 +270,10 @@ clase
       # Si hay una clase padre, le enviaremos sus variables y metodos a la clase actual
       @clase_padre.variables_instancia.each do |nombre_var, variable|
         @clase_actual.guardar_en_variables_de_instancia(nombre_var, variable)
-        puts "Se guardo variable #{nombre_var} en clase #{@clase_actual.nombre}"
       end
       @clase_padre.metodos_instancia.each do |nombre_metodo, metodo|
         @clase_actual.metodos_instancia[nombre_metodo] = metodo
-        puts "Se guardo metodo #{nombre_metodo} en clase #{@clase_actual.nombre}"
       end
-      puts "La clase #{@clase_actual.nombre} ahora hereda de la clase #{@clase_padre.nombre}"
       @clase_actual.clase_padre = @clase_padre
     end
   }
@@ -930,7 +924,6 @@ invocacion
 invocacion_de_clase
   : ( (t = 'este' | t = ID) '.')?
   {
-    puts "Esta entrando aqui cuando no deberia"
     if($t.nil? || $t.text == 'este')
       # Si la invocacion no recibio una instancia o bien indica es una llamada dentro de la clase actual
       @clase_invocada = @clase_actual
@@ -938,7 +931,6 @@ invocacion_de_clase
     else
       # Si la invocacion recibio una instancia, se busca en el metodo o en la clase donde se encuentra
       @instancia_invocada = @metodo_actual.variables_locales[$ID.text] || @clase_actual.variables_instancia[$ID.text]
-      puts "Instancia invocada - #{@instancia_invocada.nombre}"
       if @instancia_invocada.nil?
         raise "La variable #{$ID.text} no ha sido declarada para la clase #{@clase_actual.nombre}"
       end
@@ -954,7 +946,6 @@ argumentos
     @arg_cont = 0
     argumento = @p_operandos.pop
     arg_tipo = @p_tipos.pop
-    puts "Argumentos - #{argumento} - tipo: #{arg_tipo}"
     if @metodo_invocado.cantidad_de_parametros <= @arg_cont
       raise ArgumentError, "El metodo #{@metodo_invocado.nombre} debe contener #{@metodo_invocado.cantidad_de_parametros} argumentos."
     end

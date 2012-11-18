@@ -2,8 +2,8 @@ clase Articulo:
   string categoria;
 	flot precio;
 
-  metodo vacuo setCategoria(string t):
-    este.categoria = t;
+  metodo vacuo setCategoria(string categoria):
+    este.categoria = categoria;
   fin
 
   metodo string getCategoria():
@@ -21,8 +21,8 @@ clase Pelicula extiende Articulo:
     regresa este.titulo;
   fin
 
-  metodo vacuo setTitulo(string t):
-    este.titulo = t;
+  metodo vacuo setTitulo(string titulo):
+    este.titulo = titulo;
   fin
 
 fin
@@ -33,8 +33,8 @@ clase Titanic extiende Pelicula:
     regresa precio;
   fin
 
-  metodo vacuo setPrecio(flot p):
-    este.precio = p;
+  metodo vacuo setPrecio(flot precio):
+    este.precio = precio;
   fin
 
 fin
