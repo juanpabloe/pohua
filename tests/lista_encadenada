@@ -1,0 +1,8 @@
+goto,,,5
+=,51,,100
+ret,,,
+nuevo,Nodo,,101
+ret,,,
+sconst,"hola",,200
+imp,,,200
+halt,,,

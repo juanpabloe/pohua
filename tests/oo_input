@@ -1,0 +1,23 @@
+goto,,,4
+ret,,,100
+=,51,,100
+ret,,,
+nuevo,Pelicula,,51
+era,Pelicula,,2
+sconst,"Titanic",,200
+param,200,,1
+gosub,51,,2
+era,Pelicula,,1
+gosub,51,,1
+get,,,201
+=,201,,52
+imp,,,52
+era,Pelicula,,2
+sconst,"Pulp fiction",,202
+param,202,,1
+gosub,51,,2
+era,Pelicula,,1
+gosub,51,,1
+get,,,203
+imp,,,203
+halt,,,

@@ -1,7 +1,7 @@
 class Frame
   attr_accessor :registros, :cuadruplo_al_salir, :clase_al_salir
 
-  def initialize(cuadruplo_al_salir = 0, cantidad_registros = 1000)
+  def initialize(cuadruplo_al_salir = 0, cantidad_registros = 500)
     @registros = Registros.new(cantidad_registros)
     @cuadruplo_al_salir = cuadruplo_al_salir
   end
