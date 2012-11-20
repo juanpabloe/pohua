@@ -8,11 +8,11 @@ clase Principal:
 		a = 0;
 		b = 1;
 		c = 0;
-		i = 2;
+		i = 1;
 		mientras(i < n || i == n):
-			c = a + b;
 			a = b;
 			b = c;
+			c = a + b;
 			i = i + 1;
 		fin
 

@@ -72,6 +72,8 @@ clase Principal:
 		ent calif1;
 		ent calif2;
 		ent calif3;
+		ent [3] notas;
+		notas[1] = 10;
 
 		Estudiante e;
 		e = nuevo Estudiante();
@@ -83,7 +85,7 @@ clase Principal:
 		imprime("Alumno:");
 		imprime(e.getEdad());
 		imprime("Introduce Calificacion 1:");
-		calif1 = lee();
+		calif1= lee();
 		imprime("Introduce Calificacion 2:");
 		calif2 = lee();
 		imprime("Introduce Calificacion 3:");
