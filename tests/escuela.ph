@@ -69,11 +69,7 @@ fin
 
 clase Principal:
 	metodo vacuo principal:
-		ent calif1;
-		ent calif2;
-		ent calif3;
 		ent [3] notas;
-		notas[1] = 10;
 
 		Estudiante e;
 		e = nuevo Estudiante();
@@ -85,13 +81,13 @@ clase Principal:
 		imprime("Alumno:");
 		imprime(e.getEdad());
 		imprime("Introduce Calificacion 1:");
-		calif1= lee();
+		notas[0]= lee();
 		imprime("Introduce Calificacion 2:");
-		calif2 = lee();
+		notas[1] = lee();
 		imprime("Introduce Calificacion 3:");
-		calif3 = lee();
+		notas[2] = lee();
 		imprime("Calificaciones");
-		e.setCalificaciones(calif1, calif2, calif3);
+		e.setCalificaciones(notas[0], notas[1], notas[2]);
 
 		Profesor p;
 		p = nuevo Profesor();

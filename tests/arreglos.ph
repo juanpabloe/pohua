@@ -8,6 +8,7 @@ clase Principal:
      imprime(arreglo[5]);
 
      arreglo[5] = arreglo[5] + 30;
+     # comment 1 2 #
      imprime(arreglo[5]);
 
      ent temp;
@@ -15,6 +16,9 @@ clase Principal:
      imprime(temp);
      
      ent i;
+     # Esto es un comentario en pohua 
+     multilinea
+     #
      para(i = 0; i < 10; i = i + 1;):
         arreglo[i] = i * 2;
         imprime(arreglo[i]);

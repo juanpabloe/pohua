@@ -730,6 +730,7 @@ factor 	:	'('
         else
           # Si la constante 0 ya habia sido indexada, se enviara la direccion de esa constante
           direccion = @constantes['0'].direccion
+          genera_cuadruplo('iconst', 0, nil, direccion)
         end
         @p_operandos << direccion
         @p_tipos << 'ent'
@@ -778,7 +779,9 @@ var_cte	:
         genera_cuadruplo('iconst', cons.valor, nil, direccion)
       else
         # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
-        direccion = @constantes[$CTE_ENTERA.text].direccion
+        cons = @constantes[$CTE_ENTERA.text]
+        direccion = cons.direccion
+        genera_cuadruplo('iconst', cons.valor, nil, direccion)
       end
       @p_operandos << direccion
       @p_tipos << 'ent'
@@ -794,7 +797,9 @@ var_cte	:
         genera_cuadruplo('fconst', cons.valor, nil, direccion)
       else
         # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
-        direccion = @constantes[$CTE_FLOTANTE.text].direccion
+        cons = @constantes[$CTE_FLOTANTE.text]
+        direccion = cons.direccion
+        genera_cuadruplo('fconst', cons.valor, nil, direccion)
       end
       @p_operandos << direccion
       @p_tipos << 'flot'
@@ -810,7 +815,9 @@ var_cte	:
         genera_cuadruplo('sconst', cons.valor, nil, direccion)
       else
         # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
-        direccion = @constantes[$CTE_STRING.text].direccion
+        cons = @constantes[$CTE_STRING.text]
+        direccion = cons.direccion
+        genera_cuadruplo('sconst', cons.valor, nil, direccion)
       end
       @p_operandos << direccion
       @p_tipos << 'string'
@@ -826,7 +833,9 @@ var_cte	:
         genera_cuadruplo('bconst', cons.valor, nil, direccion)
       else
         # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
-        direccion = @constantes[$CTE_BOLEANA.text].direccion
+        cons = @constantes[$CTE_BOLEANA.text]
+        direccion = cons.direccion
+        genera_cuadruplo('bconst', cons.valor, nil, direccion)
       end
       @p_operandos << direccion
       @p_tipos << 'bol'
@@ -842,7 +851,9 @@ var_cte	:
         genera_cuadruplo('cconst', cons.valor, nil, direccion)
       else
         # Si la constante ya habia sido indexada, se enviara la direccion de esa constante
-        direccion = @constantes[$CTE_CHAR.text].direccion
+        cons = @constantes[$CTE_CHAR.text]
+        direccion = cons.direccion
+        genera_cuadruplo('cconst', cons.valor, nil, direccion)
       end
       @p_operandos << direccion
       @p_tipos << 'char'

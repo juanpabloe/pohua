@@ -3,6 +3,11 @@ clase Principal:
   metodo ent fiboRecursivo(ent numero):
     ent temp;
     ent temp2;
+    
+    si?(numero == 0):
+      regresa 0;
+    fin
+    
     si?(numero == 1 || numero == 2):
       regresa 1;
     sino
@@ -15,7 +20,12 @@ clase Principal:
   metodo vacuo principal:
 
      ent foo;
-     foo = fiboRecursivo(30);
+     ent n;
+     
+     imprime("Introduce n:");
+     n = lee();
+
+     foo = fiboRecursivo(n);
      imprime(foo);
 
   fin

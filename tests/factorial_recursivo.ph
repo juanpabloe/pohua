@@ -11,8 +11,13 @@ clase Principal:
   fin
 
   metodo vacuo principal:
-     foo = factorialRecursivo(10);
-     imprime(foo);
+    ent foo;
+    ent n;
+
+    imprime("Introduce n:");
+    n = lee();
+    foo = factorialRecursivo(n);
+    imprime(foo);
 
   fin
      
