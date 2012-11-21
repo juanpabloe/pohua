@@ -10,7 +10,7 @@ ret,,,101
 ret,,,
 nuevo,Titanic,,51
 era,Titanic,,5
-sconst,"Peliculon romantico",,200
+sconst,"Peliculon del anio",,200
 param,200,,1
 gosub,51,,5
 era,Titanic,,1

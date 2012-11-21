@@ -6,7 +6,8 @@ clase Principal:
      flot num_negativo2;
      flot resultado;
 
-	 num_negativo1 = -5;
+   imprime("Dame un entero n: ");
+	 num_negativo1 = lee();
 	 num_negativo2 = -6.0;
 
 	 resultado = num_negativo2 - -6;

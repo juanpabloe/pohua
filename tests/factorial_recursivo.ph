@@ -1,12 +1,10 @@
 clase Principal:
 
   metodo ent factorialRecursivo(ent numero):
-    ent temp;
     si?(numero == 1):
       regresa 1;
     sino
-      temp = numero - 1;
-      regresa numero * factorialRecursivo(temp);
+      regresa numero * factorialRecursivo(numero-1);
     fin
   fin
 
@@ -20,5 +18,4 @@ clase Principal:
     imprime(foo);
 
   fin
-     
 fin

@@ -14,20 +14,6 @@ metodo ent factorialIterativo(ent n):
 	regresa resultado;
 fin
 
-metodo ent factorialIterativo2(ent n):
-	ent resultado;
-
-        resultado = 1;
-
-	mientras(n > 1):
-	    resultado = n * resultado;
-	    imprime(resultado);
-	    n = n - 1;
-	fin
-	
-	regresa resultado;
-fin
-  
 metodo vacuo principal:
     ent num;
 
@@ -38,7 +24,6 @@ metodo vacuo principal:
 
     imprime("Resultado");
     imprime(fact);
-     
   fin
 
 fin

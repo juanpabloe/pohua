@@ -57,11 +57,11 @@ end
 class String
 
   def entero?
-    not self.match(/^[0-9]+$/).nil?
+    not self.match(/^(-)?[0-9]+$/).nil?
   end
 
   def flotante?
-    not self.match(/^[0-9]+[\.][0-9]+((e|E)(\+|\-)?[0-9]+)?$/).nil?
+    not self.match(/^(-)?[0-9]+[\.][0-9]+((e|E)(\+|\-)?[0-9]+)?$/).nil?
   end
 
   def acceso_arreglo?

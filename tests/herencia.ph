@@ -45,7 +45,7 @@ clase Principal:
      Titanic p;
      p = nuevo Titanic();
 
-     p.setTitulo("Peliculon romantico");
+     p.setTitulo("Peliculon del anio");
      p.setCategoria("Romanticas");
      p.setPrecio(199.99);
 

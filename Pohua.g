@@ -7,10 +7,10 @@ options { language = Ruby; }
 }
 
 @members {
-  # Overriding de metodo que maneja los errores generados por antlr
- # def displayRecognitionError(e)
-  #  antlr3.BaseRecognizer.displayRecognitionError = displayRecognitionError
-  #end
+
+# Clase Variable
+# Indexa cada nueva variable dentro de un programa en Pohua
+# Deben ser tipadas y tener una dimension para poder considerar vectores
 
 class Variable
   attr_accessor :nombre, :direccion, :tipo, :dimension
@@ -23,6 +23,12 @@ class Variable
   end
 
 end
+
+# Clase Metodo
+# Indexa cada nuevo metodo dentro de un programa en Pohua
+# Guarda las variables locales dentro de una estructura Hash
+# Debe tener un nombre, tipo de retorno y pertenecer a una clase
+# Guarda los parametros con sus tipos dentro de otra estructura Hash
 
 class Metodo
   attr_accessor :nombre, :variables_locales, :parametros, :tipo_de_retorno,
@@ -42,6 +48,7 @@ class Metodo
 
   def guardar_en_variables_locales(nombre, var)
     var.direccion = @sig_direccion
+    # Los vectores guardan una dimension mayor a 1 por lo que se reserva ese espacio
     @sig_direccion = @sig_direccion + var.dimension
     # Revisamos la unicidad de la variable
     if(@variables_locales[nombre].nil?)
@@ -71,11 +78,14 @@ class Metodo
 
 end
 
+# Clase Clase
+# Es la estructura principal que indexa a cada clase dentro de Pohua
+# La clase Principal y cualquier clase guardan su nombre, variables de instancia,
+# metodos de instancias y su clase padre que es otro objeto Clase para soportar herencia
+
 class Clase
   attr_accessor :nombre, :variables_instancia, :metodos_instancia, :sig_direccion, 
                 :primer_cuadruplo, :clase_padre
-
-  # To-do: Agregar un atributo para la clase padre en el caso de herencia
 
   DIR_INICIAL = 100
   DIR_FINAL = 149
@@ -90,6 +100,7 @@ class Clase
 
   def guardar_en_variables_de_instancia(nombre, var)
     var.direccion = @sig_direccion
+    # Los vectores guardan una dimension mayor a 1 por lo que se reserva ese espacio
     @sig_direccion = @sig_direccion + var.dimension
     # Revisamos la unicidad de la variable
     if(@variables_instancia[nombre].nil?)
@@ -243,6 +254,7 @@ programa
   {
     # Se agrega el cuadruplo inicial que indica el numero del cuadruplo del metodo principal
     @p_cuadruplos.insert(0, ['goto', nil, nil, @clases['Principal'].metodos_instancia['principal'].primer_cuadruplo])
+    imprime_clases
     genera_archivo_cuadruplos
   }
 	;
@@ -738,7 +750,6 @@ factor 	:	'('
       })? var_cte 
   {
     if @bandera_negativo
-      puts @p_operadores.last
       inserta_nuevo_resultado_en_pila_operandos(@p_operadores.last)
       @bandera_negativo = false
     end

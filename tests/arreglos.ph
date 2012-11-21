@@ -14,7 +14,6 @@ clase Principal:
      ent temp;
      temp = arreglo[5];
      imprime(temp);
-     
      ent i;
      # Esto es un comentario en pohua 
      multilinea
